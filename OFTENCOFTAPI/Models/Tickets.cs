@@ -1,0 +1,41 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace OFTENCOFTAPI.Models
+{
+    public partial class Tickets
+    {
+        public int Id { get; set; }
+        public int? Drawid { get; set; }
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
+        public string Emailaddress { get; set; }
+        public string Phonenumber { get; set; }
+        public string Ticketreference { get; set; }
+        public string AccessCode { get; set; }
+        public string PaystackReference { get; set; }
+        public WinStatus? Winstatus { get; set; }
+        public ClaimStatus? Claimstatus { get; set; }
+        //new fields
+        public int? transactionid { get; set; }
+        public DateTime? Datemodified { get; set; }
+        public virtual Draws Draw { get; set; }
+        public virtual Transaction Transaction { get; set; }
+        public ConfirmStatus? ConfirmStatus { get; set; }
+    }
+    public enum ConfirmStatus
+    {
+        Pending,
+        Confirmed
+    }
+    public enum WinStatus
+    {
+      Won,
+      None
+    }
+    public enum ClaimStatus
+    {
+        Won,
+        None
+    }
+}

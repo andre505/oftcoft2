@@ -7,8 +7,8 @@ namespace OFTENCOFTAPI.Models.ViewModels
 {
     public class SelectWinnerRequest
     {
-        public string drawId { get; set; }
-        public string GooglerandomNumber { get; set; }
+        public int drawid { get; set; }
+        public int googrand { get; set; }
        
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using OFTENCOFTAPI.Models;
+using OFTENCOFTAPI.Models.ViewModels;
 
 namespace OFTENCOFTAPI.Controllers
 {
@@ -34,7 +35,7 @@ namespace OFTENCOFTAPI.Controllers
             var drawDetails = await _context.Tickets.Where(s => s.Drawid == drawid && s.ConfirmStatus == ConfirmStatus.Confirmed && s.Winstatus!=WinStatus.Won).ToListAsync();
             int drawdetailscount = drawDetails.Count();
             //get minimum id
-            if (drawDetails == null)
+            if (drawdetailscount == 0)
             {
                 var data = new
                 {
@@ -61,58 +62,74 @@ namespace OFTENCOFTAPI.Controllers
             }
         }
 
-        [HttpGet("pick/{ticketid}")]
-        [HttpPost("pick/{ticketid}")]
-        public async Task<ActionResult> GetWinner(int goognumber, int iddraw )
-
+        //[HttpGet("pick/{ticketid}")]
+        [HttpPost("pick")]
+        public async Task<ActionResult> GetWinner([FromBody] SelectWinnerRequest winnerRequest)
         {
-            
-            //get generic drawdetails
-            var ticketDetails = await _context.Tickets.Where(s => s.Drawid == iddraw).ToListAsync();
-            //var did = ticketDetails.Drawid;
-            var draw = await _context.Draws.FindAsync(iddraw);
-            //get status of winners
-            //if (draw.) 
+            //validate first
+            var drawDetails = await _context.Tickets.Where(s => s.Drawid == winnerRequest.drawid && s.ConfirmStatus == ConfirmStatus.Confirmed && s.Winstatus != WinStatus.Won).ToListAsync();
+            int drawdetailscount = drawDetails.Count();
+            int minid = 1;
+            int maxid = drawdetailscount;
 
-            if (draw.Drawstatus == DrawStatus.Drawn)
+            if ((winnerRequest.googrand < minid) || winnerRequest.googrand > maxid)
             {
+                //return invalid random number
                 var data = new
                 {
                     status = "fail",
-                    winningTicket = "Winners have been selected for this draw",
-                    message = "Winners have been selected for this draw"
+                    winningTicket = "Please enter the correct generated ticket number between the minimum and maximum generated values",
+                    message = "Please enter the correct generated ticket number between the minimum and maximum generated values"
                 };
                 return new JsonResult(data);
-
             }
             else
             {
-                var winningrecord = ticketDetails[goognumber - 1];
-                string winner = winningrecord.Ticketreference.ToString();
-                var data = new
-                {
-                    status = "success",
-                    winningTicket = winner,
-                    message = "Winner Found"
-                };
-                winningrecord.Winstatus = WinStatus.Won;
-                draw.drawwinners += 1;
-                var updateticketstatus = _tController.PutTickets(goognumber, winningrecord);
-                var updatedrawstatus = _dController.PutDraws(Convert.ToInt32(iddraw), draw);
 
-                if (draw.noofwinners == draw.drawwinners)
+                //get generic drawdetails
+                var ticketDetails = await _context.Tickets.Where(s => s.Drawid == winnerRequest.drawid).ToListAsync();
+                //var did = ticketDetails.Drawid;
+                var draw = await _context.Draws.FindAsync(winnerRequest.drawid);
+                //get status of winners
+                //if (draw.) 
+
+                if (draw.Drawstatus == DrawStatus.Drawn)
                 {
-                    draw.Drawstatus = DrawStatus.Drawn;
+                    var data = new
+                    {
+                        status = "fail",
+                        winningTicket = "Winners have already been selected for this draw",
+                        message = "Winners have already been selected for this draw"
+                    };
+                    return new JsonResult(data);
+
                 }
                 else
                 {
+                    var winningrecord = ticketDetails[winnerRequest.googrand - 1];
+                    string winner = winningrecord.Ticketreference.ToString();
+                    var data = new
+                    {
+                        status = "success",
+                        winningTicket = winner,
+                        message = "Winner Found"
+                    };
+                    winningrecord.Winstatus = WinStatus.Won;
+                    draw.noofwinners += 1;
+                    var updateticketstatus = _tController.PutTickets(winnerRequest.drawid, winningrecord);
+                    var updatedrawstatus = _dController.PutDraws(Convert.ToInt32(winnerRequest.drawid), draw);
 
+                    if (draw.noofwinners == draw.drawwinners)
+                    {
+                        draw.Drawstatus = DrawStatus.Drawn;
+                    }
+                    else
+                    {
+
+                    }
+                    return new JsonResult(data);
                 }
-                return new JsonResult(data);
-
-
             }
-
         }
         // PUT: api/SelectWinner/5
         [HttpPut("{id}")]

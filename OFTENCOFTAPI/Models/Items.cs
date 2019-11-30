@@ -11,7 +11,7 @@ namespace OFTENCOFTAPI.Models
         {
             Draws = new HashSet<Draws>();
         }
-        
+
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

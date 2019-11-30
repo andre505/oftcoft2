@@ -52,7 +52,8 @@ namespace OFTENCOFTAPI.Controllers
             {
                 var data = new
                 {
-                    status = "No draws are available at the moment",
+                    status = "fail",
+                    message = "There are currently no live draws"
                 };
                 return new JsonResult(data);
 
@@ -115,7 +116,7 @@ namespace OFTENCOFTAPI.Controllers
 
         // POST: api/Draws
         [HttpPost]
-        public async Task<ActionResult<Draws>> PostDraws(Draws draws)
+        public async Task<ActionResult> PostDraws(Draws draws)
         {
 
             draws.Datecreated = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
@@ -128,11 +129,16 @@ namespace OFTENCOFTAPI.Controllers
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException d)
             {
                 if (DrawsExists(draws.Id))
                 {
-                    return Conflict();
+                    var data = new
+                    {
+                        status = "fail",
+                        message = "A draw with the specified ID already exists"
+                    };
+                    return new JsonResult(data);
                 }
                 else
                 {

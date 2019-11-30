@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace OFTENCOFTAPI.Models
 {
@@ -40,7 +41,7 @@ namespace OFTENCOFTAPI.Models
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
-                    .ValueGeneratedOnAdd();
+                    .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
 
                 entity.Property(e => e.noofwinners)
                  .HasColumnName("noofwinners");
@@ -60,8 +61,6 @@ namespace OFTENCOFTAPI.Models
 
                 entity.Property(e => e.Itemid).HasColumnName("itemid");
 
-                entity.Property(e => e.Quantity).HasColumnName("quantity");
-
                 entity.Property(e => e.DrawType)
             .HasColumnName("drawtype").HasColumnType("varchar(50)")
             .HasMaxLength(50);
@@ -78,7 +77,7 @@ namespace OFTENCOFTAPI.Models
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
-                    .ValueGeneratedOnAdd();
+                    .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
 
 
                 entity.Property(e => e.Categorydescription)
@@ -100,18 +99,14 @@ namespace OFTENCOFTAPI.Models
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
-                    .ValueGeneratedOnAdd();
+                    .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
+                //.ValueGeneratedOnAdd().HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
 
                 entity.Property(e => e.Categoryid).HasColumnName("categoryid");
 
                 entity.Property(e => e.Datecreated).HasColumnName("datecreated");
 
                 entity.Property(e => e.Datemodified).HasColumnName("datemodified");
-
-                entity.Property(e => e.Itemdescription)
-                    .IsRequired()
-                    .HasColumnName("itemdescription")
-                    .HasMaxLength(255);
 
                 entity.Property(e => e.Itemname)
                     .HasColumnName("itemname")
@@ -133,7 +128,7 @@ namespace OFTENCOFTAPI.Models
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
-                    .ValueGeneratedOnAdd();
+                    .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
                   
 
                 entity.Property(e => e.Claimstatus)
@@ -201,7 +196,7 @@ namespace OFTENCOFTAPI.Models
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
-                    .ValueGeneratedOnAdd();
+                    .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
 
                 entity.Property(e => e.Paymentdate).HasColumnName("paymentdate");
 
@@ -250,6 +245,10 @@ namespace OFTENCOFTAPI.Models
 
                 entity.Property(e => e.IPAddress)
              .HasColumnName("ipaddress")
+             .HasMaxLength(255);
+
+                entity.Property(e => e.Location)
+             .HasColumnName("customerlocation")
              .HasMaxLength(255);
 
                 entity.Property(e => e.countrycode)

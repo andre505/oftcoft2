@@ -33,10 +33,27 @@ namespace OFTENCOFTAPI.Controllers
         }
 
         // GET: api/Itemcategories
-        [HttpGet]
+        [HttpGet("categories")]
         public async Task<ActionResult<IEnumerable<Itemcategories>>> GetItemcategories()
         {
-            return await _context.Itemcategories.ToListAsync();
+            //List<Itemcategories> itemcategories = new List<Itemcategories>();
+            var dbcats = await _context.Itemcategories.Select(c => new { c.Id, c.Categoryname }).ToListAsync();
+            if (dbcats == null)
+            {
+                var data = new
+                {
+                    status = "fail",
+                    Message = "No Item Categories Found"
+                };
+                return new JsonResult(data);
+            }
+            var data2 = new
+            {
+                status = "success",
+                cats = dbcats
+            };
+            return new JsonResult(data2);
+
         }
 
         // GET: api/Itemcategories/5

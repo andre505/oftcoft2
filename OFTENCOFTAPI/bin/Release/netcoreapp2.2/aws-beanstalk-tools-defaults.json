@@ -2,7 +2,7 @@
 {
     "comment" : "This file is used to help set default values when using the dotnet CLI extension Amazon.ElasticBeanstalk.Tools. For more information run \"dotnet eb --help\" from the project root.",
     "profile" : "anthony_odu",
-    "region"  : "us-east-2",
+    "region"  : "us-west-2",
     "application" : "OFTENCOFTAPI",
     "environment" : "OFTENCOFTAPI-test",
     "cname"       : "oftencoftapi-test",

@@ -20,6 +20,7 @@ namespace OFTENCOFTAPI.Models
         public string cardtype { get; set; }
         public string countrycode { get; set; }
         public string IPAddress { get; set; }
+        public string Location { get; set; }
         public string Bank { get; set; }
         public TransactionStatus? TransactionStatus { get; set; }
 

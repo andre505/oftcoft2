@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OFTENCOFTAPI.Models;
+using Remotion.Linq.Parsing.Structure.IntermediateModel;
 
 namespace OFTENCOFTAPI.Controllers
 {
@@ -18,6 +19,37 @@ namespace OFTENCOFTAPI.Controllers
         public ItemsController(OFTENCOFTDBContext context)
         {
             _context = context;
+        }
+
+        [HttpGet("fetchitemname/{initialname}")]
+        public async Task<ActionResult<IEnumerable<Itemcategories>>> GetItemName(string initialname)
+        {
+            //List<Itemcategories> itemcategories = new List<Itemcategories>();
+            var item = await _context.Items.Select(c => new { c.Id, c.Itemname}).FirstOrDefaultAsync();
+            if (item == null)
+            {
+                int i = 0;
+                i++;
+                var nulldata = new
+                {
+                    status = "success",
+                    message = "No Item Categories Found",
+                    itemname = initialname + i.ToString()
+                };
+                return new JsonResult(nulldata);
+            }
+
+            var data = item.Itemname.Split("-");
+            int number = Convert.ToInt32(data[0]);
+            number++;
+            string finalname = initialname + number.ToString();
+            var data2 = new
+            {
+                status = "success",
+                cats = finalname
+            };
+            return new JsonResult(data2);
+
         }
 
         // GET: api/Items
@@ -103,6 +135,136 @@ namespace OFTENCOFTAPI.Controllers
             }
 
             return CreatedAtAction("GetItems", new { id = items.Id }, items);
+        }
+
+        [HttpPost("createitemdraw")]
+        public async Task<ActionResult> CreateItemDraw([FromBody] ItemDraw itemdraw)
+        {
+            List<int> itemids = new List<int>();
+            int newitemid = 1;
+            //if (!(items.Ticketamount.ToString().Contains("."))) { 
+            decimal amount = Math.Round(Convert.ToDecimal(itemdraw.amount), 2);
+
+            DateTime curdate = DateTime.Parse(DateTime.UtcNow.AddHours(1).ToString("yyyy-MM-dd HH:mm:ss"));
+            //normalize drawdate to 7.30PM - next four lines
+            string stringeddatetime = itemdraw.drawdate.ToString();
+            string[] splitdate = stringeddatetime.Split("T");
+            string completeddatetime = splitdate[0] + "T18:30:00.000Z";
+            DateTime drawdatetime = DateTime.Parse(completeddatetime);
+            string newitemname;
+            var draww = new Draws();
+            Items itemm = new Items();
+            var itemcheck = await _context.Items.Where(x => x.Itemname.Contains(itemdraw.itemname)).FirstOrDefaultAsync();
+            if (itemcheck == null)
+            {
+                //create new item in the format "iphone11-1(for item name)"
+                newitemname = itemdraw.itemname.ToLower() + "-" + newitemid.ToString();
+                itemm.Categoryid = itemdraw.catid;
+                itemm.Itemdescription = itemdraw.itemdescription;
+                itemm.Itemname = newitemname;
+                itemm.Ticketamount = amount;
+                itemm.Datecreated = curdate;
+                itemm.Datemodified = curdate;
+            }
+
+            else {
+                // retrieve record that has the highest number attached to it.
+                 var itemcheck2= await _context.Items.Where(x => x.Itemname.Contains(itemdraw.itemname)).ToListAsync();
+                 foreach (var i in itemcheck2)
+                 {
+                        string[] splititems = i.Itemname.Split('-');
+                        itemids.Add(Convert.ToInt32(splititems[1]));
+                 }
+
+                newitemid = itemids.Max() + 1;
+                newitemname = itemdraw.itemname.ToLower() + "-" +newitemid.ToString();
+                itemm.Categoryid = itemdraw.catid;
+                itemm.Itemdescription = itemdraw.itemdescription;
+                itemm.Itemname = newitemname;
+                itemm.Ticketamount = amount;
+                itemm.Datecreated = curdate;
+                itemm.Datemodified = curdate;
+            }
+        
+           
+            _context.Items.Add(itemm);
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException e)
+            {
+                if (ItemsExists(itemm.Id))
+                {
+                    var data = new
+                    {
+                        status = "fail",
+                        message = "An item already exists with the same ID"
+                    };
+                    return new JsonResult(data);
+                }
+                else
+                {
+                    var data = new
+                    {
+                        status = "fail",
+                        message = "An error occured while attempting to save new item",
+                        exception = e.Message
+                    };
+                    return new JsonResult(data);
+                    //throw;
+                }
+            }
+
+            //get newly created item
+            var createditem = await _context.Items.Where(x => x.Itemname == itemm.Itemname).FirstOrDefaultAsync();
+            //save draw
+            draww.DrawType = itemdraw.drawtype;
+            //draww.Drawdate = DateTime.Parse(itemdraw.drawdate);
+            draww.Drawdate = drawdatetime.AddDays(1);
+            draww.Drawstatus = DrawStatus.Live;
+            draww.drawwinners = itemdraw.qty;
+            draww.Itemid = createditem.Id;
+            draww.Datemodified = curdate;
+            draww.Datecreated = curdate;
+
+            //add draw
+            _context.Draws.Add(draww);
+            try
+            {
+
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (ItemsExists(draww.Id))
+                {
+                    var data = new
+                    {
+                        status = "fail",
+                        message = "An item already exists with the same ID"
+                    };
+                    return new JsonResult(data);
+                }
+                else
+                {
+                    var data = new
+                    {
+                        status = "fail",
+                        message = "An error occured while attempting to save new item"
+                    };
+                    return new JsonResult(data);
+                }
+            }
+
+            var data2 = new
+            {
+                status = "Saved! Copy the name shown below into the next field, then click 'Create Giveaway' ",
+                message = "Item Created Successfully",
+                dbitemname = newitemname
+            };
+            return new JsonResult(data2);
+        
         }
 
         // DELETE: api/Items/5

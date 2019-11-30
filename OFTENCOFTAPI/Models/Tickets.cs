@@ -1,9 +1,11 @@
 ﻿using System;
+
 using System.Collections.Generic;
 
 namespace OFTENCOFTAPI.Models
 {
     public partial class Tickets
+
     {
         public int Id { get; set; }
         public int? Drawid { get; set; }
@@ -23,19 +25,22 @@ namespace OFTENCOFTAPI.Models
         public virtual Transaction Transaction { get; set; }
         public ConfirmStatus? ConfirmStatus { get; set; }
     }
+
     public enum ConfirmStatus
     {
         Pending,
         Confirmed
     }
+
     public enum WinStatus
     {
       Won,
-      None
+      Pending
     }
+
     public enum ClaimStatus
     {
-        Won,
-        None
+        Claimed,
+        Unclaimed
     }
 }

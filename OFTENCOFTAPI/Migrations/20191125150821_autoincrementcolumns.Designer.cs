@@ -10,8 +10,8 @@ using OFTENCOFTAPI.Models;
 namespace OFTENCOFTAPI.Migrations
 {
     [DbContext(typeof(OFTENCOFTDBContext))]
-    [Migration("20191111165006_initial")]
-    partial class initial
+    [Migration("20191125150821_autoincrementcolumns")]
+    partial class autoincrementcolumns
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -25,7 +25,8 @@ namespace OFTENCOFTAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("id");
+                        .HasColumnName("id")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
 
                     b.Property<DateTime?>("Datecreated")
                         .HasColumnName("datecreated");
@@ -49,9 +50,6 @@ namespace OFTENCOFTAPI.Migrations
                     b.Property<int>("Itemid")
                         .HasColumnName("itemid");
 
-                    b.Property<int?>("Quantity")
-                        .HasColumnName("quantity");
-
                     b.Property<int>("drawwinners")
                         .HasColumnName("drawwinners");
 
@@ -69,7 +67,8 @@ namespace OFTENCOFTAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("id");
+                        .HasColumnName("id")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
 
                     b.Property<string>("Categorydescription")
                         .HasColumnName("categorydescription")
@@ -94,7 +93,8 @@ namespace OFTENCOFTAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("id");
+                        .HasColumnName("id")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
 
                     b.Property<int>("Categoryid")
                         .HasColumnName("categoryid");
@@ -105,10 +105,7 @@ namespace OFTENCOFTAPI.Migrations
                     b.Property<DateTime?>("Datemodified")
                         .HasColumnName("datemodified");
 
-                    b.Property<string>("Itemdescription")
-                        .IsRequired()
-                        .HasColumnName("itemdescription")
-                        .HasMaxLength(255);
+                    b.Property<string>("Itemdescription");
 
                     b.Property<string>("Itemname")
                         .HasColumnName("itemname")
@@ -129,7 +126,8 @@ namespace OFTENCOFTAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("id");
+                        .HasColumnName("id")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
 
                     b.Property<string>("AccessCode")
                         .HasColumnName("accesscode")
@@ -197,7 +195,8 @@ namespace OFTENCOFTAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("id");
+                        .HasColumnName("id")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
 
                     b.Property<string>("Bank")
                         .HasColumnName("bank")
@@ -212,6 +211,10 @@ namespace OFTENCOFTAPI.Migrations
 
                     b.Property<string>("IPAddress")
                         .HasColumnName("ipaddress")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Location")
+                        .HasColumnName("customerlocation")
                         .HasMaxLength(255);
 
                     b.Property<DateTime?>("Paymentdate")

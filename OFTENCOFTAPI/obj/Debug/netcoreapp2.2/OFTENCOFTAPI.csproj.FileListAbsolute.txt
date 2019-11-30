@@ -30,8 +30,14 @@ H:\OFTENCOFT\OFTENCOFTAPI\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.dll
 H:\OFTENCOFT\OFTENCOFTAPI\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.pdb
 H:\OFTENCOFT\OFTENCOFTAPI\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.csproj.CopyComplete
 H:\OFTENCOFT\OFTENCOFTAPI\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.csprojAssemblyReference.cache
+H:\AWS\OFTENCOFTAPI\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.csprojAssemblyReference.cache
+H:\AWS\OFTENCOFTAPI\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.RazorAssemblyInfo.cache
+H:\AWS\OFTENCOFTAPI\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.RazorAssemblyInfo.cs
+H:\AWS\OFTENCOFTAPI\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.AssemblyInfoInputs.cache
+H:\AWS\OFTENCOFTAPI\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.AssemblyInfo.cs
 H:\AWS\OFTENCOFTAPI\OFTENCOFTAPI\bin\Debug\netcoreapp2.2\appsettings.Development.json
 H:\AWS\OFTENCOFTAPI\OFTENCOFTAPI\bin\Debug\netcoreapp2.2\appsettings.json
+H:\AWS\OFTENCOFTAPI\OFTENCOFTAPI\bin\Debug\netcoreapp2.2\aws-beanstalk-tools-defaults.json
 H:\AWS\OFTENCOFTAPI\OFTENCOFTAPI\bin\Debug\netcoreapp2.2\Properties\launchSettings.json
 H:\AWS\OFTENCOFTAPI\OFTENCOFTAPI\bin\Debug\netcoreapp2.2\OFTENCOFTAPI.deps.json
 H:\AWS\OFTENCOFTAPI\OFTENCOFTAPI\bin\Debug\netcoreapp2.2\OFTENCOFTAPI.runtimeconfig.json
@@ -40,11 +46,6 @@ H:\AWS\OFTENCOFTAPI\OFTENCOFTAPI\bin\Debug\netcoreapp2.2\OFTENCOFTAPI.dll
 H:\AWS\OFTENCOFTAPI\OFTENCOFTAPI\bin\Debug\netcoreapp2.2\OFTENCOFTAPI.pdb
 H:\AWS\OFTENCOFTAPI\OFTENCOFTAPI\bin\Debug\netcoreapp2.2\OFTENCOFTAPI.Views.dll
 H:\AWS\OFTENCOFTAPI\OFTENCOFTAPI\bin\Debug\netcoreapp2.2\OFTENCOFTAPI.Views.pdb
-H:\AWS\OFTENCOFTAPI\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.csprojAssemblyReference.cache
-H:\AWS\OFTENCOFTAPI\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.RazorAssemblyInfo.cache
-H:\AWS\OFTENCOFTAPI\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.RazorAssemblyInfo.cs
-H:\AWS\OFTENCOFTAPI\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.AssemblyInfoInputs.cache
-H:\AWS\OFTENCOFTAPI\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.AssemblyInfo.cs
 H:\AWS\OFTENCOFTAPI\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.TagHelpers.input.cache
 H:\AWS\OFTENCOFTAPI\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.TagHelpers.output.cache
 H:\AWS\OFTENCOFTAPI\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.RazorCoreGenerate.cache
@@ -62,4 +63,3 @@ H:\AWS\OFTENCOFTAPI\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.Views.pdb
 H:\AWS\OFTENCOFTAPI\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.dll
 H:\AWS\OFTENCOFTAPI\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.pdb
 H:\AWS\OFTENCOFTAPI\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.csproj.CopyComplete
-H:\AWS\OFTENCOFTAPI\OFTENCOFTAPI\bin\Debug\netcoreapp2.2\aws-beanstalk-tools-defaults.json

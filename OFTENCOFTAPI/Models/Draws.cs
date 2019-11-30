@@ -17,7 +17,6 @@ namespace OFTENCOFTAPI.Models
         public int drawwinners { get; set; }
 
         public DrawType? DrawType { get; set; }
-        public int? Quantity { get; set; }
         public DateTime? Drawdate { get; set; }
         public DrawStatus? Drawstatus { get; set; }
         public DateTime? Datecreated { get; set; }

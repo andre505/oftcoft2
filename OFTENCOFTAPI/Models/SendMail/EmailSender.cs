@@ -43,7 +43,7 @@ namespace OFTENCOFTAPI.Models.SendMail
             var client = new SendGridClient(apiKey);
             var emailfrom = new EmailAddress("noreply@nationalgiveawaycom", "National Giveaway");
             var emailsubject = subject;
-            var emailto = new EmailAddress("tonidavis01@gmail.com", "Yo");
+            var emailto = new EmailAddress(to, "Example User");
             var plainTextContent = plaintext;
             //var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
             var htmlContent = Html;

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using OFTENCOFTAPI.Models;
@@ -9,9 +10,10 @@ using OFTENCOFTAPI.Models;
 namespace OFTENCOFTAPI.Migrations
 {
     [DbContext(typeof(OFTENCOFTDBContext))]
-    partial class OFTENCOFTDBContextModelSnapshot : ModelSnapshot
+    [Migration("20191120101120_test")]
+    partial class test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -23,8 +25,7 @@ namespace OFTENCOFTAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
+                        .HasColumnName("id");
 
                     b.Property<DateTime?>("Datecreated")
                         .HasColumnName("datecreated");
@@ -65,8 +66,7 @@ namespace OFTENCOFTAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
+                        .HasColumnName("id");
 
                     b.Property<string>("Categorydescription")
                         .HasColumnName("categorydescription")
@@ -91,8 +91,7 @@ namespace OFTENCOFTAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
+                        .HasColumnName("id");
 
                     b.Property<int>("Categoryid")
                         .HasColumnName("categoryid");
@@ -124,8 +123,7 @@ namespace OFTENCOFTAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
+                        .HasColumnName("id");
 
                     b.Property<string>("AccessCode")
                         .HasColumnName("accesscode")
@@ -193,8 +191,7 @@ namespace OFTENCOFTAPI.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
+                        .HasColumnName("id");
 
                     b.Property<string>("Bank")
                         .HasColumnName("bank")

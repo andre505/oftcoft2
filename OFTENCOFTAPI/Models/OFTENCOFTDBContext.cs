@@ -41,7 +41,9 @@ namespace OFTENCOFTAPI.Models
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
-                    .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
+                                    //.HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
+                                    .ValueGeneratedOnAdd().HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
+
 
                 entity.Property(e => e.noofwinners)
                  .HasColumnName("noofwinners");
@@ -77,7 +79,9 @@ namespace OFTENCOFTAPI.Models
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
-                    .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
+                                    //.HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
+                                    .ValueGeneratedOnAdd().HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
+
 
 
                 entity.Property(e => e.Categorydescription)
@@ -99,8 +103,8 @@ namespace OFTENCOFTAPI.Models
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
-                    .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
-                //.ValueGeneratedOnAdd().HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
+                    //.HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
+                .ValueGeneratedOnAdd().HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
 
                 entity.Property(e => e.Categoryid).HasColumnName("categoryid");
 
@@ -128,8 +132,10 @@ namespace OFTENCOFTAPI.Models
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
-                    .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
-                  
+                                    //.HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
+                                    .ValueGeneratedOnAdd().HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
+
+
 
                 entity.Property(e => e.Claimstatus)
                     .HasColumnName("claimstatus").HasColumnType("varchar(50)")
@@ -196,7 +202,9 @@ namespace OFTENCOFTAPI.Models
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
-                    .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
+                                    //.HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
+                                    .ValueGeneratedOnAdd().HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
+
 
                 entity.Property(e => e.Paymentdate).HasColumnName("paymentdate");
 

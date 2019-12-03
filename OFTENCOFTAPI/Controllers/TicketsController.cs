@@ -138,6 +138,7 @@ namespace OFTENCOFTAPI.Controllers
             var ticketdetails = await _context.Tickets.Where(s => s.Ticketreference == ticket.Ticketreference).FirstOrDefaultAsync();
             
             //get minimum id
+            
 
             if (ticketdetails == null)
             {

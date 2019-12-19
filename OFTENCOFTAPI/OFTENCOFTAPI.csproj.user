@@ -12,6 +12,7 @@
     <WebStackScaffolding_DbContextTypeFullName>OFTENCOFTAPI.Models.OFTENCOFTDBContext</WebStackScaffolding_DbContextTypeFullName>
     <NameOfLastUsedPublishProfile>CustomProfile</NameOfLastUsedPublishProfile>
     <ActiveDebugProfile>IIS Express</ActiveDebugProfile>
+    <ShowAllFiles>true</ShowAllFiles>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>

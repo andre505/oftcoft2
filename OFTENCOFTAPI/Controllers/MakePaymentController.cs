@@ -57,7 +57,9 @@ namespace OFTENCOFTAPI.Controllers
             //              .Select(u => u.Ticketamount)
             //              .SingleOrDefault();
 
+            //get item
             var item = await _context.Items.Where(u => u.Itemname == ticketRequest.itemname).FirstOrDefaultAsync();
+            //get draw for item
             var draw = await _context.Draws.Where(u => u.Itemid == item.Id).FirstOrDefaultAsync();
             if (draw.DrawType == DrawType.Paid)
             {
@@ -86,43 +88,47 @@ namespace OFTENCOFTAPI.Controllers
                 {
                     var res = await resp.Content.ReadAsStringAsync();
                     var result = (TopLevel)JsonConvert.DeserializeObject(res, typeof(TopLevel));
-                    paystackresponse.Status = result.Status.ToString();
+                    //paystackresponse.Status = result.Status.ToString();
+                    paystackresponse.Status = "Success";
                     paystackresponse.Message = result.Message;
                     paystackresponse.AuthorizationUrl = result.Data.AuthorizationUrl.ToString();
                     paystackresponse.AccessCode = result.Data.AccessCode;
                     paystackresponse.Reference = result.Data.Reference;
 
                     //saveticket in database
-                    if (paystackresponse.Status == "True")
+                    //if (paystackresponse.Status == "Success")
+                    //{
+                    //var tickets = new Tickets();
+                    //tickets.Drawid = draw.Id;
+                    //tickets.Firstname = ticketRequest.firstname;
+                    //tickets.Lastname = ticketRequest.lastname;
+                    //tickets.Emailaddress = ticketRequest.email;
+                    //tickets.Phonenumber = ticketRequest.phonenumber;
+
+
+                    //Create tickets * quantity (Validate Method actually creates the ticket references)
+                    IList<Tickets> newcustomer = new List<Tickets>();
+                    // add to context
+                    for (int i = 0; i < Convert.ToInt32(ticketRequest.quantity); i++)
                     {
-                        //var tickets = new Tickets();
-                        //tickets.Drawid = draw.Id;
-                        //tickets.Firstname = ticketRequest.firstname;
-                        //tickets.Lastname = ticketRequest.lastname;
-                        //tickets.Emailaddress = ticketRequest.email;
-                        //tickets.Phonenumber = ticketRequest.phonenumber;
-
-                        IList<Tickets> newcustomer = new List<Tickets>();
-                        // add to context
-                        for (int i = 0; i < Convert.ToInt32(ticketRequest.quantity); i++)
+                        Tickets ticket = new Tickets
                         {
-                            Tickets ticket = new Tickets
-                            {
-                                Firstname = ticketRequest.firstname,
-                                Lastname = ticketRequest.lastname,
-                                Emailaddress = ticketRequest.email,
-                                Phonenumber = ticketRequest.phonenumber,
-                                Drawid = draw.Id,
-                                AccessCode = paystackresponse.AccessCode,
-                                PaystackReference = paystackresponse.Reference,
-                                ConfirmStatus = ConfirmStatus.Pending
-                            };
-                            newcustomer.Add(ticket);
+                            Firstname = ticketRequest.firstname,
+                            Lastname = ticketRequest.lastname,
+                            Emailaddress = ticketRequest.email,
+                            Phonenumber = ticketRequest.phonenumber,
+                            Drawid = draw.Id,
+                            AccessCode = paystackresponse.AccessCode,
+                            PaystackReference = paystackresponse.Reference,
+                            ConfirmStatus = ConfirmStatus.Pending,
+                            Datemodified = curdate
                         };
-                        _context.Tickets.AddRange(newcustomer);
+                        newcustomer.Add(ticket);
+                    };
+                    _context.Tickets.AddRange(newcustomer);
 
-                        
-                    }
+                  //}
+                    
                 }     
                 //END PAID
                 await _context.SaveChangesAsync();
@@ -130,10 +136,19 @@ namespace OFTENCOFTAPI.Controllers
             //draw type is free
             else
             {
+                DateTime curdate = DateTime.Parse(DateTime.UtcNow.AddHours(1).ToString("yyyy-MM-dd HH:mm:ss"));
+
                 //var potentialrecord = await _context.Tickets.Where(x => x.Drawid == draw.Id && x.Firstname == ticketRequest.firstname && x.Lastname == ticketRequest.lastname && x.Phonenumber == ticketRequest.phonenumber).FirstOrDefaultAsync();
-                var potentialrecord = await _context.Tickets.Where(x => x.Drawid == draw.Id && (x.Firstname == ticketRequest.firstname || x.Lastname == ticketRequest.lastname || x.Phonenumber == ticketRequest.phonenumber || x.Emailaddress == ticketRequest.email)).FirstOrDefaultAsync();
+                var potentialrecord = await _context.Tickets.Where(x => x.Drawid == draw.Id && (x.Phonenumber == ticketRequest.phonenumber || x.Emailaddress == ticketRequest.email)).FirstOrDefaultAsync();
                 if (potentialrecord == null)  
+
                 {
+                    //generate ticket ref
+                    Random generator = new Random();
+                    String r2, r;
+                    r2 = generator.Next(0, 99).ToString("D2");
+                    r = generator.Next(0, 999999).ToString("D6");
+                    var ticketRef = ticketRequest.firstname.Substring(0, 1).ToUpper() + ticketRequest.lastname.Substring(0, 1).ToUpper() + r2 + DateTime.Now.ToString("ss") + r;
                     Tickets ticket = new Tickets
                     {
                         Firstname = ticketRequest.firstname,
@@ -143,13 +158,16 @@ namespace OFTENCOFTAPI.Controllers
                         Drawid = draw.Id,
                         AccessCode = paystackresponse.AccessCode,
                         PaystackReference = paystackresponse.Reference,
-                        ConfirmStatus = ConfirmStatus.Pending
+                        ConfirmStatus = ConfirmStatus.Confirmed,
+                        Datemodified = curdate,
+                        Ticketreference = ticketRef
                     };
                     _context.Tickets.Add(ticket);
                     await _context.SaveChangesAsync();
                     //
                     paystackresponse.Status = "Success";
                     paystackresponse.Message = "Free ticket successfully procured";
+                    paystackresponse.AccessCode = "Free";
 
 
                 }
@@ -184,7 +202,7 @@ namespace OFTENCOFTAPI.Controllers
             var jsonanswer = (HookResponse)JsonConvert.DeserializeObject(answer, typeof(HookResponse));
             var amt = jsonanswer.Data.Amount.ToString();
             var normalizedamount = amt.Insert(amt.Length - 2, ".");
-
+            DateTime curdate = DateTime.Parse(DateTime.UtcNow.AddHours(1).ToString("yyyy-MM-dd HH:mm:ss"));
             //compare signature  
             //var signature = jsonanswer.Data.Authorization.Signature;
             //byte[] secretkeybytes = Encoding.UTF8.GetBytes(secretkey);
@@ -257,6 +275,7 @@ namespace OFTENCOFTAPI.Controllers
                     e.Ticketreference = ticketRef;
                     e.ConfirmStatus = ConfirmStatus.Confirmed;
                     e.transactionid = tran.Id;
+                    e.Datemodified = curdate;
                     await _tController.PutTickets(e.Id, e);
                 }
                 //Send email to Customers after getting all ticket references
@@ -311,7 +330,7 @@ namespace OFTENCOFTAPI.Controllers
                 EmailSender sender = new EmailSender();
                 await sender.Execute2(ticketdetails2[0].Emailaddress, subject, body, body2);
             }
-            DateTime curdate = DateTime.Parse(DateTime.UtcNow.AddHours(1).ToString("yyyy-MM-dd HH:mm:ss"));
+           // DateTime curdate = DateTime.Parse(DateTime.UtcNow.AddHours(1).ToString("yyyy-MM-dd HH:mm:ss"));
             //DateTime nigerianTime = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(curdate, "W. Central Africa Standard Time");s        
             return paystackchargesuccessresponse;
         }

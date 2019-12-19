@@ -87,7 +87,7 @@ namespace OFTENCOFTAPI.Controllers
             {
 
                 //get generic drawdetails
-                var ticketDetails = await _context.Tickets.Where(s => s.Drawid == winnerRequest.drawid).ToListAsync();
+                             // var ticketDetails = await _context.Tickets.Where(s => s.Drawid == winnerRequest.drawid).ToListAsync();
                 //var did = ticketDetails.Drawid;
                 var draw = await _context.Draws.FindAsync(winnerRequest.drawid);
                 //get status of winners
@@ -106,7 +106,7 @@ namespace OFTENCOFTAPI.Controllers
                 }
                 else
                 {
-                    var winningrecord = ticketDetails[winnerRequest.googrand - 1];
+                    var winningrecord = drawDetails[winnerRequest.googrand - 1];
                     string winner = winningrecord.Ticketreference.ToString();
                     var data = new
                     {
@@ -116,9 +116,6 @@ namespace OFTENCOFTAPI.Controllers
                     };
                     winningrecord.Winstatus = WinStatus.Won;
                     draw.noofwinners += 1;
-                    var updateticketstatus = _tController.PutTickets(winnerRequest.drawid, winningrecord);
-                    var updatedrawstatus = _dController.PutDraws(Convert.ToInt32(winnerRequest.drawid), draw);
-
                     if (draw.noofwinners == draw.drawwinners)
                     {
                         draw.Drawstatus = DrawStatus.Drawn;
@@ -127,6 +124,11 @@ namespace OFTENCOFTAPI.Controllers
                     {
 
                     }
+
+                    await _tController.PutTickets(winningrecord.Id, winningrecord);
+                    await _dController.PutDraws(Convert.ToInt32(winnerRequest.drawid), draw);
+
+                   
                     return new JsonResult(data);
                 }
             }

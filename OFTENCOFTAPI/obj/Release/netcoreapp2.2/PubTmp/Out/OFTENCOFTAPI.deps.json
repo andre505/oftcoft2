@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.2",
-    "signature": "0828274d659c194f3dfcbbfa2454d3a253d3a5ba"
+    "signature": ""
   },
   "compilationOptions": {
     "defines": [
@@ -10,7 +10,7 @@
       "NETCOREAPP",
       "NETCOREAPP2_2"
     ],
-    "languageVersion": "",
+    "languageVersion": "7.3",
     "platform": "",
     "allowUnsafe": false,
     "warningsAsErrors": false,
@@ -24,18 +24,139 @@
     ".NETCoreApp,Version=v2.2": {
       "OFTENCOFTAPI/1.0.0": {
         "dependencies": {
+          "AWSSDK.Core": "3.3.103.62",
+          "AWSSDK.EC2": "3.3.134.9",
+          "Amazon.Lambda.AspNetCoreServer": "2.0.0",
           "Microsoft.AspNetCore.App": "2.2.0",
+          "Microsoft.AspNetCore.Razor.Design": "2.2.0",
           "Microsoft.EntityFrameworkCore.Design": "2.2.4",
+          "Microsoft.EntityFrameworkCore.Tools": "2.2.4",
           "Microsoft.NETCore.App": "2.2.0",
+          "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": "1.9.10",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.2.4",
           "Npgsql": "4.0.7",
-          "Npgsql.EntityFrameworkCore.PostgreSQL": "2.2.4"
+          "Npgsql.EntityFrameworkCore.PostgreSQL": "2.2.4",
+          "Sendgrid": "9.12.0"
         },
         "runtime": {
           "OFTENCOFTAPI.dll": {}
         },
         "compile": {
           "OFTENCOFTAPI.dll": {}
+        }
+      },
+      "Amazon.Lambda.APIGatewayEvents/1.1.1": {
+        "dependencies": {
+          "NETStandard.Library": "2.0.3",
+          "Newtonsoft.Json": "11.0.2",
+          "System.Collections": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.Serialization.Primitives": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.3/Amazon.Lambda.APIGatewayEvents.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.1.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard1.3/Amazon.Lambda.APIGatewayEvents.dll": {}
+        }
+      },
+      "Amazon.Lambda.AspNetCoreServer/2.0.0": {
+        "dependencies": {
+          "Amazon.Lambda.APIGatewayEvents": "1.1.1",
+          "Amazon.Lambda.Core": "1.0.0",
+          "Amazon.Lambda.Logging.AspNetCore": "2.0.0",
+          "Amazon.Lambda.Serialization.Json": "1.1.0",
+          "Microsoft.AspNetCore": "2.2.0",
+          "Microsoft.AspNetCore.Hosting": "2.2.0",
+          "Newtonsoft.Json": "11.0.2"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Amazon.Lambda.AspNetCoreServer.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Amazon.Lambda.AspNetCoreServer.dll": {}
+        }
+      },
+      "Amazon.Lambda.Core/1.0.0": {
+        "dependencies": {
+          "System.Console": "4.3.0",
+          "System.IO": "4.3.0",
+          "System.Runtime": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.3/Amazon.Lambda.Core.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard1.3/Amazon.Lambda.Core.dll": {}
+        }
+      },
+      "Amazon.Lambda.Logging.AspNetCore/2.0.0": {
+        "dependencies": {
+          "Amazon.Lambda.Core": "1.0.0",
+          "Microsoft.Extensions.Configuration.Abstractions": "2.2.0",
+          "Microsoft.Extensions.Logging": "2.2.0",
+          "Microsoft.Extensions.Logging.Abstractions": "2.2.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Amazon.Lambda.Logging.AspNetCore.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Amazon.Lambda.Logging.AspNetCore.dll": {}
+        }
+      },
+      "Amazon.Lambda.Serialization.Json/1.1.0": {
+        "dependencies": {
+          "Amazon.Lambda.Core": "1.0.0",
+          "NETStandard.Library": "2.0.3",
+          "Newtonsoft.Json": "11.0.2",
+          "System.Reflection": "4.3.0",
+          "System.Runtime": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.3/Amazon.Lambda.Serialization.Json.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard1.3/Amazon.Lambda.Serialization.Json.dll": {}
+        }
+      },
+      "AWSSDK.Core/3.3.103.62": {
+        "runtime": {
+          "lib/netstandard2.0/AWSSDK.Core.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.3.103.62"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/AWSSDK.Core.dll": {}
+        }
+      },
+      "AWSSDK.EC2/3.3.134.9": {
+        "dependencies": {
+          "AWSSDK.Core": "3.3.103.62"
+        },
+        "runtime": {
+          "lib/netstandard2.0/AWSSDK.EC2.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.3.134.9"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/AWSSDK.EC2.dll": {}
         }
       },
       "Microsoft.CodeAnalysis.CSharp.Workspaces/2.8.0": {
@@ -137,6 +258,12 @@
           "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Relational.dll": {}
         }
       },
+      "Microsoft.EntityFrameworkCore.Tools/2.2.4": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Design": "2.2.4"
+        }
+      },
+      "Microsoft.VisualStudio.Azure.Containers.Tools.Targets/1.9.10": {},
       "Microsoft.VisualStudio.Web.CodeGeneration/2.2.4": {
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection": "2.2.0",
@@ -327,6 +454,20 @@
         },
         "compile": {
           "lib/netstandard1.0/Remotion.Linq.dll": {}
+        }
+      },
+      "Sendgrid/9.12.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "11.0.2"
+        },
+        "runtime": {
+          "lib/netstandard2.0/SendGrid.dll": {
+            "assemblyVersion": "9.12.0.0",
+            "fileVersion": "9.12.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/SendGrid.dll": {}
         }
       },
       "System.Collections.Immutable/1.5.0": {},
@@ -623,6 +764,7 @@
           "Microsoft.AspNetCore.NodeServices": "2.2.0",
           "Microsoft.AspNetCore.Owin": "2.2.0",
           "Microsoft.AspNetCore.Razor": "2.2.0",
+          "Microsoft.AspNetCore.Razor.Design": "2.2.0",
           "Microsoft.AspNetCore.Razor.Language": "2.2.0",
           "Microsoft.AspNetCore.Razor.Runtime": "2.2.0",
           "Microsoft.AspNetCore.ResponseCaching": "2.2.0",
@@ -657,6 +799,7 @@
           "Microsoft.EntityFrameworkCore.InMemory": "2.2.0",
           "Microsoft.EntityFrameworkCore.Relational": "2.2.4",
           "Microsoft.EntityFrameworkCore.SqlServer": "2.2.0",
+          "Microsoft.EntityFrameworkCore.Tools": "2.2.4",
           "Microsoft.Extensions.Caching.Abstractions": "2.2.0",
           "Microsoft.Extensions.Caching.Memory": "2.2.0",
           "Microsoft.Extensions.Caching.SqlServer": "2.2.0",
@@ -1227,6 +1370,7 @@
           "Microsoft.AspNetCore.Mvc.RazorPages": "2.2.0",
           "Microsoft.AspNetCore.Mvc.TagHelpers": "2.2.0",
           "Microsoft.AspNetCore.Mvc.ViewFeatures": "2.2.0",
+          "Microsoft.AspNetCore.Razor.Design": "2.2.0",
           "Microsoft.Extensions.Caching.Memory": "2.2.0",
           "Microsoft.Extensions.DependencyInjection": "2.2.0"
         },
@@ -1430,6 +1574,9 @@
         "compile": {
           "lib/netstandard2.0/Microsoft.AspNetCore.Razor.dll": {}
         },
+        "compileOnly": true
+      },
+      "Microsoft.AspNetCore.Razor.Design/2.2.0": {
         "compileOnly": true
       },
       "Microsoft.AspNetCore.Razor.Language/2.2.0": {
@@ -3587,6 +3734,55 @@
       "serviceable": false,
       "sha512": ""
     },
+    "Amazon.Lambda.APIGatewayEvents/1.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-AIZgLpU25plqt30bbj1LA585YArRI0NGXkOeZmzsu4DmULMt9OkhL1q+7XTuLRwA4VxS0I5SdnQDzUImH64dCA==",
+      "path": "amazon.lambda.apigatewayevents/1.1.1",
+      "hashPath": "amazon.lambda.apigatewayevents.1.1.1.nupkg.sha512"
+    },
+    "Amazon.Lambda.AspNetCoreServer/2.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8MW4HhVv3ST47Svihxk+Db4rIU+3r4tIkLMZLID3BbsOs860t6/Z6o3HPos5mGI2ilKbTFLn2oHKcdgBsTCMMw==",
+      "path": "amazon.lambda.aspnetcoreserver/2.0.0",
+      "hashPath": "amazon.lambda.aspnetcoreserver.2.0.0.nupkg.sha512"
+    },
+    "Amazon.Lambda.Core/1.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-+pBYGHaOaDAhu2j8BA5MhKLwxZM7lgmTSroGyCzEqWMBx+uc+QtpED2ShCAkKjKeedXH+LvJpQAUkEtW7rfcgQ==",
+      "path": "amazon.lambda.core/1.0.0",
+      "hashPath": "amazon.lambda.core.1.0.0.nupkg.sha512"
+    },
+    "Amazon.Lambda.Logging.AspNetCore/2.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-4uWzuZsVJOSYKg3hjDDVSNKobUS8uf8KrS0VvdTriu6JCXPvDPLaTLRa4orXB8rgDCBW5iin0D54zHiBloWe2w==",
+      "path": "amazon.lambda.logging.aspnetcore/2.0.0",
+      "hashPath": "amazon.lambda.logging.aspnetcore.2.0.0.nupkg.sha512"
+    },
+    "Amazon.Lambda.Serialization.Json/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-xRovd71Kji08OYj3PkHlNMA/RgRdyGj2TLRFt7R5JrzHkrrH8fV8DjdaCDR1SLf8p8LJF6fQjEHdW5vSDOArrw==",
+      "path": "amazon.lambda.serialization.json/1.1.0",
+      "hashPath": "amazon.lambda.serialization.json.1.1.0.nupkg.sha512"
+    },
+    "AWSSDK.Core/3.3.103.62": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-V17y6Of+8COGGYq3wWdYYpr1UCvrv5fNYSu+Ut41XyYzXO+fkaZzgw4xGPgupVvB1pdgl9tQ2rXBmGFLC+7vzA==",
+      "path": "awssdk.core/3.3.103.62",
+      "hashPath": "awssdk.core.3.3.103.62.nupkg.sha512"
+    },
+    "AWSSDK.EC2/3.3.134.9": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-hbmhhFMYLH9ICVxQWSA2OceU5gdgtC24s9LMF6T1GbaGvIs6zJdTORJP+tNdv33P3s3PVex+8LHMuXZp8BuQnA==",
+      "path": "awssdk.ec2/3.3.134.9",
+      "hashPath": "awssdk.ec2.3.3.134.9.nupkg.sha512"
+    },
     "Microsoft.CodeAnalysis.CSharp.Workspaces/2.8.0": {
       "type": "package",
       "serviceable": true,
@@ -3635,6 +3831,20 @@
       "sha512": "sha512-Ga+kJhoSBNYv8C2gQl2sB5bTBkWsLFn92CPjZA5ql/MyxJTWri6lf44/GSYEcOQj0tqF5HhMAaB1HxQMiIPBcQ==",
       "path": "microsoft.entityframeworkcore.relational/2.2.4",
       "hashPath": "microsoft.entityframeworkcore.relational.2.2.4.nupkg.sha512"
+    },
+    "Microsoft.EntityFrameworkCore.Tools/2.2.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-9n1Mv6FrFmlVkkXVkO7U71GG42CfRjlKV0bca++UYjsmmtVVds4PhUjgVrHCh3ZTRI4jqBc5Y7trUvwdwXisPw==",
+      "path": "microsoft.entityframeworkcore.tools/2.2.4",
+      "hashPath": "microsoft.entityframeworkcore.tools.2.2.4.nupkg.sha512"
+    },
+    "Microsoft.VisualStudio.Azure.Containers.Tools.Targets/1.9.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-d5/5CDc4TAjrgO9oyyj+FHUDVumxgrlCMJqDtUX4GyTnr1Q/BP88PhnVunRZ9AQcL2UQkM4EkRNyFelPXunHtw==",
+      "path": "microsoft.visualstudio.azure.containers.tools.targets/1.9.10",
+      "hashPath": "microsoft.visualstudio.azure.containers.tools.targets.1.9.10.nupkg.sha512"
     },
     "Microsoft.VisualStudio.Web.CodeGeneration/2.2.4": {
       "type": "package",
@@ -3719,6 +3929,13 @@
       "sha512": "sha512-fK/76UmpC0FXBlGDFVPLJHQlDLYnGC+XY3eoDgCgbtrhi0vzbXDQ3n/IYHhqSKqXQfGw/u04A1drWs7rFVkRjw==",
       "path": "remotion.linq/2.2.0",
       "hashPath": "remotion.linq.2.2.0.nupkg.sha512"
+    },
+    "Sendgrid/9.12.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-HrH336vKylh6Yy4bqKFNPf0Rk1C7CDd4WX7D2f7D/g0Dy584Wx2Qh7vdM+NgAkHTWQ7bKwl7K9DZ9BiFKbimdA==",
+      "path": "sendgrid/9.12.0",
+      "hashPath": "sendgrid.9.12.0.nupkg.sha512"
     },
     "System.Collections.Immutable/1.5.0": {
       "type": "package",
@@ -4300,6 +4517,13 @@
       "sha512": "sha512-V54PIyDCFl8COnTp9gezNHpUNHk7F9UnerGeZy3UfbnwYvfzbo+ipqQmSgeoESH8e0JvKhRTyQyZquW2EPtCmg==",
       "path": "microsoft.aspnetcore.razor/2.2.0",
       "hashPath": "microsoft.aspnetcore.razor.2.2.0.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.Razor.Design/2.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-VLWK+ZtMMNukY6XjxYHc7mz33vkquoEzQJHm/LCF5REVxIaexLr+UTImljRRJBdUDJluDAQwU+59IX0rFDfURA==",
+      "path": "microsoft.aspnetcore.razor.design/2.2.0",
+      "hashPath": "microsoft.aspnetcore.razor.design.2.2.0.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Razor.Language/2.2.0": {
       "type": "package",

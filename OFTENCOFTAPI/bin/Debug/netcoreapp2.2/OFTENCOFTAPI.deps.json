@@ -26,6 +26,7 @@
         "dependencies": {
           "AWSSDK.Core": "3.3.103.62",
           "AWSSDK.EC2": "3.3.134.9",
+          "Amazon.Lambda.AspNetCoreServer": "2.0.0",
           "Microsoft.AspNetCore.App": "2.2.0",
           "Microsoft.AspNetCore.Razor.Design": "2.2.0",
           "Microsoft.EntityFrameworkCore.Design": "2.2.4",
@@ -42,6 +43,95 @@
         },
         "compile": {
           "OFTENCOFTAPI.dll": {}
+        }
+      },
+      "Amazon.Lambda.APIGatewayEvents/1.1.1": {
+        "dependencies": {
+          "NETStandard.Library": "2.0.3",
+          "Newtonsoft.Json": "11.0.2",
+          "System.Collections": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.Serialization.Primitives": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.3/Amazon.Lambda.APIGatewayEvents.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.1.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard1.3/Amazon.Lambda.APIGatewayEvents.dll": {}
+        }
+      },
+      "Amazon.Lambda.AspNetCoreServer/2.0.0": {
+        "dependencies": {
+          "Amazon.Lambda.APIGatewayEvents": "1.1.1",
+          "Amazon.Lambda.Core": "1.0.0",
+          "Amazon.Lambda.Logging.AspNetCore": "2.0.0",
+          "Amazon.Lambda.Serialization.Json": "1.1.0",
+          "Microsoft.AspNetCore": "2.2.0",
+          "Microsoft.AspNetCore.Hosting": "2.2.0",
+          "Newtonsoft.Json": "11.0.2"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Amazon.Lambda.AspNetCoreServer.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Amazon.Lambda.AspNetCoreServer.dll": {}
+        }
+      },
+      "Amazon.Lambda.Core/1.0.0": {
+        "dependencies": {
+          "System.Console": "4.3.0",
+          "System.IO": "4.3.0",
+          "System.Runtime": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.3/Amazon.Lambda.Core.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard1.3/Amazon.Lambda.Core.dll": {}
+        }
+      },
+      "Amazon.Lambda.Logging.AspNetCore/2.0.0": {
+        "dependencies": {
+          "Amazon.Lambda.Core": "1.0.0",
+          "Microsoft.Extensions.Configuration.Abstractions": "2.2.0",
+          "Microsoft.Extensions.Logging": "2.2.0",
+          "Microsoft.Extensions.Logging.Abstractions": "2.2.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Amazon.Lambda.Logging.AspNetCore.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Amazon.Lambda.Logging.AspNetCore.dll": {}
+        }
+      },
+      "Amazon.Lambda.Serialization.Json/1.1.0": {
+        "dependencies": {
+          "Amazon.Lambda.Core": "1.0.0",
+          "NETStandard.Library": "2.0.3",
+          "Newtonsoft.Json": "11.0.2",
+          "System.Reflection": "4.3.0",
+          "System.Runtime": "4.3.0"
+        },
+        "runtime": {
+          "lib/netstandard1.3/Amazon.Lambda.Serialization.Json.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard1.3/Amazon.Lambda.Serialization.Json.dll": {}
         }
       },
       "AWSSDK.Core/3.3.103.62": {
@@ -3643,6 +3733,41 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "Amazon.Lambda.APIGatewayEvents/1.1.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-AIZgLpU25plqt30bbj1LA585YArRI0NGXkOeZmzsu4DmULMt9OkhL1q+7XTuLRwA4VxS0I5SdnQDzUImH64dCA==",
+      "path": "amazon.lambda.apigatewayevents/1.1.1",
+      "hashPath": "amazon.lambda.apigatewayevents.1.1.1.nupkg.sha512"
+    },
+    "Amazon.Lambda.AspNetCoreServer/2.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8MW4HhVv3ST47Svihxk+Db4rIU+3r4tIkLMZLID3BbsOs860t6/Z6o3HPos5mGI2ilKbTFLn2oHKcdgBsTCMMw==",
+      "path": "amazon.lambda.aspnetcoreserver/2.0.0",
+      "hashPath": "amazon.lambda.aspnetcoreserver.2.0.0.nupkg.sha512"
+    },
+    "Amazon.Lambda.Core/1.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-+pBYGHaOaDAhu2j8BA5MhKLwxZM7lgmTSroGyCzEqWMBx+uc+QtpED2ShCAkKjKeedXH+LvJpQAUkEtW7rfcgQ==",
+      "path": "amazon.lambda.core/1.0.0",
+      "hashPath": "amazon.lambda.core.1.0.0.nupkg.sha512"
+    },
+    "Amazon.Lambda.Logging.AspNetCore/2.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-4uWzuZsVJOSYKg3hjDDVSNKobUS8uf8KrS0VvdTriu6JCXPvDPLaTLRa4orXB8rgDCBW5iin0D54zHiBloWe2w==",
+      "path": "amazon.lambda.logging.aspnetcore/2.0.0",
+      "hashPath": "amazon.lambda.logging.aspnetcore.2.0.0.nupkg.sha512"
+    },
+    "Amazon.Lambda.Serialization.Json/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-xRovd71Kji08OYj3PkHlNMA/RgRdyGj2TLRFt7R5JrzHkrrH8fV8DjdaCDR1SLf8p8LJF6fQjEHdW5vSDOArrw==",
+      "path": "amazon.lambda.serialization.json/1.1.0",
+      "hashPath": "amazon.lambda.serialization.json.1.1.0.nupkg.sha512"
     },
     "AWSSDK.Core/3.3.103.62": {
       "type": "package",

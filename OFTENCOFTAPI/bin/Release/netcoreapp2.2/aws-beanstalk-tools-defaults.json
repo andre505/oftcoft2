@@ -1,18 +1,19 @@
 
 {
     "comment" : "This file is used to help set default values when using the dotnet CLI extension Amazon.ElasticBeanstalk.Tools. For more information run \"dotnet eb --help\" from the project root.",
-    "profile" : "anthony_odu",
-    "region"  : "us-west-2",
+    "profile" : "tonyaws",
+    "region"  : "us-east-2",
     "application" : "OFTENCOFTAPI",
     "environment" : "OFTENCOFTAPI-test",
-    "cname"       : "oftencoftapi-test",
-    "solution-stack" : "64bit Windows Server 2016 v2.3.0 running IIS 10.0",
+    "cname"       : "oftencoftapi-test2",
+    "solution-stack" : "64bit Windows Server 2016 v2.3.1 running IIS 10.0",
     "environment-type" : "SingleInstance",
     "service-role"     : "aws-elasticbeanstalk-service-role",
     "health-check-url" : "/",
     "instance-type"    : "t2.micro",
-    "key-pair"         : "antman",
+    "key-pair"         : "antpair",
     "iis-website"      : "Default Web Site",
     "app-path"         : "/",
-    "enable-xray"      : false
+    "enable-xray"      : false,
+    "instance-profile" : "aws-elasticbeanstalk-ec2-role"
 }

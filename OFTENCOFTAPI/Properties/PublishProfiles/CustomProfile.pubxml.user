@@ -6,6 +6,11 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>C:\Users\Anthony\Documents\oftpub</_PublishTargetUrl>
+    <_PublishTargetUrl>C:\Users\Anthony\Documents\oftpub2</_PublishTargetUrl>
   </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="OFTCON">
+      <Value>User ID=postgres%3bPassword=Salva34%24dor%3bHost=oftcoft.cwxwiwhbl2bw.us-east-2.rds.amazonaws.com%3bPort=5432%3bDatabase=oftdb%3bPooling=true%3b</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
 </Project>

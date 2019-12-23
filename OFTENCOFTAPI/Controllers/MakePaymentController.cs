@@ -121,7 +121,8 @@ namespace OFTENCOFTAPI.Controllers
                             AccessCode = paystackresponse.AccessCode,
                             PaystackReference = paystackresponse.Reference,
                             ConfirmStatus = ConfirmStatus.Pending,
-                            Datemodified = curdate
+                            Datemodified = curdate,
+                            Winstatus = WinStatus.NotWon
                         };
                         newcustomer.Add(ticket);
                     };
@@ -160,7 +161,8 @@ namespace OFTENCOFTAPI.Controllers
                         PaystackReference = paystackresponse.Reference,
                         ConfirmStatus = ConfirmStatus.Confirmed,
                         Datemodified = curdate,
-                        Ticketreference = ticketRef
+                        Ticketreference = ticketRef,
+                        Winstatus = WinStatus.NotWon
                     };
                     _context.Tickets.Add(ticket);
                     await _context.SaveChangesAsync();

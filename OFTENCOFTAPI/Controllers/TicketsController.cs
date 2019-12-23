@@ -135,7 +135,7 @@ namespace OFTENCOFTAPI.Controllers
         [HttpPost("checkticket")]
         public async Task<ActionResult> CheckTicket([FromBody] Tickets ticket)
         {
-            var ticketdetails = await _context.Tickets.Where(s => s.Ticketreference == ticket.Ticketreference).FirstOrDefaultAsync();
+            var ticketdetails = await _context.Tickets.Where(s => s.Ticketreference == ticket.Ticketreference.ToUpper()).FirstOrDefaultAsync();
             
             //get minimum id
             
@@ -145,6 +145,7 @@ namespace OFTENCOFTAPI.Controllers
                 var data = new
                 {
                     status = "success",
+                    winnerdetails = "incorrect",
                     message = "Ticket Reference does not exist. Please confirm your ticket number and try again",
                 };
                 return new JsonResult(data);
@@ -168,17 +169,19 @@ namespace OFTENCOFTAPI.Controllers
                     var data = new
                     {
                         status = "success",
+                        winnerdetails = "incorrect",
                         message = "The draw allocated to this ticket reference has not taken place, please check again on" + sqlFormattedDate + " at 9PM.  #What you believe is what you get",
                     };
                     return new JsonResult(data);
                 }
 
-                else if (ticketdetails.Winstatus == WinStatus.Pending)
+                else if (ticketdetails.Winstatus != WinStatus.Won)
                 {
 
                     var data = new
                     {
                         status = "success",
+                        winnerdetails = "incorrect",
                         message = "The ticket reference isn't a winner on this ocassion",
                     };
                     return new JsonResult(data);
@@ -188,11 +191,12 @@ namespace OFTENCOFTAPI.Controllers
                 else //ticket.winstatus is winstatus.won
                 {
                     //string drawdate = draw.Drawdate.ToString("yyyy-MMMM-dd HH:mm:ss");
-                   if ((ticket.Emailaddress != ticketdetails.Emailaddress) || (ticket.Firstname != ticketdetails.Firstname))
+                   if ((ticket.Emailaddress.ToLower() != ticketdetails.Emailaddress.ToLower()) || (ticket.Firstname.ToUpper() != ticketdetails.Firstname.ToUpper()))
                    {
                         var data = new
                         {
                             status = "success",
+                            winnerdetails = "incomplete",
                             message = "Ticket Reference is a Winner",
                             description = "Giveaway Description: " + itemdesc,
                             datewon = "Date Won: " + sqlFormattedDate,
@@ -205,7 +209,8 @@ namespace OFTENCOFTAPI.Controllers
                         var data = new
                         {
                             status = "success",
-                            message = "Congratulations, Your ticket is the winning ticket for a brand new giveaway with the following details:" + " DrawDate: " + sqlFormattedDate + ". Description: " + itemdesc + ". Please check your email for instructions",
+                            winnerdetails = "correct",
+                            message = "Congratulations! Your ticket is a winning ticket. Here are the details:" + " Draw Date: " + sqlFormattedDate + ". Description: " + itemdesc + ". Please check your email for instructions",
 
                         };
                         //send email to winner

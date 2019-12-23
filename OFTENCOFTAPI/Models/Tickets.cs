@@ -35,7 +35,7 @@ namespace OFTENCOFTAPI.Models
     public enum WinStatus
     {
       Won,
-      Pending
+      NotWon
     }
 
     public enum ClaimStatus

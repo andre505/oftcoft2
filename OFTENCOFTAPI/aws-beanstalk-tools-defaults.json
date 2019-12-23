@@ -14,6 +14,6 @@
     "key-pair"         : "antpair",
     "iis-website"      : "Default Web Site",
     "app-path"         : "/",
-    "enable-xray"      : true,
+    "enable-xray"      : false,
     "instance-profile" : "aws-elasticbeanstalk-ec2-role"
 }

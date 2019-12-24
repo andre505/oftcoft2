@@ -135,6 +135,8 @@ namespace OFTENCOFTAPI.Controllers
         [HttpPost("checkticket")]
         public async Task<ActionResult> CheckTicket([FromBody] Tickets ticket)
         {
+            Logger.LogInfo("Ticket Enquiry:::" + ticket.Emailaddress);
+
             var ticketdetails = await _context.Tickets.Where(s => s.Ticketreference == ticket.Ticketreference.ToUpper()).FirstOrDefaultAsync();
             
             //get minimum id
@@ -210,7 +212,9 @@ namespace OFTENCOFTAPI.Controllers
                         {
                             status = "success",
                             winnerdetails = "correct",
-                            message = "Congratulations! Your ticket is a winning ticket. Here are the details:" + " Draw Date: " + sqlFormattedDate + ". Description: " + itemdesc + ". Please check your email for instructions",
+                            message = "You are a winner",
+                            datewon = sqlFormattedDate,
+                            description = itemdesc
 
                         };
                         //send email to winner

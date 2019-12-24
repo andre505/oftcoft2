@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +18,6 @@ namespace OFTENCOFTAPI.Controllers
     {
         private readonly TicketsController _tController;
         private readonly DrawsController _dController;
-     
         private readonly OFTENCOFTDBContext _context;
 
         public SelectWinnerController(OFTENCOFTDBContext context, TicketsController tcontroller, DrawsController drawsController )
@@ -67,6 +67,7 @@ namespace OFTENCOFTAPI.Controllers
         public async Task<ActionResult> GetWinner([FromBody] SelectWinnerRequest winnerRequest)
         {
             //validate first
+            Logger.LogInfo("Ticket Enquiry:::" + winnerRequest.googrand);
             var drawDetails = await _context.Tickets.Where(s => s.Drawid == winnerRequest.drawid && s.ConfirmStatus == ConfirmStatus.Confirmed && s.Winstatus != WinStatus.Won).ToListAsync();
             int drawdetailscount = drawDetails.Count();
             int minid = 1;

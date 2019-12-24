@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Hosting;
+using System;
 using System.Collections.Concurrent;
 using System.IO;
 using System.Linq;
@@ -6,11 +7,18 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CentralizedBiller.Core
+namespace OFTENCOFTAPI.Models
 {
     public class Logger
     {
-        static Logger() => new Logger(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments), "CBE Logs"), "").Start();
+        private readonly IHostingEnvironment _hostingEnvironment;
+
+        public Logger(IHostingEnvironment hostingEnvironment) {
+            _hostingEnvironment = hostingEnvironment;
+        }
+        static Logger() => new Logger(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments), "NationalGiveaway Logs"), "").Start();
+        //static Logger() => new Logger(Path.Combine(Environment.GetFolderPath(AppDomain.CurrentDomain.BaseDirectory), "NationalGiveaway Logs"), "").Start();
+
         private static Logger Instance { get; set; }
         private static bool _isFirstInstance = true;
         private const string Tag = "Logger";

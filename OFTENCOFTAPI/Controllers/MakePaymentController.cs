@@ -78,6 +78,7 @@ namespace OFTENCOFTAPI.Controllers
 
                 if (!resp.IsSuccessStatusCode)
                 {
+                    Logger.LogInfo(" Customer Enquiry - error saving response:::" + resp.RequestMessage.ToString());
                     paystackresponse.Status = "false";
                     paystackresponse.Message = "A Network Error Occurred";
                     paystackresponse.AuthorizationUrl = "null";

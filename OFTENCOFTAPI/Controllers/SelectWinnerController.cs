@@ -68,7 +68,9 @@ namespace OFTENCOFTAPI.Controllers
         {
             //validate first
             Logger.LogInfo("Ticket Enquiry:::" + winnerRequest.googrand);
+            //var drawDetails = await _context.Tickets.Where(s => s.Drawid == winnerRequest.drawid && s.ConfirmStatus == ConfirmStatus.Confirmed && s.Winstatus != WinStatus.Won).OrderBy(s => Guid.NewGuid()).ToListAsync();
             var drawDetails = await _context.Tickets.Where(s => s.Drawid == winnerRequest.drawid && s.ConfirmStatus == ConfirmStatus.Confirmed && s.Winstatus != WinStatus.Won).ToListAsync();
+
             int drawdetailscount = drawDetails.Count();
             int minid = 1;
             int maxid = drawdetailscount;

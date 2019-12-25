@@ -14,6 +14,8 @@
     <Compile Remove="Migrations\20191125143927_makeidserial.Designer.cs" />
     <Compile Remove="Migrations\20191130174553_ii.cs" />
     <Compile Remove="Migrations\20191130174553_ii.Designer.cs" />
+    <Compile Remove="Migrations\20191225184416_xyz.cs" />
+    <Compile Remove="Migrations\20191225184416_xyz.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

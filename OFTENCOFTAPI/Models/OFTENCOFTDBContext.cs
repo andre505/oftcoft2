@@ -22,6 +22,8 @@ namespace OFTENCOFTAPI.Models
         public virtual DbSet<Items> Items { get; set; }
         public virtual DbSet<Tickets> Tickets { get; set; }
         public virtual DbSet<Transaction> Transaction { get; set; }
+        public virtual DbSet<Transaction> Logs { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -42,7 +44,7 @@ namespace OFTENCOFTAPI.Models
                 entity.Property(e => e.Id)
                     .HasColumnName("id")
                                     //.HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
-                                    .ValueGeneratedOnAdd().HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
+                    .ValueGeneratedOnAdd().HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
 
 
                 entity.Property(e => e.noofwinners)
@@ -64,14 +66,15 @@ namespace OFTENCOFTAPI.Models
                 entity.Property(e => e.Itemid).HasColumnName("itemid");
 
                 entity.Property(e => e.DrawType)
-            .HasColumnName("drawtype").HasColumnType("varchar(50)")
-            .HasMaxLength(50);
+                    .HasColumnName("drawtype").HasColumnType("varchar(50)")
+                    .HasMaxLength(50);
 
                 entity.HasOne(d => d.Item)
                     .WithMany(p => p.Draws)
                     .HasForeignKey(d => d.Itemid)
                     .HasConstraintName("draws_itemid");
             });
+
 
             modelBuilder.Entity<Itemcategories>(entity =>
             {              
@@ -277,6 +280,36 @@ namespace OFTENCOFTAPI.Models
 
                entity.Property(e => e.DateModified).HasColumnName("datemodified");
                 //endnew
+            });
+
+            modelBuilder.Entity<Logs>(entity =>
+            {
+                entity.ToTable("logs");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                //.HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
+                .ValueGeneratedOnAdd().HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
+
+                entity.Property(e => e.Application)
+                    .HasColumnName("application").HasColumnType("varchar");
+
+                entity.Property(e => e.Logged).HasColumnName("logged");
+
+                entity.Property(e => e.Level)
+                    .HasColumnName("level").HasColumnType("varchar");
+
+                entity.Property(e => e.Message)
+                 .HasColumnName("message").HasColumnType("varchar");
+
+                entity.Property(e => e.Logger)
+                 .HasColumnName("logger").HasColumnType("varchar");
+
+                entity.Property(e => e.Callsite)
+                 .HasColumnName("callsite").HasColumnType("varchar");
+
+                entity.Property(e => e.Exception)
+                .HasColumnName("exception").HasColumnType("varchar");  
             });
         }
     }

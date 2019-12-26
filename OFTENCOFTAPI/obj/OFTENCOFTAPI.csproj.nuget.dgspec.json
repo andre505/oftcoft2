@@ -88,10 +88,6 @@
               "target": "Package",
               "version": "[2.2.4, )"
             },
-            "NLog": {
-              "target": "Package",
-              "version": "[4.6.8, )"
-            },
             "NLog.Web.AspNetCore": {
               "target": "Package",
               "version": "[4.9.0, )"

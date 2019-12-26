@@ -13,7 +13,7 @@ namespace OFTENCOFTAPI.Models
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int Id { get; set; }
 		public string Application { get; set; }
-		public DateTime? Logged { get; set; }
+		public string Logged { get; set; }
 		public string Level { get; set; }
 		public string Message { get; set; }
 		public string Logger { get; set; }

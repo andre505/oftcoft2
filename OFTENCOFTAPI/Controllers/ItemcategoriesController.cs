@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using OFTENCOFTAPI.Models;
 
 namespace OFTENCOFTAPI.Controllers
@@ -14,10 +15,13 @@ namespace OFTENCOFTAPI.Controllers
     public class ItemcategoriesController : ControllerBase
     {
         private readonly OFTENCOFTDBContext _context;
+        private readonly ILogger<SelectWinnerController> _logger;
 
-        public ItemcategoriesController(OFTENCOFTDBContext context)
+        public ItemcategoriesController(OFTENCOFTDBContext context, ILogger<SelectWinnerController> logger)
         {
+
             _context = context;
+            _logger = logger;
             //if (_context.Itemcategories.Count() == 0)
             //{
             //    IList<Itemcategories> itemcats = new List<Itemcategories>() {

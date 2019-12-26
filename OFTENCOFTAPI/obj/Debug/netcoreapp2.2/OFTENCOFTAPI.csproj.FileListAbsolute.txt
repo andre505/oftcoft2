@@ -30,6 +30,7 @@ H:\OFTENCOFT\OFTENCOFTAPI\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.dll
 H:\OFTENCOFT\OFTENCOFTAPI\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.pdb
 H:\OFTENCOFT\OFTENCOFTAPI\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.csproj.CopyComplete
 H:\OFTENCOFT\OFTENCOFTAPI\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.csprojAssemblyReference.cache
+H:\AWS\OFTENCOFTAPI\OFTENCOFTAPI\bin\Debug\netcoreapp2.2\NLog.config
 H:\AWS\OFTENCOFTAPI\OFTENCOFTAPI\bin\Debug\netcoreapp2.2\appsettings.Development.json
 H:\AWS\OFTENCOFTAPI\OFTENCOFTAPI\bin\Debug\netcoreapp2.2\appsettings.json
 H:\AWS\OFTENCOFTAPI\OFTENCOFTAPI\bin\Debug\netcoreapp2.2\aws-beanstalk-tools-defaults.json

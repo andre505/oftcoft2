@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using OFTENCOFTAPI.Models;
 using OFTENCOFTAPI.Models.ViewModels;
@@ -19,12 +20,14 @@ namespace OFTENCOFTAPI.Controllers
         private readonly TicketsController _tController;
         private readonly DrawsController _dController;
         private readonly OFTENCOFTDBContext _context;
+        private readonly ILogger<SelectWinnerController> _logger;
 
-        public SelectWinnerController(OFTENCOFTDBContext context, TicketsController tcontroller, DrawsController drawsController )
+        public SelectWinnerController(OFTENCOFTDBContext context, TicketsController tcontroller, DrawsController drawsController, ILogger<SelectWinnerController> logger )
         {
             _context = context;
             _tController = tcontroller;
             _dController = drawsController;
+            _logger = logger;
         }
 
         [HttpGet("getrange/{drawid}")]
@@ -67,7 +70,8 @@ namespace OFTENCOFTAPI.Controllers
         public async Task<ActionResult> GetWinner([FromBody] SelectWinnerRequest winnerRequest)
         {
             //validate first
-            Logger.LogInfo("Ticket Enquiry:::" + winnerRequest.googrand);
+            _logger.LogInformation("Someone just tried to check a ticket");
+            //Logger.LogInfo("Ticket Enquiry:::" + winnerRequest.googrand);
             //var drawDetails = await _context.Tickets.Where(s => s.Drawid == winnerRequest.drawid && s.ConfirmStatus == ConfirmStatus.Confirmed && s.Winstatus != WinStatus.Won).OrderBy(s => Guid.NewGuid()).ToListAsync();
             var drawDetails = await _context.Tickets.Where(s => s.Drawid == winnerRequest.drawid && s.ConfirmStatus == ConfirmStatus.Confirmed && s.Winstatus != WinStatus.Won).ToListAsync();
 

@@ -21,9 +21,9 @@ namespace OFTENCOFTAPI.Models
                                .SetBasePath(Directory.GetCurrentDirectory())
                                .AddJsonFile("appsettings.json");
             var configuration = builder.Build();
-
+            string _twiltoken = Environment.GetEnvironmentVariable("twilsms");
             string _twilsid = configuration["twiliosid"];
-            string _twiltoken = configuration["twilioauthtoken"];
+            //string _twiltoken = configuration["twilioauthtoken"];
             string _twilphone = configuration["twiliophone"];
             _client = new TwilioRestClient(_twilsid, _twiltoken);
         }

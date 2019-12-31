@@ -41,23 +41,36 @@ namespace OFTENCOFTAPI.Controllers
         public async Task<ActionResult<IEnumerable<Itemcategories>>> GetItemcategories()
         {
             //List<Itemcategories> itemcategories = new List<Itemcategories>();
-            var dbcats = await _context.Itemcategories.Select(c => new { c.Id, c.Categoryname }).ToListAsync();
-            if (dbcats == null)
+            try
+            {
+                var dbcats = await _context.Itemcategories.Select(c => new { c.Id, c.Categoryname }).ToListAsync();
+                if (dbcats == null)
+                {
+                    var data = new
+                    {
+                        status = "fail",
+                        Message = "No Item Categories Found"
+                    };
+                    return new JsonResult(data);
+                }
+                var data2 = new
+                {
+                    status = "success",
+                    cats = dbcats
+                };
+                return new JsonResult(data2);
+            }
+            catch (Exception ex)
             {
                 var data = new
                 {
                     status = "fail",
-                    Message = "No Item Categories Found"
+                    message = "An error occurred while trying to access Oftcoft API Item Categories. Please check your connection or try again later",
+                    exception = ex.Message
                 };
+                _logger.LogError(ex, data.message);
                 return new JsonResult(data);
             }
-            var data2 = new
-            {
-                status = "success",
-                cats = dbcats
-            };
-            return new JsonResult(data2);
-
         }
 
         // GET: api/Itemcategories/5
@@ -121,17 +134,36 @@ namespace OFTENCOFTAPI.Controllers
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException ex)
             {
                 if (ItemcategoriesExists(itemcategories.Id))
                 {
-                    return Conflict();
+                    // return Conflict();
+                    var data = new
+                    {
+                        status = "fail",
+                        message = "Category with ID" + itemcategories.Id + " already exists",
+                        exception = ex.Message
+                    };
+
+                    _logger.LogError(ex, data.message, ex.Message);
+                    return new JsonResult(data);
                 }
                 else
                 {
-                    throw;
+                    //throw;
+                    var data = new
+                    {
+                        status = "fail",
+                        message = "Category with ID" + itemcategories.Id + " already exists",
+                        exception = ex.Message
+                    };
+
+                    _logger.LogError(ex, data.message, ex.Message);
+                    return new JsonResult(data);
                 }
             }
+            _logger.LogInformation("New Item" + itemcategories.Categoryname + " created successfully");
 
             return CreatedAtAction("GetItemcategories", new { id = itemcategories.Id }, itemcategories);
         }

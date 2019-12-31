@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using OFTENCOFTAPI.Models;
 using Remotion.Linq.Parsing.Structure.IntermediateModel;
 
@@ -15,10 +16,14 @@ namespace OFTENCOFTAPI.Controllers
     public class ItemsController : ControllerBase
     {
         private readonly OFTENCOFTDBContext _context;
+        private readonly ILogger<ItemsController> _logger;
 
-        public ItemsController(OFTENCOFTDBContext context)
+
+
+        public ItemsController(OFTENCOFTDBContext context, ILogger<ItemsController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         [HttpGet("fetchitemname/{initialname}")]
@@ -122,18 +127,36 @@ namespace OFTENCOFTAPI.Controllers
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException ex)
             {
                 if (ItemsExists(items.Id))
                 {
-                    return Conflict();
+                    //return Conflict();
+                    var data = new
+                    {
+                        status = "fail",
+                        message = "Item with ID" + items.Id+" already exists",
+                        exception = ex.Message
+                    };
+
+                    _logger.LogError(ex, data.message, ex.Message);
+                    return new JsonResult(data);
                 }
                 else
                 {
-                    throw;
+                    //throw;
+                    var data = new
+                    {
+                        status = "fail",
+                        message = "An error occurred",
+                        exception = ex.Message
+                    };
+
+                    _logger.LogError(ex, data.message, ex.Message);
+                    return new JsonResult(data);
                 }
             }
-
+            _logger.LogInformation("New Item" + items.Itemname + " created successfully");
             return CreatedAtAction("GetItems", new { id = items.Id }, items);
         }
 
@@ -192,15 +215,17 @@ namespace OFTENCOFTAPI.Controllers
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateException e)
+            catch (DbUpdateException ex)
             {
                 if (ItemsExists(itemm.Id))
                 {
                     var data = new
                     {
                         status = "fail",
-                        message = "An item already exists with the same ID"
+                        message = "An item already exists with the same ID",
+                        exception = ex.Message
                     };
+                    _logger.LogError(ex, data.message);
                     return new JsonResult(data);
                 }
                 else
@@ -209,12 +234,15 @@ namespace OFTENCOFTAPI.Controllers
                     {
                         status = "fail",
                         message = "An error occured while attempting to save new item",
-                        exception = e.Message
+                        exception = ex.Message
                     };
+                    _logger.LogError(ex, data.message);
                     return new JsonResult(data);
                     //throw;
                 }
             }
+            //if get here, then new item create successfully
+            _logger.LogInformation("New item with item name" + itemm.Itemname +" created successfully");
 
             //get newly created item
             var createditem = await _context.Items.Where(x => x.Itemname == itemm.Itemname).FirstOrDefaultAsync();
@@ -235,15 +263,17 @@ namespace OFTENCOFTAPI.Controllers
 
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException ex)
             {
                 if (ItemsExists(draww.Id))
                 {
                     var data = new
                     {
                         status = "fail",
-                        message = "An item already exists with the same ID"
+                        message = "A draw already exists with the same ID",
+                        exception = ex.Message
                     };
+                    _logger.LogError(ex, data.message, ex.Message);
                     return new JsonResult(data);
                 }
                 else
@@ -251,12 +281,14 @@ namespace OFTENCOFTAPI.Controllers
                     var data = new
                     {
                         status = "fail",
-                        message = "An error occured while attempting to save new item"
+                        message = "An error occured while attempting to save new item",
+                        exception = ex.Message
                     };
+                    _logger.LogError(ex, data.message, ex.Message);
                     return new JsonResult(data);
                 }
             }
-
+            _logger.LogInformation("Draw with draw ID" + draww.Id + "created successfully");
             var data2 = new
             {
                 status = "Saved! Copy the name shown below into the next field, then click 'Create Giveaway' ",

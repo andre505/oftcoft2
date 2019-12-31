@@ -37,7 +37,8 @@
           "NLog.Web.AspNetCore": "4.9.0",
           "Npgsql": "4.0.7",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "2.2.4",
-          "Sendgrid": "9.12.0"
+          "Sendgrid": "9.12.0",
+          "Twilio.AspNet.Core": "5.33.1"
         },
         "runtime": {
           "OFTENCOFTAPI.dll": {}
@@ -689,6 +690,54 @@
       },
       "System.Threading.Tasks.Extensions/4.5.2": {},
       "System.ValueTuple/4.5.0": {},
+      "Twilio/5.33.1": {
+        "dependencies": {
+          "Microsoft.IdentityModel.Tokens": "5.3.0",
+          "Newtonsoft.Json": "11.0.2",
+          "System.Collections.Specialized": "4.3.0",
+          "System.IdentityModel.Tokens.Jwt": "5.3.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Twilio.dll": {
+            "assemblyVersion": "5.33.1.0",
+            "fileVersion": "5.33.1.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Twilio.dll": {}
+        }
+      },
+      "Twilio.AspNet.Common/5.33.1": {
+        "dependencies": {
+          "NETStandard.Library": "2.0.3"
+        },
+        "runtime": {
+          "lib/netstandard1.0/Twilio.AspNet.Common.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard1.0/Twilio.AspNet.Common.dll": {}
+        }
+      },
+      "Twilio.AspNet.Core/5.33.1": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Mvc.Core": "2.2.0",
+          "NETStandard.Library": "2.0.3",
+          "Twilio": "5.33.1",
+          "Twilio.AspNet.Common": "5.33.1"
+        },
+        "runtime": {
+          "lib/netstandard1.6/Twilio.AspNet.Core.dll": {
+            "assemblyVersion": "5.33.1.0",
+            "fileVersion": "5.33.1.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard1.6/Twilio.AspNet.Core.dll": {}
+        }
+      },
       "Microsoft.AspNet.WebApi.Client/5.2.6": {
         "dependencies": {
           "Newtonsoft.Json": "11.0.2",
@@ -4099,6 +4148,27 @@
       "sha512": "sha512-okurQJO6NRE/apDIP23ajJ0hpiNmJ+f0BwOlB/cSqTLQlw5upkf+5+96+iG2Jw40G1fCVCyPz/FhIABUjMR+RQ==",
       "path": "system.valuetuple/4.5.0",
       "hashPath": "system.valuetuple.4.5.0.nupkg.sha512"
+    },
+    "Twilio/5.33.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-PB+PR1KU4q9kF9JrKTe4mPVW/SSsGM7svukooUWpj2Mtb0NU2vFO0pk8Q8T3NGvRW7tFDYrY0mQO5NjGPhPmQQ==",
+      "path": "twilio/5.33.1",
+      "hashPath": "twilio.5.33.1.nupkg.sha512"
+    },
+    "Twilio.AspNet.Common/5.33.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-bhraBhABgftWbffPi8QOr6j+P/KvPW+Vr0Ua+ePhA5Kfa6BdogYv2VMd5HPhLb4+Wb8RUSZft3d057loEocKoA==",
+      "path": "twilio.aspnet.common/5.33.1",
+      "hashPath": "twilio.aspnet.common.5.33.1.nupkg.sha512"
+    },
+    "Twilio.AspNet.Core/5.33.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-0x3cbyVDztM2kI2UywTggqlSz9ep+GKVtLQsuCsu/KHBEgWV5L7NJVb2pSC3MDk1BeGIHDXmjPyOwhrq+jiD1w==",
+      "path": "twilio.aspnet.core/5.33.1",
+      "hashPath": "twilio.aspnet.core.5.33.1.nupkg.sha512"
     },
     "Microsoft.AspNet.WebApi.Client/5.2.6": {
       "type": "package",

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using OFTENCOFTAPI.Models;
 using OFTENCOFTAPI.Models.SendMail;
 
@@ -17,11 +18,13 @@ namespace OFTENCOFTAPI.Controllers
     public class TicketsController : ControllerBase
     {
         private readonly OFTENCOFTDBContext _context;
+        private readonly ILogger<TicketsController> _logger;
 
-        public TicketsController(OFTENCOFTDBContext context)
+
+        public TicketsController(OFTENCOFTDBContext context, ILogger<TicketsController> logger)
         {
             _context = context;
-
+            _logger = logger;
         }
 
         // GET: api/Tickets
@@ -150,8 +153,7 @@ namespace OFTENCOFTAPI.Controllers
                     winnerdetails = "incorrect",
                     message = "Ticket Reference does not exist. Please confirm your ticket number and try again",
                 };
-                return new JsonResult(data);
-               
+                return new JsonResult(data);              
             }
             else
             {
@@ -240,6 +242,20 @@ namespace OFTENCOFTAPI.Controllers
                         EmailSender sender = new EmailSender();
                         await sender.Execute2(ticketdetails.Emailaddress, subject, body, body2);
                         //
+                        //send text message
+                        SendSms sendsms = new SendSms();
+                        string phone = ticketdetails.Phonenumber.Substring(1, 10);
+                        string completephone = "+234" + phone;
+                        string smsbody = "Congratulations" + ticketdetails.Firstname + ", You are a winner of the following giveaway: " + item.Itemdescription + ". Draw Date: " + sqlFormattedDate + ". Please call 08012345678 to claim your prize ";
+                        try
+                        {
+                            await sendsms.SendSmsMessage(completephone, smsbody);
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogError(ex, ex.Message);
+                        }
+                        //end send sms
                         return new JsonResult(data);
                    }                    
                 }

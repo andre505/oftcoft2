@@ -17,6 +17,7 @@ using System.Text;
 using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
 using OFTENCOFTAPI.Models.SendMail;
+using Microsoft.Extensions.Logging;
 
 namespace OFTENCOFTAPI.Controllers
 {
@@ -26,11 +27,14 @@ namespace OFTENCOFTAPI.Controllers
     {
         private readonly OFTENCOFTDBContext _context;
         private readonly TicketsController _tController;
+        private readonly ILogger<MakePaymentController> _logger;
 
-        public MakePaymentController(OFTENCOFTDBContext context, TicketsController tController)
+
+        public MakePaymentController(OFTENCOFTDBContext context, TicketsController tController, ILogger<MakePaymentController> logger)
         {
             _context = context;
             _tController = tController;
+            _logger = logger;
         }
         public IActionResult Index()
         {
@@ -48,6 +52,9 @@ namespace OFTENCOFTAPI.Controllers
             var configuration = builder.Build();
             string secretkey = configuration["paystacksk"];
             string endpoint = configuration["paystackitendpoint"];
+            string twilsid = configuration["twiliosid"];
+            string twiltoken = configuration["twilioauthtoken"];
+            string twilphone = configuration["twiliophone"];
 
             //fetchdraw
 
@@ -79,7 +86,7 @@ namespace OFTENCOFTAPI.Controllers
                 if (!resp.IsSuccessStatusCode)
                 {
                     Logger.LogInfo(" Customer Enquiry - error saving response:::" + resp.RequestMessage.ToString());
-                    paystackresponse.Status = "false";
+                    paystackresponse.Status = "fail";
                     paystackresponse.Message = "A Network Error Occurred";
                     paystackresponse.AuthorizationUrl = "null";
                     paystackresponse.AccessCode = "null";
@@ -90,7 +97,7 @@ namespace OFTENCOFTAPI.Controllers
                     var res = await resp.Content.ReadAsStringAsync();
                     var result = (TopLevel)JsonConvert.DeserializeObject(res, typeof(TopLevel));
                     //paystackresponse.Status = result.Status.ToString();
-                    paystackresponse.Status = "Success";
+                    paystackresponse.Status = "success";
                     paystackresponse.Message = result.Message;
                     paystackresponse.AuthorizationUrl = result.Data.AuthorizationUrl.ToString();
                     paystackresponse.AccessCode = result.Data.AccessCode;
@@ -168,15 +175,63 @@ namespace OFTENCOFTAPI.Controllers
                     _context.Tickets.Add(ticket);
                     await _context.SaveChangesAsync();
                     //
-                    paystackresponse.Status = "Success";
+                    paystackresponse.Status = "success";
                     paystackresponse.Message = "Free ticket successfully procured";
                     paystackresponse.AccessCode = "Free";
 
+                    //send email
+                    string sqlFormattedDate = draw.Drawdate.HasValue
+                 ? draw.Drawdate.Value.ToString("dd-MMMM-yyyy")
+                 : "<not available>";
+                    //List<string> stringofticketids = new List<string>();
+                    StringBuilder ticketrows = new StringBuilder();
+                    //int i = 1;
+                    //send
 
+                    ticketrows.Append("<tr><td>1</td> <td>"+ticketRef+ "</td></tr>");
+                    
+
+                    var subject = "Ticket Request Successful";
+                    //string ticketss = String.Join(",", stringofticketids);
+                    var body = "";
+                    string body2 = @"<!DOCTYPE html>
+                        <html>
+                        <head>
+                        <style>
+                        </style>
+                        </head>
+                        <body>
+                        <img style='display:block;' align='right' src='https://www.dropbox.com/s/0p1flnq0voo7hn9/oftcoftlogosmall.jpg?raw=1' alt = 'felt lucky'></a>" +
+                            "<h1 style = 'font-family: Arial, sans-serif; font-size: 250%; color:#9370DB;'> Congratulations!!!" + ticket.Firstname + "</h1>" +
+                             "<p style = 'font-family: Gill Sans, sans-serif; font-size: 160%; color:#666666;'> You have successfully entered into the National Giveaways Draw. Find draw details and ticket reference(s) below</p>" +
+                             "<p style = 'font-family: Gill Sans, sans-serif; font-size: 160%; color:#666666;'> Draw Date: " + sqlFormattedDate + "</p>" +
+                             "<p style = 'font-family: Gill Sans, sans-serif; font-size: 160%; color:#666666;'> Draw Date: " + item.Itemdescription + "</p>" +
+                             "<p style = 'font-family: Gill Sans, sans-serif; font-size: 160%; color:#666666;'> Ticket Reference(s)</p>" +
+                             "<table style='border:1px solid #d9d9d9;width:50%;font-family:Gill Sans, sans-serif;text-align:left; font-size: 130%; color:#666666;'>" +
+                             "<tr style='background-color:#595959; color:#FFFFFF'><td>S/N</td><td>Ticket Reference</td></tr> " +
+
+                             ticketrows +
+                             //
+                             "</table>" +
+                             "<p></p>" +
+                             "<a href='https://www.nationalgiveaway.com'><img style='display:block; width:100%;height:100%;' src='https://www.dropbox.com/s/medm6f3npfr4gh5/freegift.jpg?raw=1' alt = 'feeling lucky'></a>" +
+                             "</body>" +
+                             "</html>";
+                    EmailSender sender = new EmailSender();
+                    try
+                    {
+                        await sender.Execute2(ticket.Emailaddress, subject, body, body2);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex, ex.Message);
+                    }
+
+                    //end send email
                 }
                 else
                 {
-                    paystackresponse.Status = "Fail";
+                    paystackresponse.Status = "fail";
                     paystackresponse.Message = "Customer has already procured a ticket";
                 }
 
@@ -194,7 +249,7 @@ namespace OFTENCOFTAPI.Controllers
                                    .AddJsonFile("appsettings.json");
             var configuration = builder.Build();
             string secretkey = configuration["paystacksk"];
-
+            SendSms sendsms = new SendSms();
             ChargeSuccessResponse paystackchargesuccessresponse = new ChargeSuccessResponse();
             string answer;
             using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
@@ -282,17 +337,28 @@ namespace OFTENCOFTAPI.Controllers
                     await _tController.PutTickets(e.Id, e);
                 }
                 //Send email to Customers after getting all ticket references
+                    //ticket details
                 var ticketdetails2 = await _context.Tickets.Where(s => s.PaystackReference == paystackchargesuccessresponse.Reference).ToListAsync();
+                    //draw details
 
-                //string[] ticket = new string[ticketdetails.Count];
-                //List<string> TicketReferencesList = new List<string>();
-                //foreach (var e in ticketdetails2)
-                //{
-                //    TicketReferencesList.Add(e.Ticketreference);
-                //}
-                //string[] trs = TicketReferencesList.ToArray();
-                //send email to customer
-                //get params
+                 var drawdetails = await (from p in _context.Draws
+                                          join e in _context.Items
+                                          on p.Itemid equals e.Id
+                                          where p.Id == ticketdetails2[0].Drawid
+                                          select new
+                                          {
+                                              id = p.Id,
+                                              itemid = p.Itemid,
+                                              drawdate = p.Drawdate,
+                                              itemname = e.Itemdescription
+                                          }).FirstOrDefaultAsync();
+                //normalizedate
+                string sqlFormattedDate = drawdetails.drawdate.HasValue
+                  ? drawdetails.drawdate.Value.ToString("dd-MMMM-yyyy")
+                  : "<not available>";
+
+                //string[] ticket = new string[ticketdetails.Count]; //List<string> TicketReferencesList = new List<string>();//foreach (var e in ticketdetails2)//{ //TicketReferencesList.Add(e.Ticketreference);//}//string[] trs = TicketReferencesList.ToArray();//send email to customer//get params
+                
                 List<string> stringofticketids = new List<string>();
                 StringBuilder ticketrows = new StringBuilder();
                 int i=1;
@@ -300,7 +366,7 @@ namespace OFTENCOFTAPI.Controllers
                 foreach (var p in ticketdetails2)
                 {
                     stringofticketids.Add(p.Ticketreference);
-                    ticketrows.Append("<tr><td>"+i++.ToString()+"</td> <td>"+p.Ticketreference +"</td></tr>");
+                    ticketrows.Append("<tr><td style='padding: 0.25rem; text-align: left; border: 1px solid #ccc;'>" + i++.ToString()+ "</td> <td style ='padding: 0.25rem; text-align: left; border: 1px solid #ccc;'>" + p.Ticketreference +"</td></tr>");
                 }
 
                 var subject = "Ticket Request Successful";
@@ -309,17 +375,17 @@ namespace OFTENCOFTAPI.Controllers
                 string body2 = @"<!DOCTYPE html>
                         <html>
                         <head>
-                        <style>
-                        </style>
+                        <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css' integrity='sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy' crossorigin='anonymous'>
                         </head>
-                        <body>
-                        <img style='display:block;' align='right' src='https://www.dropbox.com/s/0p1flnq0voo7hn9/oftcoftlogosmall.jpg?raw=1' alt = 'felt lucky'></a>" +
-                        "<h1 style = 'font-family: Arial, sans-serif; font-size: 250%; color:#9370DB;'> Congratulations!!!</h1>" +
+                        <body style='font: normal medium/1.4 sans-serif;'>
+                        <img style='display:block;width:10%;height:10%;margin-left: auto;margin-right: auto;' src='https://www.dropbox.com/s/0p1flnq0voo7hn9/oftcoftlogosmall.jpg?raw=1' alt = 'felt lucky'></a>" +
+                        "<h1 style = 'font-family: Arial, sans-serif; font-size: 185%; color:#000000;'> Congratulations!!!" + ticketdetails2[0].Firstname + "</h1>" +
                          "<p style = 'font-family: Gill Sans, sans-serif; font-size: 160%; color:#666666;'> You have successfully entered into the National Giveaways Draw. Find draw details and ticket reference(s) below</p>" +
-                         "<p style = 'font-family: Gill Sans, sans-serif; font-size: 160%; color:#666666;'> Draw Date: 11 December 2019</p>" +
+                         "<p style = 'font-family: Gill Sans, sans-serif; font-size: 160%; color:#666666;'> Draw Date: " + sqlFormattedDate +"</p>" +
+                         "<p style = 'font-family: Gill Sans, sans-serif; font-size: 160%; color:#666666;'> Draw Date: " + drawdetails.itemname + "</p>" +
                          "<p style = 'font-family: Gill Sans, sans-serif; font-size: 160%; color:#666666;'> Ticket Reference(s)</p>" +
-                         "<table style='border:1px solid #d9d9d9;width:50%;font-family:Gill Sans, sans-serif;text-align:left; font-size: 130%; color:#666666;'>" +
-                         "<tr style='background-color:#595959; color:#FFFFFF'><td>S/N</td><td>Ticket Reference</td></tr> " +
+                         "<table style='border-collapse: collapse; width: 100%;'>" +
+                         "<tr style='background-color:#595959; color:#FFFFFF'><th style='padding: 0.25rem; text-align: left; border: 1px solid #ccc;'>S/N</th><th style='padding: 0.25rem; text-align: left; border: 1px solid #ccc;'>Ticket Reference</th></tr>" +
                          //"<tr><td>1</td> <td> ABC12344674HH </td> </tr>" +
                          //"<tr><td>2</td> <td> AHDN3J32K2K22 </td> </tr>" +
                          //"<tr><td>3</td><td> AHDN3J32K2K22 </td> </tr>" +
@@ -331,7 +397,27 @@ namespace OFTENCOFTAPI.Controllers
                          "</body>" +
                          "</html>";
                 EmailSender sender = new EmailSender();
-                await sender.Execute2(ticketdetails2[0].Emailaddress, subject, body, body2);
+                try
+                {
+                    await sender.Execute2(ticketdetails2[0].Emailaddress, subject, body, body2);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, ex.Message);
+                }
+                //send text message.
+                string phone = ticketdetails2[0].Phonenumber.Substring(1, 10);
+                string completephone = "+234" + phone;
+                string smsbody = "Hi" + ticketdetails2[0].Firstname + ", you have successfully purchased a ticket for the following item: " + drawdetails.itemname + ". Draw Date: " + drawdetails.drawdate + ". Tickets: " + ticketss;
+                try
+                {
+                    await sendsms.SendSmsMessage(completephone, smsbody);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, ex.Message);
+                }//end send sms
+
             }
            // DateTime curdate = DateTime.Parse(DateTime.UtcNow.AddHours(1).ToString("yyyy-MM-dd HH:mm:ss"));
             //DateTime nigerianTime = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(curdate, "W. Central Africa Standard Time");s        
@@ -343,6 +429,98 @@ namespace OFTENCOFTAPI.Controllers
         //    dynamic body = await req.Content.ReadAsStringAsync();
         //    log.Info(body);
         //}
+
+
+        [HttpGet("ticketdetails/{psref}")]
+        public async Task<ActionResult<IEnumerable<Draws>>> GetTicketDetails(string psref)
+        //public async Task<ActionResult> GetLiveDraws()
+        {
+            //return await _context.Draws.Where(s => s.Drawstatus == "live").ToListAsync()
+            DateTime curdate = DateTime.Parse(DateTime.UtcNow.AddHours(1).ToString("yyyy-MM-dd HH:mm:ss"));
+            //DateTime nigerianTime = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(curdate, "W. Central Africa Standard Time");
+            //return await _context.Draws.Include("Items").Where(s => s.Drawdate < curdate && s.Drawstatus == "live").ToListAsync();
+
+            try
+            {
+                //var ticketts = await (from p in _context.Tickets
+                //                      join e in _context.Items
+                //                      on p.Itemid equals e.Id
+                //                      where p.Drawstatus == DrawStatus.Live && p.Drawdate < curdate
+                //                      select new
+                //                      {
+                //                          id = p.Id,
+                //                          itemid = p.Itemid,
+                //                          drawdate = p.Drawdate,
+                //                          drawstatus = p.Drawstatus,
+                //                          itemname = e.Itemname
+                //                      }).ToListAsync();
+
+                var ticketts = await (from tr in _context.Transaction
+                                      join ti in _context.Tickets on tr.Id equals ti.transactionid
+                                      join dr in _context.Draws on ti.Drawid equals dr.Id
+                                      join it in _context.Items on dr.Itemid equals it.Id
+
+                                      where tr.Pspaymentreference == psref
+
+                                      select new
+                                      {
+                                          id = tr.Id,
+                                          drawdate = dr.Drawdate,
+                                          itemname = it.Itemdescription
+
+                                      }).FirstOrDefaultAsync();
+
+
+
+                if (ticketts == null)
+                {
+                    var data = new
+                    {
+                        status = "fail",
+                        message = "Your payment is processing, you will receive an email with your ticket details once payment has been confirmed"
+                    };
+                    return new JsonResult(data);
+
+                }
+                else
+                {
+                    var ticketdetails2 = await _context.Tickets.Where(s => s.transactionid == ticketts.id).ToListAsync();
+                    List<string> stringoftickets = new List<string>();
+
+                    int i = 1;
+                    //send
+                    foreach (var p in ticketdetails2)
+                    {
+                        stringoftickets.Add(p.Ticketreference);
+                    }
+                    var ticketsstring = string.Join(",", stringoftickets);
+
+                    var data = new
+                    {
+                        status = "success",
+                        tickets = ticketsstring,
+                        itemname = ticketts.itemname,
+                        drawdate = ticketts.drawdate
+                    };
+                    //send 
+
+
+                    return new JsonResult(data);
+                }
+            }
+            catch (Exception ex)
+            {
+                var data = new
+                {
+                    status = "fail",
+                    message = "An error occurred while trying to access Oftcoft API Draws. Please check your connection or try again later",
+                    exception = ex.Message
+                };
+                _logger.LogError(ex, data.message);
+                return new JsonResult(data);
+
+            }
+        }
 
         [HttpPost]
         [Route("verify")]

@@ -122,7 +122,8 @@ namespace OFTENCOFTAPI.Controllers
                     {
                         status = "success",
                         winningTicket = winner,
-                        message = "Winner Found"
+                        message = "Winner Found",
+                        item = item.Itemdescription
                     };
                     winningrecord.Winstatus = WinStatus.Won;
                     draw.noofwinners += 1;
@@ -179,7 +180,7 @@ namespace OFTENCOFTAPI.Controllers
                     SendSms sendsms = new SendSms();
                     string phone = winningrecord.Phonenumber.Substring(1, 10);
                     string completephone = "+234" + phone;
-                    string smsbody = "Congratulations" + winningrecord.Firstname + ", You are a winner of the following giveaway: " + item.Itemdescription + ". Draw Date: " + sqlFormattedDate + ". Please call 08012345678 to claim your prize ";
+                    string smsbody = "Congratulations " + winningrecord.Firstname + ", You are a winner of the following giveaway: " + item.Itemdescription + ". Draw Date: " + sqlFormattedDate + ". Please call 08012345678 to claim your prize ";
                     try
                     {
                         await sendsms.SendSmsMessage(completephone, smsbody);

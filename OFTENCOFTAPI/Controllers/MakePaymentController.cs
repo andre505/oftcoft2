@@ -63,62 +63,113 @@ namespace OFTENCOFTAPI.Controllers
             //              .Where(u => u.Itemname == ticketRequest.itemname)
             //              .Select(u => u.Ticketamount)
             //              .SingleOrDefault();
-
+            DateTime curentdate = DateTime.Parse(DateTime.UtcNow.AddHours(1).ToString("yyyy-MM-dd HH:mm:ss"));
             //get item
             var item = await _context.Items.Where(u => u.Itemname == ticketRequest.itemname).FirstOrDefaultAsync();
             //get draw for item
             var draw = await _context.Draws.Where(u => u.Itemid == item.Id).FirstOrDefaultAsync();
-            if (draw.DrawType == DrawType.Paid)
+            if (draw.Drawdate < curentdate)
             {
-                var totalamount = Convert.ToDecimal(item.Ticketamount) * Convert.ToDecimal(ticketRequest.quantity);
-                //paystack request params
-                payRequest.email = ticketRequest.email;
-                payRequest.amount = totalamount.ToString().Replace(".", "");
-                //payRequest.amount += "00";
+                paystackresponse.Status = "fail";
+                paystackresponse.Message = "Oopsy, you are a tiny bit late to this party. Please ensure to enter earlier for any of our Giveaways. All our giveaways end at 19:30";
+                paystackresponse.AuthorizationUrl = "null";
+                paystackresponse.AccessCode = "null";
+                paystackresponse.Reference = "null";
+            }
+            else
+            {
 
-                DateTime curdate = DateTime.Parse(DateTime.UtcNow.AddHours(1).ToString("yyyy-MM-dd HH:mm:ss"));
-                //DateTime nigerianTime = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(curdate, "W. Central Africa Standard Time");
-
-                HttpClient client = CreateWebRequest();
-                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + secretkey);
-                var resp = await client.PostAsJsonAsync(endpoint, payRequest);
-
-                if (!resp.IsSuccessStatusCode)
+            
+                if (draw.DrawType == DrawType.Paid)
                 {
-                    Logger.LogInfo(" Customer Enquiry - error saving response:::" + resp.RequestMessage.ToString());
-                    paystackresponse.Status = "fail";
-                    paystackresponse.Message = "A Network Error Occurred";
-                    paystackresponse.AuthorizationUrl = "null";
-                    paystackresponse.AccessCode = "null";
-                    paystackresponse.Reference = "null";
+                    var totalamount = Convert.ToDecimal(item.Ticketamount) * Convert.ToDecimal(ticketRequest.quantity);
+                    //paystack request params
+                    payRequest.email = ticketRequest.email;
+                    payRequest.amount = totalamount.ToString().Replace(".", "");
+                    //payRequest.amount += "00";
+
+                    DateTime curdate = DateTime.Parse(DateTime.UtcNow.AddHours(1).ToString("yyyy-MM-dd HH:mm:ss"));
+                    //DateTime nigerianTime = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(curdate, "W. Central Africa Standard Time");
+
+                    HttpClient client = CreateWebRequest();
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + secretkey);
+                    var resp = await client.PostAsJsonAsync(endpoint, payRequest);
+
+                    if (!resp.IsSuccessStatusCode)
+                    {
+                        Logger.LogInfo(" Customer Enquiry - error saving response:::" + resp.RequestMessage.ToString());
+                        paystackresponse.Status = "fail";
+                        paystackresponse.Message = "A Network Error Occurred";
+                        paystackresponse.AuthorizationUrl = "null";
+                        paystackresponse.AccessCode = "null";
+                        paystackresponse.Reference = "null";
+                    }
+                    else
+                    {
+                        var res = await resp.Content.ReadAsStringAsync();
+                        var result = (TopLevel)JsonConvert.DeserializeObject(res, typeof(TopLevel));
+                        //paystackresponse.Status = result.Status.ToString();
+                        paystackresponse.Status = "success";
+                        paystackresponse.Message = result.Message;
+                        paystackresponse.AuthorizationUrl = result.Data.AuthorizationUrl.ToString();
+                        paystackresponse.AccessCode = result.Data.AccessCode;
+                        paystackresponse.Reference = result.Data.Reference;
+
+                        //saveticket in database
+                        //if (paystackresponse.Status == "Success")
+                        //{
+                        //var tickets = new Tickets();
+                        //tickets.Drawid = draw.Id;
+                        //tickets.Firstname = ticketRequest.firstname;
+                        //tickets.Lastname = ticketRequest.lastname;
+                        //tickets.Emailaddress = ticketRequest.email;
+                        //tickets.Phonenumber = ticketRequest.phonenumber;
+
+
+                        //Create tickets * quantity (Validate Method actually creates the ticket references)
+                        IList<Tickets> newcustomer = new List<Tickets>();
+                        // add to context
+                        for (int i = 0; i < Convert.ToInt32(ticketRequest.quantity); i++)
+                        {
+                            Tickets ticket = new Tickets
+                            {
+                                Firstname = ticketRequest.firstname,
+                                Lastname = ticketRequest.lastname,
+                                Emailaddress = ticketRequest.email,
+                                Phonenumber = ticketRequest.phonenumber,
+                                Drawid = draw.Id,
+                                AccessCode = paystackresponse.AccessCode,
+                                PaystackReference = paystackresponse.Reference,
+                                ConfirmStatus = ConfirmStatus.Pending,
+                                Datemodified = curdate,
+                                Winstatus = WinStatus.NotWon
+                            };
+                            newcustomer.Add(ticket);
+                        };
+                        _context.Tickets.AddRange(newcustomer);
+
+                      //}
+                    
+                    }     
+                    //END PAID
+                    await _context.SaveChangesAsync();
                 }
+                //draw type is free
                 else
                 {
-                    var res = await resp.Content.ReadAsStringAsync();
-                    var result = (TopLevel)JsonConvert.DeserializeObject(res, typeof(TopLevel));
-                    //paystackresponse.Status = result.Status.ToString();
-                    paystackresponse.Status = "success";
-                    paystackresponse.Message = result.Message;
-                    paystackresponse.AuthorizationUrl = result.Data.AuthorizationUrl.ToString();
-                    paystackresponse.AccessCode = result.Data.AccessCode;
-                    paystackresponse.Reference = result.Data.Reference;
+                    DateTime curdate = DateTime.Parse(DateTime.UtcNow.AddHours(1).ToString("yyyy-MM-dd HH:mm:ss"));
 
-                    //saveticket in database
-                    //if (paystackresponse.Status == "Success")
-                    //{
-                    //var tickets = new Tickets();
-                    //tickets.Drawid = draw.Id;
-                    //tickets.Firstname = ticketRequest.firstname;
-                    //tickets.Lastname = ticketRequest.lastname;
-                    //tickets.Emailaddress = ticketRequest.email;
-                    //tickets.Phonenumber = ticketRequest.phonenumber;
+                    //var potentialrecord = await _context.Tickets.Where(x => x.Drawid == draw.Id && x.Firstname == ticketRequest.firstname && x.Lastname == ticketRequest.lastname && x.Phonenumber == ticketRequest.phonenumber).FirstOrDefaultAsync();
+                    var potentialrecord = await _context.Tickets.Where(x => x.Drawid == draw.Id && (x.Phonenumber == ticketRequest.phonenumber || x.Emailaddress == ticketRequest.email)).FirstOrDefaultAsync();
+                    if (potentialrecord == null)  
 
-
-                    //Create tickets * quantity (Validate Method actually creates the ticket references)
-                    IList<Tickets> newcustomer = new List<Tickets>();
-                    // add to context
-                    for (int i = 0; i < Convert.ToInt32(ticketRequest.quantity); i++)
                     {
+                        //generate ticket ref
+                        Random generator = new Random();
+                        String r2, r;
+                        r2 = generator.Next(0, 99).ToString("D2");
+                        r = generator.Next(0, 999999).ToString("D6");
+                        var ticketRef = ticketRequest.firstname.Substring(0, 1).ToUpper() + ticketRequest.lastname.Substring(0, 1).ToUpper() + r2 + DateTime.Now.ToString("ss") + r;
                         Tickets ticket = new Tickets
                         {
                             Firstname = ticketRequest.firstname,
@@ -128,113 +179,75 @@ namespace OFTENCOFTAPI.Controllers
                             Drawid = draw.Id,
                             AccessCode = paystackresponse.AccessCode,
                             PaystackReference = paystackresponse.Reference,
-                            ConfirmStatus = ConfirmStatus.Pending,
+                            ConfirmStatus = ConfirmStatus.Confirmed,
                             Datemodified = curdate,
+                            Ticketreference = ticketRef,
                             Winstatus = WinStatus.NotWon
                         };
-                        newcustomer.Add(ticket);
-                    };
-                    _context.Tickets.AddRange(newcustomer);
+                        _context.Tickets.Add(ticket);
+                        await _context.SaveChangesAsync();
+                        //
+                        paystackresponse.Status = "success";
+                        paystackresponse.Message = "Free ticket successfully procured";
+                        paystackresponse.AccessCode = "Free";
 
-                  //}
-                    
-                }     
-                //END PAID
-                await _context.SaveChangesAsync();
-            }
-            //draw type is free
-            else
-            {
-                DateTime curdate = DateTime.Parse(DateTime.UtcNow.AddHours(1).ToString("yyyy-MM-dd HH:mm:ss"));
+                        //send email
+                        string sqlFormattedDate = draw.Drawdate.HasValue
+                     ? draw.Drawdate.Value.ToString("dd-MMMM-yyyy")
+                     : "<not available>";
+                        //List<string> stringofticketids = new List<string>();
+                        StringBuilder ticketrows = new StringBuilder();
+                        //int i = 1;
+                        //send
 
-                //var potentialrecord = await _context.Tickets.Where(x => x.Drawid == draw.Id && x.Firstname == ticketRequest.firstname && x.Lastname == ticketRequest.lastname && x.Phonenumber == ticketRequest.phonenumber).FirstOrDefaultAsync();
-                var potentialrecord = await _context.Tickets.Where(x => x.Drawid == draw.Id && (x.Phonenumber == ticketRequest.phonenumber || x.Emailaddress == ticketRequest.email)).FirstOrDefaultAsync();
-                if (potentialrecord == null)  
-
-                {
-                    //generate ticket ref
-                    Random generator = new Random();
-                    String r2, r;
-                    r2 = generator.Next(0, 99).ToString("D2");
-                    r = generator.Next(0, 999999).ToString("D6");
-                    var ticketRef = ticketRequest.firstname.Substring(0, 1).ToUpper() + ticketRequest.lastname.Substring(0, 1).ToUpper() + r2 + DateTime.Now.ToString("ss") + r;
-                    Tickets ticket = new Tickets
-                    {
-                        Firstname = ticketRequest.firstname,
-                        Lastname = ticketRequest.lastname,
-                        Emailaddress = ticketRequest.email,
-                        Phonenumber = ticketRequest.phonenumber,
-                        Drawid = draw.Id,
-                        AccessCode = paystackresponse.AccessCode,
-                        PaystackReference = paystackresponse.Reference,
-                        ConfirmStatus = ConfirmStatus.Confirmed,
-                        Datemodified = curdate,
-                        Ticketreference = ticketRef,
-                        Winstatus = WinStatus.NotWon
-                    };
-                    _context.Tickets.Add(ticket);
-                    await _context.SaveChangesAsync();
-                    //
-                    paystackresponse.Status = "success";
-                    paystackresponse.Message = "Free ticket successfully procured";
-                    paystackresponse.AccessCode = "Free";
-
-                    //send email
-                    string sqlFormattedDate = draw.Drawdate.HasValue
-                 ? draw.Drawdate.Value.ToString("dd-MMMM-yyyy")
-                 : "<not available>";
-                    //List<string> stringofticketids = new List<string>();
-                    StringBuilder ticketrows = new StringBuilder();
-                    //int i = 1;
-                    //send
-
-                    ticketrows.Append("<tr><td>1</td> <td>"+ticketRef+ "</td></tr>");
+                        ticketrows.Append("<tr><td>1</td> <td>"+ticketRef+ "</td></tr>");
                     
 
-                    var subject = "Ticket Request Successful";
-                    //string ticketss = String.Join(",", stringofticketids);
-                    var body = "";
-                    string body2 = @"<!DOCTYPE html>
-                        <html>
-                        <head>
-                        <style>
-                        </style>
-                        </head>
-                        <body>
-                        <img style='display:block;' align='right' src='https://www.dropbox.com/s/0p1flnq0voo7hn9/oftcoftlogosmall.jpg?raw=1' alt = 'felt lucky'></a>" +
-                            "<h1 style = 'font-family: Arial, sans-serif; font-size: 250%; color:#9370DB;'> Congratulations!!!" + ticket.Firstname + "</h1>" +
-                             "<p style = 'font-family: Gill Sans, sans-serif; font-size: 160%; color:#666666;'> You have successfully entered into the National Giveaways Draw. Find draw details and ticket reference(s) below</p>" +
-                             "<p style = 'font-family: Gill Sans, sans-serif; font-size: 160%; color:#666666;'> Draw Date: " + sqlFormattedDate + "</p>" +
-                             "<p style = 'font-family: Gill Sans, sans-serif; font-size: 160%; color:#666666;'> Draw Date: " + item.Itemdescription + "</p>" +
-                             "<p style = 'font-family: Gill Sans, sans-serif; font-size: 160%; color:#666666;'> Ticket Reference(s)</p>" +
-                             "<table style='border:1px solid #d9d9d9;width:50%;font-family:Gill Sans, sans-serif;text-align:left; font-size: 130%; color:#666666;'>" +
-                             "<tr style='background-color:#595959; color:#FFFFFF'><td>S/N</td><td>Ticket Reference</td></tr> " +
+                        var subject = "Ticket Request Successful";
+                        //string ticketss = String.Join(",", stringofticketids);
+                        var body = "";
+                        string body2 = @"<!DOCTYPE html>
+                            <html>
+                            <head>
+                            <style>
+                            </style>
+                            </head>
+                            <body>
+                            <img style='display:block;' align='right' src='https://www.dropbox.com/s/0p1flnq0voo7hn9/oftcoftlogosmall.jpg?raw=1' alt = 'felt lucky'></a>" +
+                                "<h1 style = 'font-family: Arial, sans-serif; font-size: 250%; color:#9370DB;'> Congratulations!!!" + ticket.Firstname + "</h1>" +
+                                 "<p style = 'font-family: Gill Sans, sans-serif; font-size: 160%; color:#666666;'> You have successfully entered into the National Giveaways Draw. Find draw details and ticket reference(s) below</p>" +
+                                 "<p style = 'font-family: Gill Sans, sans-serif; font-size: 160%; color:#666666;'> Draw Date: " + sqlFormattedDate + "</p>" +
+                                 "<p style = 'font-family: Gill Sans, sans-serif; font-size: 160%; color:#666666;'> Draw Date: " + item.Itemdescription + "</p>" +
+                                 "<p style = 'font-family: Gill Sans, sans-serif; font-size: 160%; color:#666666;'> Ticket Reference(s)</p>" +
+                                 "<table style='border:1px solid #d9d9d9;width:50%;font-family:Gill Sans, sans-serif;text-align:left; font-size: 130%; color:#666666;'>" +
+                                 "<tr style='background-color:#595959; color:#FFFFFF'><td>S/N</td><td>Ticket Reference</td></tr> " +
 
-                             ticketrows +
-                             //
-                             "</table>" +
-                             "<p></p>" +
-                             "<a href='https://www.nationalgiveaway.com'><img style='display:block; width:100%;height:100%;' src='https://www.dropbox.com/s/medm6f3npfr4gh5/freegift.jpg?raw=1' alt = 'feeling lucky'></a>" +
-                             "</body>" +
-                             "</html>";
-                    EmailSender sender = new EmailSender();
-                    try
-                    {
-                        await sender.Execute2(ticket.Emailaddress, subject, body, body2);
+                                 ticketrows +
+                                 //
+                                 "</table>" +
+                                 "<p></p>" +
+                                 "<a href='https://www.nationalgiveaway.com'><img style='display:block; width:100%;height:100%;' src='https://www.dropbox.com/s/medm6f3npfr4gh5/freegift.jpg?raw=1' alt = 'feeling lucky'></a>" +
+                                 "</body>" +
+                                 "</html>";
+                        EmailSender sender = new EmailSender();
+                        try
+                        {
+                            await sender.Execute2(ticket.Emailaddress, subject, body, body2);
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogError(ex, ex.Message);
+                        }
+
+                        //end send email
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        _logger.LogError(ex, ex.Message);
+                        paystackresponse.Status = "fail";
+                        paystackresponse.Message = "You have already entered this giveaway";
                     }
 
-                    //end send email
                 }
-                else
-                {
-                    paystackresponse.Status = "fail";
-                    paystackresponse.Message = "Customer has already procured a ticket";
-                }
-
             }
             //string JSONresult = JsonConvert.SerializeObject(paystackresponse);               
 
@@ -408,7 +421,7 @@ namespace OFTENCOFTAPI.Controllers
                 //send text message.
                 string phone = ticketdetails2[0].Phonenumber.Substring(1, 10);
                 string completephone = "+234" + phone;
-                string smsbody = "Hi" + ticketdetails2[0].Firstname + ", you have successfully purchased a ticket for the following item: " + drawdetails.itemname + ". Draw Date: " + drawdetails.drawdate + ". Tickets: " + ticketss;
+                string smsbody = "Hi " + ticketdetails2[0].Firstname + ", you have successfully purchased a ticket for the following item: " + drawdetails.itemname + ". Draw Date: " + drawdetails.drawdate + ". Tickets: " + ticketss;
                 try
                 {
                     await sendsms.SendSmsMessage(completephone, smsbody);

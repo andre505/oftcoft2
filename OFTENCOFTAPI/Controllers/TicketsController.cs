@@ -246,7 +246,7 @@ namespace OFTENCOFTAPI.Controllers
                         SendSms sendsms = new SendSms();
                         string phone = ticketdetails.Phonenumber.Substring(1, 10);
                         string completephone = "+234" + phone;
-                        string smsbody = "Congratulations" + ticketdetails.Firstname + ", You are a winner of the following giveaway: " + item.Itemdescription + ". Draw Date: " + sqlFormattedDate + ". Please call 08012345678 to claim your prize ";
+                        string smsbody = "Congratulations " + ticketdetails.Firstname + ", You are a winner of the following giveaway: " + item.Itemdescription + ". Draw Date: " + sqlFormattedDate + ". Please call 08012345678 to claim your prize ";
                         try
                         {
                             await sendsms.SendSmsMessage(completephone, smsbody);

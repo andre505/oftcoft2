@@ -1,24 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "H:\\AWS\\OFTENCOFTAPI\\OFTENCOFTAPI\\OFTENCOFTAPI.csproj": {}
+    "E:\\AWS\\OFTENCOFTAPI\\OFTENCOFTAPI\\OFTENCOFTAPI.csproj": {}
   },
   "projects": {
-    "H:\\AWS\\OFTENCOFTAPI\\OFTENCOFTAPI\\OFTENCOFTAPI.csproj": {
+    "E:\\AWS\\OFTENCOFTAPI\\OFTENCOFTAPI\\OFTENCOFTAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "H:\\AWS\\OFTENCOFTAPI\\OFTENCOFTAPI\\OFTENCOFTAPI.csproj",
+        "projectUniqueName": "E:\\AWS\\OFTENCOFTAPI\\OFTENCOFTAPI\\OFTENCOFTAPI.csproj",
         "projectName": "OFTENCOFTAPI",
-        "projectPath": "H:\\AWS\\OFTENCOFTAPI\\OFTENCOFTAPI\\OFTENCOFTAPI.csproj",
-        "packagesPath": "C:\\Users\\Anthony\\.nuget\\packages\\",
-        "outputPath": "H:\\AWS\\OFTENCOFTAPI\\OFTENCOFTAPI\\obj\\",
+        "projectPath": "E:\\AWS\\OFTENCOFTAPI\\OFTENCOFTAPI\\OFTENCOFTAPI.csproj",
+        "packagesPath": "C:\\Users\\Paelyt Solution\\.nuget\\packages\\",
+        "outputPath": "E:\\AWS\\OFTENCOFTAPI\\OFTENCOFTAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Anthony\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Paelyt Solution\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp2.2"
@@ -119,7 +121,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100-preview2-014569\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

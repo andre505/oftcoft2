@@ -249,7 +249,7 @@ namespace OFTENCOFTAPI.Controllers
             //save draw
             draww.DrawType = itemdraw.drawtype;
             //draww.Drawdate = DateTime.Parse(itemdraw.drawdate);
-            draww.Drawdate = drawdatetime.AddDays(1);
+            draww.Drawdate = drawdatetime.AddHours(1);
             draww.Drawstatus = DrawStatus.Live;
             draww.drawwinners = itemdraw.qty;
             draww.Itemid = createditem.Id;

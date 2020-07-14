@@ -29,14 +29,15 @@
           "Amazon.Lambda.AspNetCoreServer": "2.0.0",
           "Microsoft.AspNetCore.App": "2.2.0",
           "Microsoft.AspNetCore.Razor.Design": "2.2.0",
+          "Microsoft.EntityFrameworkCore": "2.2.4",
           "Microsoft.EntityFrameworkCore.Design": "2.2.4",
+          "Microsoft.EntityFrameworkCore.SqlServer": "2.2.4",
           "Microsoft.EntityFrameworkCore.Tools": "2.2.4",
           "Microsoft.NETCore.App": "2.2.0",
           "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": "1.9.10",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.2.4",
+          "NLog.Web": "4.9.2",
           "NLog.Web.AspNetCore": "4.9.0",
-          "Npgsql": "4.0.7",
-          "Npgsql.EntityFrameworkCore.PostgreSQL": "2.2.4",
           "Sendgrid": "9.12.0",
           "Twilio.AspNet.Core": "5.33.1"
         },
@@ -260,6 +261,21 @@
           "lib/netstandard2.0/Microsoft.EntityFrameworkCore.Relational.dll": {}
         }
       },
+      "Microsoft.EntityFrameworkCore.SqlServer/2.2.4": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore.Relational": "2.2.4",
+          "System.Data.SqlClient": "4.6.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.EntityFrameworkCore.SqlServer.dll": {
+            "assemblyVersion": "2.2.4.0",
+            "fileVersion": "2.2.4.19081"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.EntityFrameworkCore.SqlServer.dll": {}
+        }
+      },
       "Microsoft.EntityFrameworkCore.Tools/2.2.4": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Design": "2.2.4"
@@ -412,6 +428,17 @@
           "lib/netstandard2.0/NLog.Extensions.Logging.dll": {}
         }
       },
+      "NLog.Web/4.9.2": {
+        "runtime": {
+          "lib/net35/NLog.Web.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.9.2.1619"
+          }
+        },
+        "compile": {
+          "lib/net35/NLog.Web.dll": {}
+        }
+      },
       "NLog.Web.AspNetCore/4.9.0": {
         "dependencies": {
           "Microsoft.AspNetCore.Hosting.Abstractions": "2.2.0",
@@ -427,40 +454,6 @@
         },
         "compile": {
           "lib/netstandard2.0/NLog.Web.AspNetCore.dll": {}
-        }
-      },
-      "Npgsql/4.0.7": {
-        "dependencies": {
-          "System.Memory": "4.5.3",
-          "System.Runtime.CompilerServices.Unsafe": "4.5.2",
-          "System.Threading.Tasks.Extensions": "4.5.2",
-          "System.ValueTuple": "4.5.0"
-        },
-        "runtime": {
-          "lib/netstandard2.0/Npgsql.dll": {
-            "assemblyVersion": "4.0.7.0",
-            "fileVersion": "4.0.7.0"
-          }
-        },
-        "compile": {
-          "lib/netstandard2.0/Npgsql.dll": {}
-        }
-      },
-      "Npgsql.EntityFrameworkCore.PostgreSQL/2.2.4": {
-        "dependencies": {
-          "Microsoft.EntityFrameworkCore": "2.2.4",
-          "Microsoft.EntityFrameworkCore.Abstractions": "2.2.4",
-          "Microsoft.EntityFrameworkCore.Relational": "2.2.4",
-          "Npgsql": "4.0.7"
-        },
-        "runtime": {
-          "lib/netstandard2.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll": {
-            "assemblyVersion": "2.2.4.0",
-            "fileVersion": "2.2.4.0"
-          }
-        },
-        "compile": {
-          "lib/netstandard2.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll": {}
         }
       },
       "NuGet.Frameworks/4.7.0": {
@@ -676,20 +669,6 @@
           "System.Runtime": "4.3.0"
         }
       },
-      "System.Memory/4.5.3": {},
-      "System.Runtime.CompilerServices.Unsafe/4.5.2": {
-        "runtime": {
-          "lib/netcoreapp2.0/System.Runtime.CompilerServices.Unsafe.dll": {
-            "assemblyVersion": "4.0.4.1",
-            "fileVersion": "4.6.26919.2"
-          }
-        },
-        "compile": {
-          "ref/netstandard2.0/System.Runtime.CompilerServices.Unsafe.dll": {}
-        }
-      },
-      "System.Threading.Tasks.Extensions/4.5.2": {},
-      "System.ValueTuple/4.5.0": {},
       "Twilio/5.33.1": {
         "dependencies": {
           "Microsoft.IdentityModel.Tokens": "5.3.0",
@@ -891,7 +870,7 @@
           "Microsoft.EntityFrameworkCore.Design": "2.2.4",
           "Microsoft.EntityFrameworkCore.InMemory": "2.2.0",
           "Microsoft.EntityFrameworkCore.Relational": "2.2.4",
-          "Microsoft.EntityFrameworkCore.SqlServer": "2.2.0",
+          "Microsoft.EntityFrameworkCore.SqlServer": "2.2.4",
           "Microsoft.EntityFrameworkCore.Tools": "2.2.4",
           "Microsoft.Extensions.Caching.Abstractions": "2.2.0",
           "Microsoft.Extensions.Caching.Memory": "2.2.0",
@@ -1510,7 +1489,7 @@
           "Microsoft.Extensions.FileProviders.Abstractions": "2.2.0",
           "Microsoft.Extensions.Logging.Abstractions": "2.2.0",
           "System.Diagnostics.DiagnosticSource": "4.5.0",
-          "System.Threading.Tasks.Extensions": "4.5.2"
+          "System.Threading.Tasks.Extensions": "4.5.1"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.AspNetCore.Mvc.Core.dll": {}
@@ -1794,9 +1773,9 @@
           "Microsoft.Extensions.Options": "2.2.0",
           "System.Buffers": "4.5.0",
           "System.IO.Pipelines": "4.5.2",
-          "System.Memory": "4.5.3",
+          "System.Memory": "4.5.1",
           "System.Numerics.Vectors": "4.5.0",
-          "System.Runtime.CompilerServices.Unsafe": "4.5.2",
+          "System.Runtime.CompilerServices.Unsafe": "4.5.1",
           "System.Security.Principal.Windows": "4.5.0"
         },
         "compile": {
@@ -1826,11 +1805,11 @@
           "Microsoft.Extensions.Logging.Abstractions": "2.2.0",
           "Microsoft.Extensions.Options": "2.2.0",
           "Microsoft.Net.Http.Headers": "2.2.0",
-          "System.Memory": "4.5.3",
+          "System.Memory": "4.5.1",
           "System.Numerics.Vectors": "4.5.0",
-          "System.Runtime.CompilerServices.Unsafe": "4.5.2",
+          "System.Runtime.CompilerServices.Unsafe": "4.5.1",
           "System.Security.Cryptography.Cng": "4.5.0",
-          "System.Threading.Tasks.Extensions": "4.5.2"
+          "System.Threading.Tasks.Extensions": "4.5.1"
         },
         "compile": {
           "lib/netcoreapp2.1/Microsoft.AspNetCore.Server.Kestrel.Core.dll": {}
@@ -2024,7 +2003,7 @@
           "System.Threading.Tasks": "4.3.0",
           "System.Threading.Tasks.Parallel": "4.3.0",
           "System.Threading.Thread": "4.3.0",
-          "System.ValueTuple": "4.5.0",
+          "System.ValueTuple": "4.3.0",
           "System.Xml.ReaderWriter": "4.3.0",
           "System.Xml.XDocument": "4.3.0",
           "System.Xml.XPath.XDocument": "4.3.0",
@@ -2080,16 +2059,6 @@
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.EntityFrameworkCore.InMemory.dll": {}
-        },
-        "compileOnly": true
-      },
-      "Microsoft.EntityFrameworkCore.SqlServer/2.2.0": {
-        "dependencies": {
-          "Microsoft.EntityFrameworkCore.Relational": "2.2.4",
-          "System.Data.SqlClient": "4.6.0"
-        },
-        "compile": {
-          "lib/netstandard2.0/Microsoft.EntityFrameworkCore.SqlServer.dll": {}
         },
         "compileOnly": true
       },
@@ -2513,8 +2482,8 @@
       },
       "Microsoft.Extensions.Primitives/2.2.0": {
         "dependencies": {
-          "System.Memory": "4.5.3",
-          "System.Runtime.CompilerServices.Unsafe": "4.5.2"
+          "System.Memory": "4.5.1",
+          "System.Runtime.CompilerServices.Unsafe": "4.5.1"
         },
         "compile": {
           "lib/netstandard2.0/Microsoft.Extensions.Primitives.dll": {}
@@ -3223,6 +3192,9 @@
         },
         "compileOnly": true
       },
+      "System.Memory/4.5.1": {
+        "compileOnly": true
+      },
       "System.Net.Http/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.2.0",
@@ -3390,6 +3362,12 @@
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.2.0",
           "Microsoft.NETCore.Targets": "2.0.0"
+        },
+        "compileOnly": true
+      },
+      "System.Runtime.CompilerServices.Unsafe/4.5.1": {
+        "compile": {
+          "ref/netstandard2.0/System.Runtime.CompilerServices.Unsafe.dll": {}
         },
         "compileOnly": true
       },
@@ -3652,7 +3630,7 @@
       "System.Text.Encoding.CodePages/4.5.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.2.0",
-          "System.Runtime.CompilerServices.Unsafe": "4.5.2"
+          "System.Runtime.CompilerServices.Unsafe": "4.5.1"
         },
         "compileOnly": true
       },
@@ -3698,6 +3676,9 @@
         },
         "compileOnly": true
       },
+      "System.Threading.Tasks.Extensions/4.5.1": {
+        "compileOnly": true
+      },
       "System.Threading.Tasks.Parallel/4.3.0": {
         "dependencies": {
           "System.Collections.Concurrent": "4.3.0",
@@ -3713,6 +3694,14 @@
       },
       "System.Threading.Thread/4.3.0": {
         "dependencies": {
+          "System.Runtime": "4.3.0"
+        },
+        "compileOnly": true
+      },
+      "System.ValueTuple/4.3.0": {
+        "dependencies": {
+          "System.Collections": "4.3.0",
+          "System.Resources.ResourceManager": "4.3.0",
           "System.Runtime": "4.3.0"
         },
         "compileOnly": true
@@ -3733,7 +3722,7 @@
           "System.Text.Encoding.Extensions": "4.3.0",
           "System.Text.RegularExpressions": "4.3.0",
           "System.Threading.Tasks": "4.3.0",
-          "System.Threading.Tasks.Extensions": "4.5.2"
+          "System.Threading.Tasks.Extensions": "4.5.1"
         },
         "compileOnly": true
       },
@@ -3925,6 +3914,13 @@
       "path": "microsoft.entityframeworkcore.relational/2.2.4",
       "hashPath": "microsoft.entityframeworkcore.relational.2.2.4.nupkg.sha512"
     },
+    "Microsoft.EntityFrameworkCore.SqlServer/2.2.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-e0rW3jJXunnwUCout+lQicDoyviO53qsuawZa/HZsfRoEF/bWGlGTJxUN0MPZVQkEd5Gx8ypdDSRbGHtrQp/SA==",
+      "path": "microsoft.entityframeworkcore.sqlserver/2.2.4",
+      "hashPath": "microsoft.entityframeworkcore.sqlserver.2.2.4.nupkg.sha512"
+    },
     "Microsoft.EntityFrameworkCore.Tools/2.2.4": {
       "type": "package",
       "serviceable": true,
@@ -4009,26 +4005,19 @@
       "path": "nlog.extensions.logging/1.6.0",
       "hashPath": "nlog.extensions.logging.1.6.0.nupkg.sha512"
     },
+    "NLog.Web/4.9.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zRzXT4HIz8PMlemDBduWybdq+6odcpzLzOCgGWwtB5Pz9IwNafUGFnRUv5dtbuyjys7QevzESA/iD8N8b+Ia0w==",
+      "path": "nlog.web/4.9.2",
+      "hashPath": "nlog.web.4.9.2.nupkg.sha512"
+    },
     "NLog.Web.AspNetCore/4.9.0": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-lEA+6Xm/DbU+Z6qVbJP1fgP4MvE0amlwXlJj3MyarcassZ/yuIAQIJsiLoJ/NMDFu1Jfh139L8F4mQpB/r5q/g==",
       "path": "nlog.web.aspnetcore/4.9.0",
       "hashPath": "nlog.web.aspnetcore.4.9.0.nupkg.sha512"
-    },
-    "Npgsql/4.0.7": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-MtKdc1CjuS0BnHti51Skw5A1cbk0JmUxgRIepqq8zkgZ3kYpBOQJcrTGH+305I7kqQBtGs9Y/kpJjv/GBExulw==",
-      "path": "npgsql/4.0.7",
-      "hashPath": "npgsql.4.0.7.nupkg.sha512"
-    },
-    "Npgsql.EntityFrameworkCore.PostgreSQL/2.2.4": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-5UriY41Ef+4JoHFl6fH568JmrPHPQPpWBgoEJOAeYWQYQXaT2d5e/mCznzns6jKziZJIEPwd+E42QI3HmJT9WQ==",
-      "path": "npgsql.entityframeworkcore.postgresql/2.2.4",
-      "hashPath": "npgsql.entityframeworkcore.postgresql.2.2.4.nupkg.sha512"
     },
     "NuGet.Frameworks/4.7.0": {
       "type": "package",
@@ -4120,34 +4109,6 @@
       "sha512": "sha512-Yn/WfYe9RoRfmSLvUt2JerP0BTGGykCZkQPgojaxgzF2N0oPo+/AhB8TXOpdCcNlrG3VRtsamtK2uzsp3cqRVw==",
       "path": "system.linq.queryable/4.0.1",
       "hashPath": "system.linq.queryable.4.0.1.nupkg.sha512"
-    },
-    "System.Memory/4.5.3": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-3oDzvc/zzetpTKWMShs1AADwZjQ/36HnsufHRPcOjyRAAMLDlu2iD33MBI2opxnezcVUtXyqDXXjoFMOU9c7SA==",
-      "path": "system.memory/4.5.3",
-      "hashPath": "system.memory.4.5.3.nupkg.sha512"
-    },
-    "System.Runtime.CompilerServices.Unsafe/4.5.2": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-wprSFgext8cwqymChhrBLu62LMg/1u92bU+VOwyfBimSPVFXtsNqEWC92Pf9ofzJFlk4IHmJA75EDJn1b2goAQ==",
-      "path": "system.runtime.compilerservices.unsafe/4.5.2",
-      "hashPath": "system.runtime.compilerservices.unsafe.4.5.2.nupkg.sha512"
-    },
-    "System.Threading.Tasks.Extensions/4.5.2": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-BG/TNxDFv0svAzx8OiMXDlsHfGw623BZ8tCXw4YLhDFDvDhNUEV58jKYMGRnkbJNm7c3JNNJDiN7JBMzxRBR2w==",
-      "path": "system.threading.tasks.extensions/4.5.2",
-      "hashPath": "system.threading.tasks.extensions.4.5.2.nupkg.sha512"
-    },
-    "System.ValueTuple/4.5.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-okurQJO6NRE/apDIP23ajJ0hpiNmJ+f0BwOlB/cSqTLQlw5upkf+5+96+iG2Jw40G1fCVCyPz/FhIABUjMR+RQ==",
-      "path": "system.valuetuple/4.5.0",
-      "hashPath": "system.valuetuple.4.5.0.nupkg.sha512"
     },
     "Twilio/5.33.1": {
       "type": "package",
@@ -4890,13 +4851,6 @@
       "sha512": "sha512-WxvRXUwCGdY1Ze8GfZteWadsxrxpFRfZN8WJ1jcXZKp5eYo5WwmiBq5e3xIZR8cHxznqlqczJ3NpXjqyYpNK9w==",
       "path": "microsoft.entityframeworkcore.inmemory/2.2.0",
       "hashPath": "microsoft.entityframeworkcore.inmemory.2.2.0.nupkg.sha512"
-    },
-    "Microsoft.EntityFrameworkCore.SqlServer/2.2.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-rCGBF6Hab9633Dh2xtiAcJnDxf2CjaBrGyoagoCoYHH5Ftbdw5zX/e9ABgif5ngzh7DsrBcgxK/3gHBZ2n+TGA==",
-      "path": "microsoft.entityframeworkcore.sqlserver/2.2.0",
-      "hashPath": "microsoft.entityframeworkcore.sqlserver.2.2.0.nupkg.sha512"
     },
     "Microsoft.Extensions.Caching.Abstractions/2.2.0": {
       "type": "package",
@@ -5682,6 +5636,13 @@
       "path": "system.linq.expressions/4.3.0",
       "hashPath": "system.linq.expressions.4.3.0.nupkg.sha512"
     },
+    "System.Memory/4.5.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-sDJYJpGtTgx+23Ayu5euxG5mAXWdkDb4+b0rD0Cab0M1oQS9H0HXGPriKcqpXuiJDTV7fTp/d+fMDJmnr6sNvA==",
+      "path": "system.memory/4.5.1",
+      "hashPath": "system.memory.4.5.1.nupkg.sha512"
+    },
     "System.Net.Http/4.3.0": {
       "type": "package",
       "serviceable": true,
@@ -5793,6 +5754,13 @@
       "sha512": "sha512-JufQi0vPQ0xGnAczR13AUFglDyVYt4Kqnz1AZaiKZ5+GICq0/1MH/mO/eAJHt/mHW1zjKBJd7kV26SrxddAhiw==",
       "path": "system.runtime/4.3.0",
       "hashPath": "system.runtime.4.3.0.nupkg.sha512"
+    },
+    "System.Runtime.CompilerServices.Unsafe/4.5.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Zh8t8oqolRaFa9vmOZfdQm/qKejdqz0J9kr7o2Fu0vPeoH3BL1EOXipKWwkWtLT1JPzjByrF19fGuFlNbmPpiw==",
+      "path": "system.runtime.compilerservices.unsafe/4.5.1",
+      "hashPath": "system.runtime.compilerservices.unsafe.4.5.1.nupkg.sha512"
     },
     "System.Runtime.Extensions/4.3.0": {
       "type": "package",
@@ -5997,6 +5965,13 @@
       "path": "system.threading.tasks/4.3.0",
       "hashPath": "system.threading.tasks.4.3.0.nupkg.sha512"
     },
+    "System.Threading.Tasks.Extensions/4.5.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-WSKUTtLhPR8gllzIWO2x6l4lmAIfbyMAiTlyXAis4QBDonXK4b4S6F8zGARX4/P8wH3DH+sLdhamCiHn+fTU1A==",
+      "path": "system.threading.tasks.extensions/4.5.1",
+      "hashPath": "system.threading.tasks.extensions.4.5.1.nupkg.sha512"
+    },
     "System.Threading.Tasks.Parallel/4.3.0": {
       "type": "package",
       "serviceable": true,
@@ -6010,6 +5985,13 @@
       "sha512": "sha512-OHmbT+Zz065NKII/ZHcH9XO1dEuLGI1L2k7uYss+9C1jLxTC9kTZZuzUOyXHayRk+dft9CiDf3I/QZ0t8JKyBQ==",
       "path": "system.threading.thread/4.3.0",
       "hashPath": "system.threading.thread.4.3.0.nupkg.sha512"
+    },
+    "System.ValueTuple/4.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-cNLEvBX3d6MMQRZe3SMFNukVbitDAEpVZO17qa0/2FHxZ7Y7PpFRpr6m2615XYM/tYYYf0B+WyHNujqIw8Luwg==",
+      "path": "system.valuetuple/4.3.0",
+      "hashPath": "system.valuetuple.4.3.0.nupkg.sha512"
     },
     "System.Xml.ReaderWriter/4.3.0": {
       "type": "package",

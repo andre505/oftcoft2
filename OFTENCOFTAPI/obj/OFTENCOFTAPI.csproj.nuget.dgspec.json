@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\AWS\\OFTENCOFTAPI\\OFTENCOFTAPI\\OFTENCOFTAPI.csproj": {}
+    "C:\\Users\\Paelyt Solution\\source\\repos\\oftcoft2\\OFTENCOFTAPI\\OFTENCOFTAPI.csproj": {}
   },
   "projects": {
-    "E:\\AWS\\OFTENCOFTAPI\\OFTENCOFTAPI\\OFTENCOFTAPI.csproj": {
+    "C:\\Users\\Paelyt Solution\\source\\repos\\oftcoft2\\OFTENCOFTAPI\\OFTENCOFTAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\AWS\\OFTENCOFTAPI\\OFTENCOFTAPI\\OFTENCOFTAPI.csproj",
+        "projectUniqueName": "C:\\Users\\Paelyt Solution\\source\\repos\\oftcoft2\\OFTENCOFTAPI\\OFTENCOFTAPI.csproj",
         "projectName": "OFTENCOFTAPI",
-        "projectPath": "E:\\AWS\\OFTENCOFTAPI\\OFTENCOFTAPI\\OFTENCOFTAPI.csproj",
+        "projectPath": "C:\\Users\\Paelyt Solution\\source\\repos\\oftcoft2\\OFTENCOFTAPI\\OFTENCOFTAPI.csproj",
         "packagesPath": "C:\\Users\\Paelyt Solution\\.nuget\\packages\\",
-        "outputPath": "E:\\AWS\\OFTENCOFTAPI\\OFTENCOFTAPI\\obj\\",
+        "outputPath": "C:\\Users\\Paelyt Solution\\source\\repos\\oftcoft2\\OFTENCOFTAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
@@ -66,7 +66,15 @@
               "target": "Package",
               "version": "[2.2.0, )"
             },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[2.2.4, )"
+            },
             "Microsoft.EntityFrameworkCore.Design": {
+              "target": "Package",
+              "version": "[2.2.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[2.2.4, )"
             },
@@ -90,17 +98,13 @@
               "target": "Package",
               "version": "[2.2.4, )"
             },
+            "NLog.Web": {
+              "target": "Package",
+              "version": "[4.9.2, )"
+            },
             "NLog.Web.AspNetCore": {
               "target": "Package",
               "version": "[4.9.0, )"
-            },
-            "Npgsql": {
-              "target": "Package",
-              "version": "[4.0.7, )"
-            },
-            "Npgsql.EntityFrameworkCore.PostgreSQL": {
-              "target": "Package",
-              "version": "[2.2.4, )"
             },
             "Sendgrid": {
               "target": "Package",

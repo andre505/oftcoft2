@@ -7,10 +7,6 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
     <_PublishTargetUrl>C:\Users\Anthony\Documents\oftpub2</_PublishTargetUrl>
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA76nXlfV1EkKebwA8DSTaNwAAAAACAAAAAAAQZgAAAAEAACAAAACTq77LIqkYDbHHYd/tfdJEJSxz4eDqrKstINmyR/WKEAAAAAAOgAAAAAIAACAAAAAKUP9C8ykdiwKfGZ3E4UHsweQCbhO0odxX/ar6apKgDiAAAADXDSP6SLS9fHzxVv4jqemqK5pcVe00uer0Hy+YClRMIUAAAADUYwGuBROPYNhhDTqiah0FtifoRXP6fjYbCTPBJZZXl9skf83SiwviJQ0tlMVOjLZtE92jx4pgBzB9sNbgKk39</EncryptedPassword>
   </PropertyGroup>
-  <ItemGroup>
-    <DestinationConnectionStrings Include="OFTCON">
-      <Value>User ID=postgres%3bPassword=Salva34%24dor%3bHost=oftcoft.cwxwiwhbl2bw.us-east-2.rds.amazonaws.com%3bPort=5432%3bDatabase=oftdb%3bPooling=true%3b</Value>
-    </DestinationConnectionStrings>
-  </ItemGroup>
 </Project>

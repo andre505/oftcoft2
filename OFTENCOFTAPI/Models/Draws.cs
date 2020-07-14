@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OFTENCOFTAPI.Models
 {
@@ -10,6 +12,8 @@ namespace OFTENCOFTAPI.Models
             Tickets = new HashSet<Tickets>();
         }
 
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int Itemid { get; set; }
         public int noofwinners { get; set; }

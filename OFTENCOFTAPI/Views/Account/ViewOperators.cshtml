@@ -1,0 +1,144 @@
+﻿
+@model IEnumerable<OFTENCOFTAPI.Models.User.ApplicationUser>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>ViewOperators</h1>
+
+@*<p>
+        <a asp-action="Create">Create New</a>
+    </p>*@
+
+<div class="content-wrapper">
+    <section class="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Users</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>S/No</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Email Address)</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{int index = 1;}
+                                @foreach (var item in Model)
+                                 {
+                                    <tr>
+                                        <td>
+                                            @index
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.FirstName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.LastName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Email)
+                                        </td>
+                                        <td style="white-space:nowrap;flex-direction:row";>
+                                            @*<a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |*@
+                                            <button style="width:35%;display:inline-flex;" type="button" class="btn btn-block btn-outline-info btn-xs" asp-action="Details" asp-route-id="@item.Id">Info</button> <button style="margin-top:-0.6%; width:60%;display: inline-block;" type="button" class="btn btn-block btn-outline-danger btn-xs" asp-action="Delete" asp-route-id="@item.Id">Delete</button>
+                                        </td>
+                                    </tr>
+                                   index++;
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>S/No</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Email Address)</th>
+                                    <th>Action</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!-- /.row -->
+    </section>
+</div>
+
+@* --------------------------------------- *@
+
+<script src="~/theme/plugins/jquery/jquery.min.js"></script>
+
+<script src="~/theme/plugins/moment/moment.min.js"></script>
+
+<script src="~/theme/plugins/daterangepicker/daterangepicker.js"></script>
+
+<!-- DataTables -->
+<!-- Bootstrap 4 -->
+
+<script src="~/theme/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- DataTables -->
+<script src="~/theme/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="~/theme/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/theme/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="~/theme/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+
+<!-- Download Feature -->
+<script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
+
+<script>
+
+    var $jq = jQuery.noConflict();
+
+
+    $jq(document).ready(function () {
+
+        //hide loader
+        //$jq("#spinnerp").hide();
+        //$jq("#spinneri").hide();
+
+        //show mandates count
+        //$jq("#mandatescount").show();
+
+        //Date range picker
+        //$jq('#reservation').daterangepicker();
+
+        //data table
+        //$jq('#example2').DataTable({
+        //"paging": true,
+        //"lengthChange": false,
+        //"searching": false,
+        //"ordering": true,
+        //"info": true,
+        //"autoWidth": false,
+        //"responsive": true,
+        //});
+
+
+         $jq("#example1").DataTable({
+          "responsive": true,
+          "autoWidth": false,
+         });
+
+    });
+
+</script>

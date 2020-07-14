@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OFTENCOFTAPI.Models
 {
@@ -9,7 +11,8 @@ namespace OFTENCOFTAPI.Models
         {
             Items = new HashSet<Items>();
         }
-
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public string Categoryname { get; set; }
         public string Categorydescription { get; set; }

@@ -42,7 +42,7 @@ namespace OFTENCOFTAPI.Controllers
         }
 
         [HttpPost("initialize")]
-        public async Task<ActionResult> PostItems([FromBody] TicketRequest ticketRequest)
+        public async Task<ActionResult> InitializeTransaction([FromBody] TicketRequest ticketRequest)
         {
             PayStackResponse paystackresponse = new PayStackResponse();
             PayRequest payRequest = new PayRequest();
@@ -253,7 +253,9 @@ namespace OFTENCOFTAPI.Controllers
 
             return new JsonResult(paystackresponse);
         }
+        
 
+        //Paystack calls this
         [HttpPost("validate")]
         public async Task<ActionResult<ChargeSuccessResponse>> HandleCallback()
         {
@@ -336,6 +338,7 @@ namespace OFTENCOFTAPI.Controllers
                 String r2;
                 String r;
 
+
                 var tran = await _context.Transaction.Where(s => s.Pspaymentreference == paystackchargesuccessresponse.Reference).FirstOrDefaultAsync();
                 foreach (var e in ticketdetails)
                 {
@@ -352,6 +355,7 @@ namespace OFTENCOFTAPI.Controllers
                 //Send email to Customers after getting all ticket references
                     //ticket details
                 var ticketdetails2 = await _context.Tickets.Where(s => s.PaystackReference == paystackchargesuccessresponse.Reference).ToListAsync();
+
                     //draw details
 
                  var drawdetails = await (from p in _context.Draws

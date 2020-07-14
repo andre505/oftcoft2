@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:56392",
+      "applicationUrl": "http://localhost:56392/Account/Login",
       "sslPort": 44332
     }
   },
@@ -11,6 +11,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
+      "launchUrl": "Account/Login",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -18,6 +19,7 @@
     "OFTENCOFTAPI": {
       "commandName": "Project",
       "launchBrowser": true,
+      "launchUrl": "Account/Login",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

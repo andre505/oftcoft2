@@ -18,8 +18,5 @@ namespace OFTENCOFTAPI.Models.ViewModels
         public string phonenumber { get; set; }
         public string itemname { get; set; }
         public string quantity { get; set; }
-
-
-
     }
 }

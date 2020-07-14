@@ -1,12 +1,16 @@
 ﻿using System;
 
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OFTENCOFTAPI.Models
 {
     public partial class Tickets
 
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int? Drawid { get; set; }
         public string Firstname { get; set; }

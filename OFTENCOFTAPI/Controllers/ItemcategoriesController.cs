@@ -15,9 +15,9 @@ namespace OFTENCOFTAPI.Controllers
     public class ItemcategoriesController : ControllerBase
     {
         private readonly OFTENCOFTDBContext _context;
-        private readonly ILogger<SelectWinnerController> _logger;
+        private readonly ILogger _logger;
 
-        public ItemcategoriesController(OFTENCOFTDBContext context, ILogger<SelectWinnerController> logger)
+        public ItemcategoriesController(OFTENCOFTDBContext context, ILogger<ItemcategoriesController> logger)
         {
 
             _context = context;
@@ -68,7 +68,7 @@ namespace OFTENCOFTAPI.Controllers
                     message = "An error occurred while trying to access Oftcoft API Item Categories. Please check your connection or try again later",
                     exception = ex.Message
                 };
-                _logger.LogError(ex, data.message);
+                _logger.LogError("" +ex, data.message);
                 return new JsonResult(data);
             }
         }

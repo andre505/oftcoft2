@@ -2,8 +2,8 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using OFTENCOFTAPI.Models;
 
 namespace OFTENCOFTAPI.Migrations
@@ -15,207 +15,222 @@ namespace OFTENCOFTAPI.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
-                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ClaimType");
+
+                    b.Property<string>("ClaimValue");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ClaimType");
+
+                    b.Property<string>("ClaimValue");
+
+                    b.Property<string>("UserId")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider");
+
+                    b.Property<string>("ProviderKey");
+
+                    b.Property<string>("ProviderDisplayName");
+
+                    b.Property<string>("UserId")
+                        .IsRequired();
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId");
+
+                    b.Property<string>("RoleId");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId");
+
+                    b.Property<string>("LoginProvider");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Value");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens");
+                });
 
             modelBuilder.Entity("OFTENCOFTAPI.Models.Draws", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime?>("Datecreated")
-                        .HasColumnName("datecreated");
+                    b.Property<DateTime?>("Datecreated");
 
-                    b.Property<DateTime?>("Datemodified")
-                        .HasColumnName("datemodified");
+                    b.Property<DateTime?>("Datemodified");
 
-                    b.Property<string>("DrawType")
-                        .HasColumnName("drawtype")
-                        .HasColumnType("varchar(50)")
-                        .HasMaxLength(50);
+                    b.Property<int?>("DrawType");
 
-                    b.Property<DateTime?>("Drawdate")
-                        .HasColumnName("drawdate");
+                    b.Property<DateTime?>("Drawdate");
 
-                    b.Property<string>("Drawstatus")
-                        .HasColumnName("drawstatus")
-                        .HasColumnType("varchar(50)")
-                        .HasMaxLength(255);
+                    b.Property<int?>("Drawstatus");
 
-                    b.Property<int>("Itemid")
-                        .HasColumnName("itemid");
+                    b.Property<int>("Itemid");
 
-                    b.Property<int>("drawwinners")
-                        .HasColumnName("drawwinners");
+                    b.Property<int>("drawwinners");
 
-                    b.Property<int>("noofwinners")
-                        .HasColumnName("noofwinners");
+                    b.Property<int>("noofwinners");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Itemid");
 
-                    b.ToTable("draws");
+                    b.ToTable("Draws");
                 });
 
             modelBuilder.Entity("OFTENCOFTAPI.Models.Itemcategories", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Categorydescription")
-                        .HasColumnName("categorydescription")
-                        .HasMaxLength(255);
+                    b.Property<string>("Categorydescription");
 
-                    b.Property<string>("Categoryname")
-                        .HasColumnName("categoryname")
-                        .HasMaxLength(255);
+                    b.Property<string>("Categoryname");
 
-                    b.Property<DateTime?>("Datecreated")
-                        .HasColumnName("datecreated");
+                    b.Property<DateTime?>("Datecreated");
 
-                    b.Property<DateTime?>("Datemodified")
-                        .HasColumnName("datemodified");
+                    b.Property<DateTime?>("Datemodified");
 
                     b.HasKey("Id");
 
-                    b.ToTable("itemcategories");
+                    b.ToTable("Itemcategories");
                 });
 
             modelBuilder.Entity("OFTENCOFTAPI.Models.Items", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Categoryid")
-                        .HasColumnName("categoryid");
+                    b.Property<int>("Categoryid");
 
-                    b.Property<DateTime?>("Datecreated")
-                        .HasColumnName("datecreated");
+                    b.Property<DateTime?>("Datecreated");
 
-                    b.Property<DateTime?>("Datemodified")
-                        .HasColumnName("datemodified");
+                    b.Property<DateTime?>("Datemodified");
 
                     b.Property<string>("Itemdescription");
 
-                    b.Property<string>("Itemname")
-                        .HasColumnName("itemname")
-                        .HasMaxLength(255);
+                    b.Property<string>("Itemname");
 
-                    b.Property<decimal?>("Ticketamount")
-                        .HasColumnName("ticketamount")
-                        .HasColumnType("decimal(20,2)");
+                    b.Property<decimal?>("Ticketamount");
 
                     b.HasKey("Id");
 
                     b.HasIndex("Categoryid");
 
-                    b.ToTable("items");
-                });
-
-            modelBuilder.Entity("OFTENCOFTAPI.Models.Logs", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
-
-                    b.Property<string>("Application")
-                        .HasColumnName("application")
-                        .HasColumnType("varchar");
-
-                    b.Property<string>("Callsite")
-                        .HasColumnName("callsite")
-                        .HasColumnType("varchar");
-
-                    b.Property<string>("Exception")
-                        .HasColumnName("exception")
-                        .HasColumnType("varchar");
-
-                    b.Property<string>("Level")
-                        .HasColumnName("level")
-                        .HasColumnType("varchar");
-
-                    b.Property<string>("Logged")
-                        .HasColumnName("logged");
-
-                    b.Property<string>("Logger")
-                        .HasColumnName("logger")
-                        .HasColumnType("varchar");
-
-                    b.Property<string>("Message")
-                        .HasColumnName("message")
-                        .HasColumnType("varchar");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("logs");
+                    b.ToTable("Items");
                 });
 
             modelBuilder.Entity("OFTENCOFTAPI.Models.Tickets", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("AccessCode")
-                        .HasColumnName("accesscode")
-                        .HasMaxLength(255);
+                    b.Property<string>("AccessCode");
 
-                    b.Property<string>("Claimstatus")
-                        .HasColumnName("claimstatus")
-                        .HasColumnType("varchar(50)")
-                        .HasMaxLength(255);
+                    b.Property<int?>("Claimstatus");
 
-                    b.Property<string>("ConfirmStatus")
-                        .HasColumnName("confirmstatus")
-                        .HasColumnType("varchar(50)")
-                        .HasMaxLength(50);
+                    b.Property<int?>("ConfirmStatus");
 
-                    b.Property<DateTime?>("Datemodified")
-                        .HasColumnName("datemodified");
+                    b.Property<DateTime?>("Datemodified");
 
-                    b.Property<int?>("Drawid")
-                        .HasColumnName("drawid");
+                    b.Property<int?>("Drawid");
 
-                    b.Property<string>("Emailaddress")
-                        .HasColumnName("emailaddress")
-                        .HasMaxLength(255);
+                    b.Property<string>("Emailaddress");
 
-                    b.Property<string>("Firstname")
-                        .HasColumnName("firstname")
-                        .HasMaxLength(255);
+                    b.Property<string>("Firstname");
 
-                    b.Property<string>("Lastname")
-                        .HasColumnName("lastname")
-                        .HasMaxLength(255);
+                    b.Property<string>("Lastname");
 
-                    b.Property<string>("PaystackReference")
-                        .HasColumnName("paystackreference")
-                        .HasMaxLength(255);
+                    b.Property<string>("PaystackReference");
 
-                    b.Property<string>("Phonenumber")
-                        .HasColumnName("phonenumber")
-                        .HasMaxLength(255);
+                    b.Property<string>("Phonenumber");
 
-                    b.Property<string>("Ticketreference")
-                        .HasColumnName("ticketreference")
-                        .HasMaxLength(255);
+                    b.Property<string>("Ticketreference");
 
-                    b.Property<string>("Winstatus")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("winstatus")
-                        .HasColumnType("varchar(50)")
-                        .HasDefaultValueSql("NULL::character varying")
-                        .HasMaxLength(255);
+                    b.Property<int?>("Winstatus");
 
                     b.Property<int?>("transactionid");
 
@@ -225,91 +240,156 @@ namespace OFTENCOFTAPI.Migrations
 
                     b.HasIndex("transactionid");
 
-                    b.ToTable("tickets");
+                    b.ToTable("Tickets");
                 });
 
             modelBuilder.Entity("OFTENCOFTAPI.Models.Transaction", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn);
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Bank")
-                        .HasColumnName("bank")
-                        .HasMaxLength(255);
+                    b.Property<string>("Bank");
 
-                    b.Property<DateTime?>("DateModified")
-                        .HasColumnName("datemodified");
+                    b.Property<DateTime?>("DateModified");
 
-                    b.Property<string>("Email")
-                        .HasColumnName("email")
-                        .HasMaxLength(255);
+                    b.Property<string>("Email");
 
-                    b.Property<string>("IPAddress")
-                        .HasColumnName("ipaddress")
-                        .HasMaxLength(255);
+                    b.Property<string>("IPAddress");
 
-                    b.Property<string>("Location")
-                        .HasColumnName("customerlocation")
-                        .HasMaxLength(255);
+                    b.Property<string>("Location");
 
-                    b.Property<DateTime?>("Paymentdate")
-                        .HasColumnName("paymentdate");
+                    b.Property<DateTime?>("Paymentdate");
 
-                    b.Property<string>("Pspaymentreference")
-                        .HasColumnName("paystackreference")
-                        .HasMaxLength(255);
+                    b.Property<string>("Pspaymentreference");
 
-                    b.Property<int?>("Quantity")
-                        .HasColumnName("quantity");
+                    b.Property<int?>("Quantity");
 
                     b.Property<string>("TicketReferences");
 
-                    b.Property<decimal?>("Totalamount")
-                        .HasColumnName("totalamount")
-                        .HasColumnType("numeric(255,0)");
+                    b.Property<decimal?>("Totalamount");
 
-                    b.Property<string>("TransactionStatus")
-                        .HasColumnName("transactionstatus")
-                        .HasColumnType("varchar(50)")
-                        .HasMaxLength(50);
+                    b.Property<int?>("TransactionStatus");
 
-                    b.Property<string>("cardchannel")
-                        .HasColumnName("cardchannel")
-                        .HasMaxLength(255);
+                    b.Property<string>("cardchannel");
 
-                    b.Property<string>("cardexpmonth")
-                        .HasColumnName("cardexpmonth")
-                        .HasMaxLength(255);
+                    b.Property<string>("cardexpmonth");
 
-                    b.Property<string>("cardexpyear")
-                        .HasColumnName("cardexpyear")
-                        .HasMaxLength(255);
+                    b.Property<string>("cardexpyear");
 
-                    b.Property<string>("cardlast4")
-                        .HasColumnName("cardlast4")
-                        .HasMaxLength(255);
+                    b.Property<string>("cardlast4");
 
-                    b.Property<string>("cardtype")
-                        .HasColumnName("cardtype")
-                        .HasMaxLength(255);
+                    b.Property<string>("cardtype");
 
-                    b.Property<string>("countrycode")
-                        .HasColumnName("countrycode")
-                        .HasMaxLength(255);
+                    b.Property<string>("countrycode");
 
-                    b.Property<string>("customercode")
-                        .HasColumnName("customercode")
-                        .HasMaxLength(255);
+                    b.Property<string>("customercode");
 
-                    b.Property<string>("customerid")
-                        .HasColumnName("customerid")
-                        .HasMaxLength(255);
+                    b.Property<string>("customerid");
 
                     b.HasKey("Id");
 
-                    b.ToTable("transaction");
+                    b.ToTable("Transaction");
+                });
+
+            modelBuilder.Entity("OFTENCOFTAPI.Models.Users.ApplicationUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AccessFailedCount");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256);
+
+                    b.Property<bool>("EmailConfirmed");
+
+                    b.Property<string>("FirstName");
+
+                    b.Property<string>("LastName");
+
+                    b.Property<bool>("LockoutEnabled");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("PasswordHash");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("SecurityStamp");
+
+                    b.Property<bool>("TwoFactorEnabled");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("OFTENCOFTAPI.Models.Users.ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("OFTENCOFTAPI.Models.Users.ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("OFTENCOFTAPI.Models.Users.ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("OFTENCOFTAPI.Models.Users.ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("OFTENCOFTAPI.Models.Draws", b =>
@@ -317,7 +397,6 @@ namespace OFTENCOFTAPI.Migrations
                     b.HasOne("OFTENCOFTAPI.Models.Items", "Item")
                         .WithMany("Draws")
                         .HasForeignKey("Itemid")
-                        .HasConstraintName("draws_itemid")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -326,7 +405,6 @@ namespace OFTENCOFTAPI.Migrations
                     b.HasOne("OFTENCOFTAPI.Models.Itemcategories", "Category")
                         .WithMany("Items")
                         .HasForeignKey("Categoryid")
-                        .HasConstraintName("item_catid")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -334,15 +412,11 @@ namespace OFTENCOFTAPI.Migrations
                 {
                     b.HasOne("OFTENCOFTAPI.Models.Draws", "Draw")
                         .WithMany("Tickets")
-                        .HasForeignKey("Drawid")
-                        .HasConstraintName("ticket_drawid")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("Drawid");
 
                     b.HasOne("OFTENCOFTAPI.Models.Transaction", "Transaction")
                         .WithMany("Tickets")
-                        .HasForeignKey("transactionid")
-                        .HasConstraintName("ticket_transactionid")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("transactionid");
                 });
 #pragma warning restore 612, 618
         }

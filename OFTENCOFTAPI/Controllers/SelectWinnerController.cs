@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using OFTENCOFTAPI.Models;
-using OFTENCOFTAPI.Models.SendMail;
+using OFTENCOFTAPI.Services;
 using OFTENCOFTAPI.Models.ViewModels;
 
 namespace OFTENCOFTAPI.Controllers
@@ -22,13 +22,15 @@ namespace OFTENCOFTAPI.Controllers
         private readonly DrawsController _dController;
         private readonly OFTENCOFTDBContext _context;
         private readonly ILogger<SelectWinnerController> _logger;
+        private readonly IEmailService _emailService;
 
-        public SelectWinnerController(OFTENCOFTDBContext context, TicketsController tcontroller, DrawsController drawsController, ILogger<SelectWinnerController> logger )
+        public SelectWinnerController(OFTENCOFTDBContext context, TicketsController tcontroller, DrawsController drawsController, ILogger<SelectWinnerController> logger, IEmailService emailService)
         {
             _context = context;
             _tController = tcontroller;
             _dController = drawsController;
             _logger = logger;
+            _emailService = emailService;
         }
 
         [HttpGet("getrange/{drawid}")]
@@ -166,10 +168,11 @@ namespace OFTENCOFTAPI.Controllers
                              "<img style='display:block;width:10%;height:10%;margin-left: auto;margin-right: auto;' src='https://www.dropbox.com/s/0p1flnq0voo7hn9/oftcoftlogosmall.jpg?raw=1'alt='felt lucky'></a>" +
                              "</body>" +
                              "</html>";
-                    EmailSender sender = new EmailSender();
+
                     try
                     {
-                        await sender.Execute2("tonidavis01@gmail.com", subject, body, body2);
+
+                        await _emailService.ExecuteAsync("tonidavis01@gmail.com", subject, body, body2);
                     }
                     catch (Exception ex)
                     {

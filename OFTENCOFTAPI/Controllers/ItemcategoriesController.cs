@@ -168,7 +168,7 @@ namespace OFTENCOFTAPI.Controllers
             return CreatedAtAction("GetItemcategories", new { id = itemcategories.Id }, itemcategories);
         }
 
-        // DELETE: api/Itemcategories/5
+        // DELETE: api/Itemcategories/5 
         [HttpDelete("{id}")]
         public async Task<ActionResult<Itemcategories>> DeleteItemcategories(int id)
         {

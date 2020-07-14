@@ -9,7 +9,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using OFTENCOFTAPI.Models;
-using OFTENCOFTAPI.Models.SendMail;
+using OFTENCOFTAPI.Services;
 
 namespace OFTENCOFTAPI.Controllers
 {

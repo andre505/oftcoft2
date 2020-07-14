@@ -16,7 +16,7 @@ using Newtonsoft.Json.Linq;
 using System.Text;
 using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
-using OFTENCOFTAPI.Models.SendMail;
+using OFTENCOFTAPI.Services;
 using Microsoft.Extensions.Logging;
 
 namespace OFTENCOFTAPI.Controllers
@@ -28,13 +28,16 @@ namespace OFTENCOFTAPI.Controllers
         private readonly OFTENCOFTDBContext _context;
         private readonly TicketsController _tController;
         private readonly ILogger<MakePaymentController> _logger;
+        private readonly IEmailService _emailService;
 
 
-        public MakePaymentController(OFTENCOFTDBContext context, TicketsController tController, ILogger<MakePaymentController> logger)
+
+        public MakePaymentController(OFTENCOFTDBContext context, TicketsController tController, ILogger<MakePaymentController> logger, IEmailService emailService)
         {
             _context = context;
             _tController = tController;
             _logger = logger;
+            _emailService = emailService;
         }
         public IActionResult Index()
         {
@@ -229,10 +232,11 @@ namespace OFTENCOFTAPI.Controllers
                                  "<a href='https://www.nationalgiveaway.com'><img style='display:block; width:100%;height:100%;' src='https://www.dropbox.com/s/medm6f3npfr4gh5/freegift.jpg?raw=1' alt = 'feeling lucky'></a>" +
                                  "</body>" +
                                  "</html>";
-                        EmailSender sender = new EmailSender();
+                        //EmailSender sender = new EmailSender();
                         try
                         {
-                            await sender.Execute2(ticket.Emailaddress, subject, body, body2);
+                            //await sender.Execute2(ticket.Emailaddress, subject, body, body2);
+                            await _emailService.ExecuteAsync(ticket.Emailaddress, subject, body, body2);
                         }
                         catch (Exception ex)
                         {
@@ -413,10 +417,11 @@ namespace OFTENCOFTAPI.Controllers
                          "<a href='https://www.nationalgiveaway.com'><img style='display:block; width:100%;height:100%;' src='https://www.dropbox.com/s/medm6f3npfr4gh5/freegift.jpg?raw=1' alt = 'feeling lucky'></a>" +
                          "</body>" +
                          "</html>";
-                EmailSender sender = new EmailSender();
+                //EmailSender sender = new EmailSender();
                 try
                 {
-                    await sender.Execute2(ticketdetails2[0].Emailaddress, subject, body, body2);
+
+                    await _emailService.ExecuteAsync(ticketdetails2[0].Emailaddress, subject, body, body2);
                 }
                 catch (Exception ex)
                 {

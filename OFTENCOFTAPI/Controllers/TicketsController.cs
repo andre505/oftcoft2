@@ -19,12 +19,13 @@ namespace OFTENCOFTAPI.Controllers
     {
         private readonly OFTENCOFTDBContext _context;
         private readonly ILogger<TicketsController> _logger;
+        private readonly IEmailService _emailService;
 
-
-        public TicketsController(OFTENCOFTDBContext context, ILogger<TicketsController> logger)
+        public TicketsController(OFTENCOFTDBContext context, ILogger<TicketsController> logger, IEmailService emailservice)
         {
             _context = context;
             _logger = logger;
+            _emailService = emailservice;
         }
 
         // GET: api/Tickets
@@ -239,8 +240,10 @@ namespace OFTENCOFTAPI.Controllers
                                  "<a href='https://www.nationalgiveaway.com'><img style='display:block; width:100%;height:100%;' src='https://www.dropbox.com/s/medm6f3npfr4gh5/freegift.jpg?raw=1' alt = 'feeling lucky'></a>" +
                                  "</body>" +
                                  "</html>";
-                        EmailSender sender = new EmailSender();
-                        await sender.Execute2(ticketdetails.Emailaddress, subject, body, body2);
+                        //EmailSender sender = new EmailSender();
+                        //await sender.Execute2(ticketdetails.Emailaddress, subject, body, body2);
+
+                        await _emailService.ExecuteAsync(ticketdetails.Emailaddress, subject, body, body2);
                         //
                         //send text message
                         SendSms sendsms = new SendSms();

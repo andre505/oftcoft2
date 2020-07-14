@@ -3,10 +3,14 @@ using SendGrid.Helpers.Mail;
 using System;
 using System.Threading.Tasks;
 
-namespace OFTENCOFTAPI.Models.SendMail
+namespace OFTENCOFTAPI.Services
 
 {
-    public class EmailSender
+    public interface IEmailService
+    {
+        Task ExecuteAsync(string email, string subject, string message, string htmlMessage);
+    }
+    public class EmailSender : IEmailService
     {
         //static void main(string[] args)
         //{
@@ -37,7 +41,7 @@ namespace OFTENCOFTAPI.Models.SendMail
         //    var response = await client.SendEmailAsync(msg);
         //}
 
-        public async Task Execute2(string to, string subject, string plaintext, string Html)
+        public async Task ExecuteAsync(string to, string subject, string plaintext, string Html)
         {
             var apiKey = Environment.GetEnvironmentVariable("oftcoftkey");
             var client = new SendGridClient(apiKey);

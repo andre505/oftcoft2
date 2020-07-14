@@ -48,5 +48,12 @@ namespace OFTENCOFTAPI.Models
                 body: message,
                 client: _client);
         }
+
+        public class twiliodetails
+        {
+           public string twiliosid { get; set; }
+           public string twiliophone { get; set; }
+
+        }
     }
 }

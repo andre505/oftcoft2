@@ -18,6 +18,7 @@ using Microsoft.IdentityModel.Tokens;
 using OFTENCOFTAPI.Controllers;
 using OFTENCOFTAPI.Data;
 using OFTENCOFTAPI.Models;
+using OFTENCOFTAPI.Services;
 using OFTENCOFTAPI.Models.User;
 using OFTENCOFTAPI.Services;
 
@@ -112,16 +113,10 @@ namespace OFTENCOFTAPI
 
             });
 
-            //iis
-            //services.Configure<IISOptions>(options =>
-            //{
-            //    options.ForwardClientCertificate = false;
-            //});
-
-            //inject controller
             services.AddTransient<TicketsController>();
             services.AddTransient<DrawsController>();
             services.AddTransient<CustomCookieAuthenticationEvents>();
+            services.AddTransient<IEmailService, EmailSender>();
 
         }
 
@@ -177,10 +172,7 @@ namespace OFTENCOFTAPI
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
-            });
-
-           
+            });           
         }
-
     }
 }

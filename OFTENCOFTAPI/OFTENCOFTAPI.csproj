@@ -38,7 +38,10 @@
 
   <ItemGroup>
     <Folder Include="bin\Debug\NewFolder\" />
-    <Folder Include="Content\" />
+    <Folder Include="Content\">
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+    </Folder>
+    <Content Include="Content/**" CopyToPublishDirectory="PreserveNewest" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder);@(Content)" />
   </ItemGroup>
 
 </Project>

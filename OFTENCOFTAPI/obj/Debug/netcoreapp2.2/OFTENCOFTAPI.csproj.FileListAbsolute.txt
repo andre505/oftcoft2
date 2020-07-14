@@ -172,4 +172,3 @@ C:\Users\Paelyt Solution\source\repos\oftcoft2\OFTENCOFTAPI\bin\Debug\netcoreapp
 C:\Users\Paelyt Solution\source\repos\oftcoft2\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.Views.pdb
 C:\Users\Paelyt Solution\source\repos\oftcoft2\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.csproj.CopyComplete
 C:\Users\Paelyt Solution\source\repos\oftcoft2\OFTENCOFTAPI\bin\Debug\netcoreapp2.2\web.config
-C:\Users\Paelyt Solution\source\repos\oftcoft2\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.csprojAssemblyReference.cache

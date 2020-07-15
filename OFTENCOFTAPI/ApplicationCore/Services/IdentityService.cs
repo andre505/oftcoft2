@@ -90,9 +90,93 @@ namespace OFTENCOFTAPI.ApplicationCore.Services
            
         }
 
-        public Task<AuthenticationResultDTO> RegisterAsync()
+        public async Task<RegistrationResultDTO> RegisterAsync(
+            string email, string password, bool rememberMe, string lastname, string firstname, string phonenumber)
         {
-            return null;
+            if(_userManager.FindByEmailAsync(email).Result != null)
+            {
+
+                RegistrationResultDTO registrationResultDTO = new RegistrationResultDTO
+                {
+                    Status = "fail",
+                    ResponseCode = "01",
+                    ResponseMessage = "User registration failed. User already exists",
+                    userSignInResult = null,
+                    ErrorList = null
+                };
+
+                return registrationResultDTO;
+            }
+
+            ApplicationUser user = new ApplicationUser();
+            user.UserName = email;
+            user.Email = email;
+            user.FirstName = firstname;
+            user.LastName = lastname;
+            user.EmailConfirmed = true;
+            user.PhoneNumber = phonenumber;
+            IdentityResult result = _userManager.CreateAsync(user, password).Result;
+
+            if(result.Succeeded)
+            {
+                UserSignInResultDTO userSignInResult = new UserSignInResultDTO
+                {
+                    firstname = firstname,
+                    lastname = lastname,
+                    email = email,
+                    phone = phonenumber
+                };
+
+                _userManager.AddToRoleAsync(user, "Customer").Wait();
+
+                var signInResult = await _signInManager.PasswordSignInAsync(email, password, rememberMe, lockoutOnFailure: false);
+                if (signInResult.Succeeded)
+                {
+                    string secret = _appSettings.Secret;
+                    string token = IdentityUtil.generateJwtToken(user, secret);
+
+                    userSignInResult.token = token;
+
+                    RegistrationResultDTO registrationResultDTO = new RegistrationResultDTO
+                    {
+                        Status = "success",
+                        ResponseCode = "00",
+                        ResponseMessage = "User registered successfully",
+                        userSignInResult = userSignInResult,
+                        ErrorList = null
+                    };
+
+                    return registrationResultDTO;
+                }
+                else
+                {
+
+                    RegistrationResultDTO registrationResultDTO = new RegistrationResultDTO
+                    {
+                        Status = "success",
+                        ResponseCode = "00",
+                        ResponseMessage = "User Registration Successful. Login to retrieve token",
+                        userSignInResult = userSignInResult,
+                        ErrorList = null
+                    };
+
+                    return registrationResultDTO;
+                }
+            }
+            else
+            {
+
+                RegistrationResultDTO registrationResultDTO = new RegistrationResultDTO
+                {
+                    Status = "fail",
+                    ResponseCode = "01",
+                    ResponseMessage = "User Registration Failed. Please try again later",
+                    userSignInResult = null,
+                    ErrorList = null
+                };
+
+                return registrationResultDTO;
+            }
         }
 
     }

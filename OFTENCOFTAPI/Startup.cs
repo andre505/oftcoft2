@@ -21,6 +21,7 @@ using OFTENCOFTAPI.Models;
 using OFTENCOFTAPI.Services;
 using OFTENCOFTAPI.Models.User;
 using OFTENCOFTAPI.Services;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace OFTENCOFTAPI
 {
@@ -118,6 +119,12 @@ namespace OFTENCOFTAPI
             services.AddTransient<CustomCookieAuthenticationEvents>();
             services.AddTransient<IEmailService, EmailSender>();
 
+            // Swagger Docs Configuration
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "National Uptake API", Version = "v1" });
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -164,6 +171,13 @@ namespace OFTENCOFTAPI
                 {
                     context.HttpContext.Response.Redirect($"/Error?code={context.HttpContext.Response.StatusCode}");
                 }
+            });
+
+            // Added swagger middleware to App pipeline
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "National Uptake V1");
             });
 
 

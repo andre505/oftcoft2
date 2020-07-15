@@ -21,6 +21,12 @@ using Microsoft.Extensions.Logging;
 
 namespace OFTENCOFTAPI.Controllers
 {
+    // Added this attribute to exclude this controller from being documented by swagger
+    // as swagger as issues with documenting it. I'll be fixing the issue later, but for now,
+    //I'll just exclude it..
+    [ApiExplorerSettings(IgnoreApi = true)]
+    
+    
     [Route("api/makepayment")]
     [ApiController]
     public class MakePaymentController : Controller

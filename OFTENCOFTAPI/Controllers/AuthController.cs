@@ -116,111 +116,34 @@ namespace OFTENCOFTAPI.Controllers
 
             try
             {
-                if (ModelState.IsValid)
+                if (!ModelState.IsValid)
                 {
-                    if (_userManager.FindByEmailAsync(model.email).Result == null)
-                    {
-                        ApplicationUser user = new ApplicationUser();
-                        user.UserName = model.email;
-                        user.Email = model.email;
-                        user.FirstName = model.firstname;
-                        user.LastName = model.lastname;
-                        user.EmailConfirmed = true;
-                        user.PhoneNumber = model.phonenumber;
-                        IdentityResult result = _userManager.CreateAsync(user, model.Password).Result;
 
-                        if (result.Succeeded)
-                        {
-
-                            UserSignInResult customerResult = new UserSignInResult
-                            {
-                                firstname = model.firstname,
-                                lastname = model.lastname,
-                                email = model.email,
-                                phone = model.phonenumber
-                            };
-                            _userManager.AddToRoleAsync(user, "Customer").Wait();
-
-                            var signinresult = await _signInManager.PasswordSignInAsync(model.email, model.Password, model.rememberMe, lockoutOnFailure: false);
-                            if (signinresult.Succeeded)
-                            {
-                                string token = generateJwtToken(user);
-                                //await _signInManager.SignInAsync(user, isPersistent: false);
-                                customerResult.token = token;
-
-                                //success
-                                var RegisterSuccessResponse = new
-                                {
-                                    status = "success",
-                                    responsecode = "00",
-                                    responsemessage = "User Registration Successful",
-                                    userdetails = customerResult,
-                                };
-
-                                return new JsonResult(RegisterSuccessResponse);
-                            }
-
-                            else
-                            {
-                                var RegisterSuccessResponse = new
-                                {
-                                    status = "success",
-                                    responsecode = "00",
-                                    responsemessage = "User Registration Successful. Login to retrieve token",
-                                    userdetails = customerResult,
-                                };
-                                return new JsonResult(RegisterSuccessResponse);
-                            }
-                        }
-                        else
-                        {
-                            //fail
-                            var RegisterFailureResponse = new
-                            {
-                                status = "fail",
-                                responsecode = "01",
-                                responsemessage = "User Registration Failed. Please try again later",
-                                userdetails = "",
-                            };
-
-                            return new JsonResult(RegisterFailureResponse);
-
-                        }
-                    }
-                    else
-                    {
-                        //user exists
-                        var RegisterFailureResponse = new
-                        {
-                            status = "fail",
-                            responsecode = "01",
-                            responsemessage = "User registration failed. User already exists",
-                            userdetails = "",
-                        };
-                        return new JsonResult(RegisterFailureResponse);
-
-                    }
-
-                }
-                //invalid model state
-                else
-                {
                     var query = from state in ModelState.Values
                                 from error in state.Errors
                                 select error.ErrorMessage;
 
                     var errorList = query.ToList();
 
-                    var ModelErrors = new
+                    return BadRequest(new RegistrationResultDTO {
+                        Status = "fail",
+                        ResponseCode = "01",
+                        ResponseMessage = "User Registration Failed",
+                        ErrorList = errorList
+                    });
+                }                
+                else
+                {
+                    var registrationResult = await _identityService.RegisterAsync(model.email, model.Password, model.rememberMe, model.lastname, model.firstname, model.phonenumber);
+
+                    if(registrationResult.Status == "success")
                     {
-                        status = "fail",
-                        responsecode = "01",
-                        responsemessage = "User Registration Failed",
-                        errors = errorList
-                    };
-
-                    return new JsonResult(ModelErrors);
-
+                        return Ok(registrationResult);
+                    }
+                    else
+                    {
+                        return BadRequest(registrationResult);
+                    }
                 }
             }
             catch (Exception ex)

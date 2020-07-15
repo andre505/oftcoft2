@@ -1,24 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Paelyt Solution\\source\\repos\\oftcoft2\\OFTENCOFTAPI\\OFTENCOFTAPI.csproj": {}
+    "C:\\Work\\OftCoft\\oftcoft2\\OFTENCOFTAPI\\OFTENCOFTAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Paelyt Solution\\source\\repos\\oftcoft2\\OFTENCOFTAPI\\OFTENCOFTAPI.csproj": {
+    "C:\\Work\\OftCoft\\oftcoft2\\OFTENCOFTAPI\\OFTENCOFTAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Paelyt Solution\\source\\repos\\oftcoft2\\OFTENCOFTAPI\\OFTENCOFTAPI.csproj",
+        "projectUniqueName": "C:\\Work\\OftCoft\\oftcoft2\\OFTENCOFTAPI\\OFTENCOFTAPI.csproj",
         "projectName": "OFTENCOFTAPI",
-        "projectPath": "C:\\Users\\Paelyt Solution\\source\\repos\\oftcoft2\\OFTENCOFTAPI\\OFTENCOFTAPI.csproj",
-        "packagesPath": "C:\\Users\\Paelyt Solution\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Paelyt Solution\\source\\repos\\oftcoft2\\OFTENCOFTAPI\\obj\\",
+        "projectPath": "C:\\Work\\OftCoft\\oftcoft2\\OFTENCOFTAPI\\OFTENCOFTAPI.csproj",
+        "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
+        "outputPath": "C:\\Work\\OftCoft\\oftcoft2\\OFTENCOFTAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
-          "C:\\Users\\Paelyt Solution\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
@@ -98,10 +97,6 @@
               "target": "Package",
               "version": "[2.2.4, )"
             },
-            "NLog.Web": {
-              "target": "Package",
-              "version": "[4.9.2, )"
-            },
             "NLog.Web.AspNetCore": {
               "target": "Package",
               "version": "[4.9.0, )"
@@ -125,7 +120,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
         }
       }
     }

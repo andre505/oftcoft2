@@ -29,7 +29,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.10" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.4" />
-    <PackageReference Include="NLog.Web" Version="4.9.2" />
+    <!--<PackageReference Include="NLog.Web" Version="4.9.2" />-->
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.9.0" />
     <PackageReference Include="Sendgrid" Version="9.12.0" />
     <PackageReference Include="Twilio.AspNet.Core" Version="5.33.1" />

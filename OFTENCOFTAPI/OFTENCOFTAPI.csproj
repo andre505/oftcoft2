@@ -38,8 +38,6 @@
 
 
   <ItemGroup>
-    <Folder Include="ApplicationCore\Interfaces\" />
-    <Folder Include="ApplicationCore\Services\" />
     <Folder Include="Content\">
       <CopyToPublishDirectory>Always</CopyToPublishDirectory>
     </Folder>

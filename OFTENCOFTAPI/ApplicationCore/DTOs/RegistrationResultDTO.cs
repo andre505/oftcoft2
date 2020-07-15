@@ -10,7 +10,7 @@ namespace OFTENCOFTAPI.ApplicationCore.DTOs
         public string Status { get; set; }
         public string ResponseCode { get; set; }
         public string ResponseMessage { get; set; }
-        public UserSignInResultDTO userSignInResult { get; set; }
+        public UserSignInResultDTO UserSignInResult { get; set; }
         public IList<string> ErrorList { get; set; }
     }
 }

@@ -129,6 +129,7 @@ namespace OFTENCOFTAPI.Controllers
                         Status = "fail",
                         ResponseCode = "01",
                         ResponseMessage = "User Registration Failed",
+                        UserSignInResult = null,
                         ErrorList = errorList
                     });
                 }                
@@ -148,21 +149,40 @@ namespace OFTENCOFTAPI.Controllers
             }
             catch (Exception ex)
             {
-                var OtherErrors = new
+
+                var OtherErrors = new RegistrationResultDTO
                 {
-                    status = "fail",
-                    responsecode = "02",
-                    responsemessage = ex.Message.ToString(),
-                    userdetails = model,
+                    Status = "fail",
+                    ResponseCode = "02",
+                    ResponseMessage = ex.Message.ToString(),
+                    UserSignInResult = null,
+                    ErrorList = null
                 };
 
-                return new JsonResult(OtherErrors);
+                return StatusCode(500, OtherErrors);
 
             }
 
         }
-        //LOGIN
 
+        //EMAIL AUTHENTICATION
+        [AllowAnonymous]
+        [HttpGet("verifyAccount/{email}")]
+        public async Task<IActionResult> verifyAccountExist(string email)
+        {
+            try
+            {
+                var isAccountExist = await _identityService.verifyAccountExist(email);
+
+                return Ok(isAccountExist);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        //LOGIN
         [AllowAnonymous]
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody]LoginViewModel model)
@@ -185,7 +205,7 @@ namespace OFTENCOFTAPI.Controllers
                         Status = "fail",
                         ResponseCode = "01",
                         ResponseMessage = "Sign in failed",
-                        userSignInResult = null,
+                        UserSignInResult = null,
                         ErrorList = errorList
                     });
 
@@ -210,7 +230,7 @@ namespace OFTENCOFTAPI.Controllers
                     Status = "fail",
                     ResponseCode = "02",
                     ResponseMessage = ex.Message.ToString(),
-                    userSignInResult = null,
+                    UserSignInResult = null,
                     ErrorList = null
                 };
 

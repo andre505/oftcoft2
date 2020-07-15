@@ -54,7 +54,7 @@ namespace OFTENCOFTAPI.ApplicationCore.Services
                         Status = "success",
                         ResponseCode = "00",
                         ResponseMessage = "Sign in Successfully",
-                        userSignInResult = customerResult,
+                        UserSignInResult = customerResult,
                         ErrorList = null
                     };
 
@@ -67,7 +67,7 @@ namespace OFTENCOFTAPI.ApplicationCore.Services
                         Status = "fail",
                         ResponseCode = "01",
                         ResponseMessage = "Invalid Credentials",
-                        userSignInResult = null,
+                        UserSignInResult = null,
                         ErrorList = null
                     };
 
@@ -81,7 +81,7 @@ namespace OFTENCOFTAPI.ApplicationCore.Services
                     Status = "fail",
                     ResponseCode = "01",
                     ResponseMessage = "User does not exist",
-                    userSignInResult = null,
+                    UserSignInResult = null,
                     ErrorList = null
                 };
 
@@ -93,7 +93,8 @@ namespace OFTENCOFTAPI.ApplicationCore.Services
         public async Task<RegistrationResultDTO> RegisterAsync(
             string email, string password, bool rememberMe, string lastname, string firstname, string phonenumber)
         {
-            if(_userManager.FindByEmailAsync(email).Result != null)
+            var isAccountExisting = await this.verifyAccountExist(email);
+            if (isAccountExisting)
             {
 
                 RegistrationResultDTO registrationResultDTO = new RegistrationResultDTO
@@ -101,7 +102,7 @@ namespace OFTENCOFTAPI.ApplicationCore.Services
                     Status = "fail",
                     ResponseCode = "01",
                     ResponseMessage = "User registration failed. User already exists",
-                    userSignInResult = null,
+                    UserSignInResult = null,
                     ErrorList = null
                 };
 
@@ -142,7 +143,7 @@ namespace OFTENCOFTAPI.ApplicationCore.Services
                         Status = "success",
                         ResponseCode = "00",
                         ResponseMessage = "User registered successfully",
-                        userSignInResult = userSignInResult,
+                        UserSignInResult = userSignInResult,
                         ErrorList = null
                     };
 
@@ -156,7 +157,7 @@ namespace OFTENCOFTAPI.ApplicationCore.Services
                         Status = "success",
                         ResponseCode = "00",
                         ResponseMessage = "User Registration Successful. Login to retrieve token",
-                        userSignInResult = userSignInResult,
+                        UserSignInResult = userSignInResult,
                         ErrorList = null
                     };
 
@@ -171,7 +172,7 @@ namespace OFTENCOFTAPI.ApplicationCore.Services
                     Status = "fail",
                     ResponseCode = "01",
                     ResponseMessage = "User Registration Failed. Please try again later",
-                    userSignInResult = null,
+                    UserSignInResult = null,
                     ErrorList = null
                 };
 
@@ -179,5 +180,11 @@ namespace OFTENCOFTAPI.ApplicationCore.Services
             }
         }
 
+        public async Task<bool> verifyAccountExist(string email)
+        {
+            var userObject = await _userManager.FindByEmailAsync(email);
+
+            return userObject != null;
+        }
     }
 }

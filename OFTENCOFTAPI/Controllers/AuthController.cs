@@ -17,6 +17,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using OFTENCOFTAPI.Data.Models;
+using OFTENCOFTAPI.ApplicationCore.Interfaces;
+using OFTENCOFTAPI.ApplicationCore.DTOs;
 
 namespace OFTENCOFTAPI.Controllers
 {
@@ -30,12 +32,15 @@ namespace OFTENCOFTAPI.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly AppSettings _appSettings;
-        public AuthController(IUserService userService, OFTENCOFTDBContext context, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IOptions<AppSettings> appSettings)
+        private readonly IIdentityService _identityService;
+
+        public AuthController(IUserService userService, OFTENCOFTDBContext context, SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IOptions<AppSettings> appSettings, IIdentityService identityService)
         {
             _userService = userService;
             _context = context;
             _signInManager = signInManager;
             _userManager = userManager;
+            _identityService = identityService;
             _appSettings = appSettings.Value;
         }
 
@@ -243,94 +248,52 @@ namespace OFTENCOFTAPI.Controllers
 
             try
             {
-                if (ModelState.IsValid)
+                if (!ModelState.IsValid)
                 {
-                    string token = "";
-                    ApplicationUser user = await _userManager.FindByEmailAsync(model.email);
-                    if ((user != null))
-                    {
 
-                        var result = await _signInManager.PasswordSignInAsync(model.email, model.password, model.RememberMe, lockoutOnFailure: false);
-                        if (result.Succeeded)
-                        {
-                            token = generateJwtToken(user);
-
-                            UserSignInResult customerResult = new UserSignInResult
-                            {
-                                firstname = user.FirstName,
-                                lastname = user.LastName,
-                                email = user.Email,
-                                phone = user.PhoneNumber,
-                                token = token
-                            };
-
-                            var signinresponse = new
-                            {
-                                status = "success",
-                                responsecode = "00",
-                                responsemessage = "Sign in Successful",
-                                user = customerResult
-                            };
-                            return new JsonResult(signinresponse);
-                        } 
-                        else
-                        {
-                            var signinfailresponse = new
-                            {
-                                status = "fail",
-                                responsecode = "01",
-                                responsemessage = "Invalid credentials",
-                                user = ""
-                            };
-                            return new JsonResult(signinfailresponse);
-
-                        }
-                    }
-                    else
-                    {
-                        var signinfailresponse = new
-                        {
-                            status = "fail",
-                            responsecode = "01",
-                            user = "User does not exist"
-                        };
-                        return new JsonResult(signinfailresponse);
-                    }
-                }
-                //model state invalid 
-                else
-                {
                     var query = from state in ModelState.Values
                                 from error in state.Errors
                                 select error.ErrorMessage;
 
                     var errorList = query.ToList();
 
-                    var ModelErrors = new
+                    return BadRequest(new LoginResultDTO
                     {
-                        status = "fail",
-                        responsecode = "01",
-                        responsemessage = "Sign in failed",
-                        errors = errorList
-                    };
-
-                    return new JsonResult(ModelErrors);
+                        Status = "fail",
+                        ResponseCode = "01",
+                        ResponseMessage = "Sign in failed",
+                        userSignInResult = null,
+                        ErrorList = errorList
+                    });
 
                 }
-            }
-            catch(Exception ex)
-            {
-                var OtherErrors = new
+
+                var loginResult = await _identityService.LoginAsync(model.email, model.password, model.RememberMe);
+
+                if(loginResult.Status == "success")
                 {
-                    status = "fail",
-                    responsecode = "02",
-                    responsemessage = ex.Message.ToString(),
-                    userdetails = model,
+                    return Ok(loginResult);
+                } 
+                    else
+                {
+                    return BadRequest(loginResult);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                var OtherErrors = new LoginResultDTO
+                {
+                    Status = "fail",
+                    ResponseCode = "02",
+                    ResponseMessage = ex.Message.ToString(),
+                    userSignInResult = null,
+                    ErrorList = null
                 };
 
-                return new JsonResult(OtherErrors);
-
+                return StatusCode(500, OtherErrors);
             }
+                   
 
         }
 

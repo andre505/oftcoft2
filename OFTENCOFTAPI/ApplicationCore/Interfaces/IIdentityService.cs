@@ -7,6 +7,6 @@ namespace OFTENCOFTAPI.ApplicationCore.Interfaces
     public interface IIdentityService
     {
         Task<AuthenticationResultDTO> RegisterAsync();
-        Task<LoginResultDTO> LoginAsync(string email, string password);
+        Task<LoginResultDTO> LoginAsync(string email, string password, bool rememberMe);
     }
 }

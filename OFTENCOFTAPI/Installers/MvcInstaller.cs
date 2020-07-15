@@ -8,6 +8,8 @@ using Microsoft.IdentityModel.Tokens;
 using OFTENCOFTAPI.Controllers;
 using OFTENCOFTAPI.Services;
 using Swashbuckle.AspNetCore.Swagger;
+using OFTENCOFTAPI.ApplicationCore.Interfaces;
+using OFTENCOFTAPI.ApplicationCore.Services;
 
 namespace OFTENCOFTAPI.Installers
 {
@@ -45,6 +47,7 @@ namespace OFTENCOFTAPI.Installers
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
 
+            services.AddScoped<IIdentityService, IdentityService>();
 
             //
             services.Configure<CookiePolicyOptions>(options =>

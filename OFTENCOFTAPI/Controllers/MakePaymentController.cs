@@ -9,15 +9,16 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using OFTENCOFTAPI.Models;
-using OFTENCOFTAPI.Models.ViewModels;
-using OFTENCOFTAPI.Models.ViewModels.QuickType;
+using OFTENCOFTAPI.ApplicationCore.Models;
+using OFTENCOFTAPI.ApplicationCore.Models.ViewModels;
+using OFTENCOFTAPI.ApplicationCore.Models.ViewModels.QuickType;
 using Newtonsoft.Json.Linq;
 using System.Text;
 using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore;
 using OFTENCOFTAPI.Services;
 using Microsoft.Extensions.Logging;
+using OFTENCOFTAPI.Data.Models;
 
 namespace OFTENCOFTAPI.Controllers
 {

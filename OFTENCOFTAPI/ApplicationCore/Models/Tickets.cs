@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OFTENCOFTAPI.Models
+namespace OFTENCOFTAPI.ApplicationCore.Models
 {
     public partial class Tickets
 

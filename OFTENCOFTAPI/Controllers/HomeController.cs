@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using OFTENCOFTAPI.Models;
+using OFTENCOFTAPI.ApplicationCore.Models;
 
 namespace OFTENCOFTAPI.Controllers
 {

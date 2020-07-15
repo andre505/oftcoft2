@@ -4,9 +4,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using OFTENCOFTAPI.Models.User;
+using OFTENCOFTAPI.ApplicationCore.Models;
+using OFTENCOFTAPI.ApplicationCore.Models.User;
 
-namespace OFTENCOFTAPI.Models
+namespace OFTENCOFTAPI.Data.Models
 {
     public partial class OFTENCOFTDBContext : IdentityDbContext<ApplicationUser, IdentityRole, string>
     {

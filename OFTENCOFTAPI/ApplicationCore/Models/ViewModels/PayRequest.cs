@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace OFTENCOFTAPI.Models.ViewModels
+namespace OFTENCOFTAPI.ApplicationCore.Models.ViewModels
 {
     public class PayRequest
     {

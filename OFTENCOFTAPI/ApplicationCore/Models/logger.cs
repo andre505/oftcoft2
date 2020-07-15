@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace OFTENCOFTAPI.Models
+namespace OFTENCOFTAPI.ApplicationCore.Models
 {
     public class Logger
     {

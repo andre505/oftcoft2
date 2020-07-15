@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using OFTENCOFTAPI.Models.User;
+using OFTENCOFTAPI.ApplicationCore.Models.User;
 
 namespace OFTENCOFTAPI.Areas.Identity.Pages.Account.Manage
 {

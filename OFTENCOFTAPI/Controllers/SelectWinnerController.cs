@@ -8,9 +8,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
-using OFTENCOFTAPI.Models;
+using OFTENCOFTAPI.ApplicationCore.Models;
 using OFTENCOFTAPI.Services;
-using OFTENCOFTAPI.Models.ViewModels;
+using OFTENCOFTAPI.ApplicationCore.Models.ViewModels;
+using OFTENCOFTAPI.Data.Models;
 
 namespace OFTENCOFTAPI.Controllers
 {

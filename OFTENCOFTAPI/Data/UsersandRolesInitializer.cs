@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using OFTENCOFTAPI.Models.User;
+using OFTENCOFTAPI.ApplicationCore.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -7,15 +7,16 @@ using Microsoft.AspNetCore.Mvc;
 using System.Web.Http;
 using OFTENCOFTAPI.Services;
 using OFTENCOFTAPI.ViewModels.Account;
-using OFTENCOFTAPI.Models;
+using OFTENCOFTAPI.ApplicationCore.Models;
 using Microsoft.AspNetCore.Identity;
-using OFTENCOFTAPI.Models.User;
+using OFTENCOFTAPI.ApplicationCore.Models.User;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using OFTENCOFTAPI.Data.Models;
 
 namespace OFTENCOFTAPI.Controllers
 {

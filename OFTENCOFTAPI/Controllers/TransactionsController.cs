@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using OFTENCOFTAPI.Models;
+using OFTENCOFTAPI.ApplicationCore.Models;
+using OFTENCOFTAPI.Data.Models;
 
 namespace OFTENCOFTAPI.Controllers
 {

@@ -173,12 +173,12 @@ C:\Users\Paelyt Solution\source\repos\oftcoft2\OFTENCOFTAPI\obj\Debug\netcoreapp
 C:\Users\Paelyt Solution\source\repos\oftcoft2\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.csproj.CopyComplete
 C:\Users\Paelyt Solution\source\repos\oftcoft2\OFTENCOFTAPI\bin\Debug\netcoreapp2.2\web.config
 C:\Users\Paelyt Solution\source\repos\oftcoft2\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.csprojAssemblyReference.cache
+C:\Work\OftCoft\oftcoft2\OFTENCOFTAPI\bin\Debug\netcoreapp2.2\NLog.config
+C:\Work\OftCoft\oftcoft2\OFTENCOFTAPI\bin\Debug\netcoreapp2.2\web.config
 C:\Work\OftCoft\oftcoft2\OFTENCOFTAPI\bin\Debug\netcoreapp2.2\appsettings.Development.json
 C:\Work\OftCoft\oftcoft2\OFTENCOFTAPI\bin\Debug\netcoreapp2.2\appsettings.json
 C:\Work\OftCoft\oftcoft2\OFTENCOFTAPI\bin\Debug\netcoreapp2.2\aws-beanstalk-tools-defaults.json
 C:\Work\OftCoft\oftcoft2\OFTENCOFTAPI\bin\Debug\netcoreapp2.2\Properties\launchSettings.json
-C:\Work\OftCoft\oftcoft2\OFTENCOFTAPI\bin\Debug\netcoreapp2.2\NLog.config
-C:\Work\OftCoft\oftcoft2\OFTENCOFTAPI\bin\Debug\netcoreapp2.2\web.config
 C:\Work\OftCoft\oftcoft2\OFTENCOFTAPI\bin\Debug\netcoreapp2.2\OFTENCOFTAPI.deps.json
 C:\Work\OftCoft\oftcoft2\OFTENCOFTAPI\bin\Debug\netcoreapp2.2\OFTENCOFTAPI.runtimeconfig.json
 C:\Work\OftCoft\oftcoft2\OFTENCOFTAPI\bin\Debug\netcoreapp2.2\OFTENCOFTAPI.runtimeconfig.dev.json
@@ -188,6 +188,7 @@ C:\Work\OftCoft\oftcoft2\OFTENCOFTAPI\bin\Debug\netcoreapp2.2\OFTENCOFTAPI.Views
 C:\Work\OftCoft\oftcoft2\OFTENCOFTAPI\bin\Debug\netcoreapp2.2\OFTENCOFTAPI.Views.pdb
 C:\Work\OftCoft\oftcoft2\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.AssemblyInfoInputs.cache
 C:\Work\OftCoft\oftcoft2\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.AssemblyInfo.cs
+C:\Work\OftCoft\oftcoft2\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.csproj.CoreCompileInputs.cache
 C:\Work\OftCoft\oftcoft2\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.RazorAssemblyInfo.cache
 C:\Work\OftCoft\oftcoft2\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.RazorAssemblyInfo.cs
 C:\Work\OftCoft\oftcoft2\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.TagHelpers.input.cache
@@ -248,5 +249,3 @@ C:\Work\OftCoft\oftcoft2\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.dll
 C:\Work\OftCoft\oftcoft2\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.pdb
 C:\Work\OftCoft\oftcoft2\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.genruntimeconfig.cache
 C:\Work\OftCoft\oftcoft2\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.csproj.CopyComplete
-C:\Work\OftCoft\oftcoft2\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.csproj.CoreCompileInputs.cache
-C:\Work\OftCoft\oftcoft2\OFTENCOFTAPI\obj\Debug\netcoreapp2.2\OFTENCOFTAPI.csprojAssemblyReference.cache

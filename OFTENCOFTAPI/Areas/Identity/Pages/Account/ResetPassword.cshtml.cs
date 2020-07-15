@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using OFTENCOFTAPI.Models.User;
+using OFTENCOFTAPI.ApplicationCore.Models.User;
 
 namespace OFTENCOFTAPI.Areas.Identity.Pages.Account
 {

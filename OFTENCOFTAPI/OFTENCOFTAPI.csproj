@@ -38,13 +38,21 @@
 
 
   <ItemGroup>
-    <Folder Include="bin\Debug\NewFolder\" />
+    <Folder Include="ApplicationCore\Interfaces\" />
+    <Folder Include="ApplicationCore\Services\" />
     <Folder Include="Content\">
       <CopyToPublishDirectory>Always</CopyToPublishDirectory>
     </Folder>
     <Content Include="Content/**" CopyToPublishDirectory="PreserveNewest" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder);@(Content)" />
-    <Folder Include="Core\" />
-    <Folder Include="Persistence\" />
+    <Folder Include="Data\Repositories\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Compile Remove="bin\**" />
+    <Content Remove="bin\**" />
+    <EmbeddedResource Remove="bin\**" />
+    <None Remove="bin\**" />
   </ItemGroup>
 
 </Project>

@@ -7,8 +7,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using OFTENCOFTAPI.Models;
-using OFTENCOFTAPI.Models.User;
+using OFTENCOFTAPI.ApplicationCore.Models;
+using OFTENCOFTAPI.ApplicationCore.Models.User;
+using OFTENCOFTAPI.Data.Models;
 using OFTENCOFTAPI.ViewModels.Account;
 
 namespace OFTENCOFTAPI.Controllers

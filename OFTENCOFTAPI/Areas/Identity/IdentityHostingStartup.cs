@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using OFTENCOFTAPI.Models;
-using OFTENCOFTAPI.Models.User;
+using OFTENCOFTAPI.ApplicationCore.Models;
+using OFTENCOFTAPI.ApplicationCore.Models.User;
 
 [assembly: HostingStartup(typeof(OFTENCOFTAPI.Areas.Identity.IdentityHostingStartup))]
 namespace OFTENCOFTAPI.Areas.Identity

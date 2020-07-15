@@ -5,7 +5,7 @@
 //using System.Linq;
 //using System.Threading.Tasks;
 
-//namespace OFTENCOFTAPI.Models
+//namespace OFTENCOFTAPI.ApplicationCore.Models
 //{
 //    public class LambdaFunction : Amazon.Lambda.AspNetCoreServer.APIGatewayProxyFunction
 //    {

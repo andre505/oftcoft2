@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using OFTENCOFTAPI.Data;
 using OFTENCOFTAPI.Installers;
-using OFTENCOFTAPI.Models.User;
+using OFTENCOFTAPI.ApplicationCore.Models.User;
 
 namespace OFTENCOFTAPI
 {

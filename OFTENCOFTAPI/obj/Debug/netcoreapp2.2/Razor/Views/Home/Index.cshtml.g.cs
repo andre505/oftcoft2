@@ -19,12 +19,12 @@ using OFTENCOFTAPI;
 #line default
 #line hidden
 #line 2 "C:\Work\OftCoft\oftcoft2\OFTENCOFTAPI\Views\_ViewImports.cshtml"
-using OFTENCOFTAPI.Models;
+using OFTENCOFTAPI.ApplicationCore.Models;
 
 #line default
 #line hidden
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"0102159232384517337f7027ce3fc131065c04f7", @"/Views/Home/Index.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"1d50fb3e9fe31566a553af626bd6aef2abc13b83", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"0e2d623a920ad6b5c1ac64dfdb62bd262dbd834e", @"/Views/_ViewImports.cshtml")]
     public class Views_Home_Index : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         #pragma warning disable 1998

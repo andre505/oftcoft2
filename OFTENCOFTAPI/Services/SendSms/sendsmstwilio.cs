@@ -8,7 +8,7 @@ using Twilio.Clients;
 using Twilio.Rest.Api.V2010.Account;
 using Twilio.Types;
 
-namespace OFTENCOFTAPI.Models
+namespace OFTENCOFTAPI.ApplicationCore.Models
 {
     public class SendSms
     {

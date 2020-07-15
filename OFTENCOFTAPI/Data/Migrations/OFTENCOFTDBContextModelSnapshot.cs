@@ -3,17 +3,16 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using OFTENCOFTAPI.Models;
+using OFTENCOFTAPI.ApplicationCore.Models;
+using OFTENCOFTAPI.Data.Models;
 
-namespace OFTENCOFTAPI.Migrations
+namespace OFTENCOFTAPI.Data.Migrations
 {
     [DbContext(typeof(OFTENCOFTDBContext))]
-    [Migration("20200628230335_usingSQLServer")]
-    partial class usingSQLServer
+    partial class OFTENCOFTDBContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -131,7 +130,7 @@ namespace OFTENCOFTAPI.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("OFTENCOFTAPI.Models.Draws", b =>
+            modelBuilder.Entity("OFTENCOFTAPI.ApplicationCore.Models.Draws", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -160,7 +159,7 @@ namespace OFTENCOFTAPI.Migrations
                     b.ToTable("Draws");
                 });
 
-            modelBuilder.Entity("OFTENCOFTAPI.Models.Itemcategories", b =>
+            modelBuilder.Entity("OFTENCOFTAPI.ApplicationCore.Models.Itemcategories", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -179,7 +178,7 @@ namespace OFTENCOFTAPI.Migrations
                     b.ToTable("Itemcategories");
                 });
 
-            modelBuilder.Entity("OFTENCOFTAPI.Models.Items", b =>
+            modelBuilder.Entity("OFTENCOFTAPI.ApplicationCore.Models.Items", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -204,7 +203,7 @@ namespace OFTENCOFTAPI.Migrations
                     b.ToTable("Items");
                 });
 
-            modelBuilder.Entity("OFTENCOFTAPI.Models.Tickets", b =>
+            modelBuilder.Entity("OFTENCOFTAPI.ApplicationCore.Models.Tickets", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -245,7 +244,7 @@ namespace OFTENCOFTAPI.Migrations
                     b.ToTable("Tickets");
                 });
 
-            modelBuilder.Entity("OFTENCOFTAPI.Models.Transaction", b =>
+            modelBuilder.Entity("OFTENCOFTAPI.ApplicationCore.Models.Transaction", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -294,7 +293,7 @@ namespace OFTENCOFTAPI.Migrations
                     b.ToTable("Transaction");
                 });
 
-            modelBuilder.Entity("OFTENCOFTAPI.Models.Users.ApplicationUser", b =>
+            modelBuilder.Entity("OFTENCOFTAPI.ApplicationCore.Models.Users.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -359,7 +358,7 @@ namespace OFTENCOFTAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("OFTENCOFTAPI.Models.Users.ApplicationUser")
+                    b.HasOne("OFTENCOFTAPI.ApplicationCore.Models.Users.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -367,7 +366,7 @@ namespace OFTENCOFTAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("OFTENCOFTAPI.Models.Users.ApplicationUser")
+                    b.HasOne("OFTENCOFTAPI.ApplicationCore.Models.Users.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -380,7 +379,7 @@ namespace OFTENCOFTAPI.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("OFTENCOFTAPI.Models.Users.ApplicationUser")
+                    b.HasOne("OFTENCOFTAPI.ApplicationCore.Models.Users.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -388,35 +387,35 @@ namespace OFTENCOFTAPI.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("OFTENCOFTAPI.Models.Users.ApplicationUser")
+                    b.HasOne("OFTENCOFTAPI.ApplicationCore.Models.Users.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("OFTENCOFTAPI.Models.Draws", b =>
+            modelBuilder.Entity("OFTENCOFTAPI.ApplicationCore.Models.Draws", b =>
                 {
-                    b.HasOne("OFTENCOFTAPI.Models.Items", "Item")
+                    b.HasOne("OFTENCOFTAPI.ApplicationCore.Models.Items", "Item")
                         .WithMany("Draws")
                         .HasForeignKey("Itemid")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("OFTENCOFTAPI.Models.Items", b =>
+            modelBuilder.Entity("OFTENCOFTAPI.ApplicationCore.Models.Items", b =>
                 {
-                    b.HasOne("OFTENCOFTAPI.Models.Itemcategories", "Category")
+                    b.HasOne("OFTENCOFTAPI.ApplicationCore.Models.Itemcategories", "Category")
                         .WithMany("Items")
                         .HasForeignKey("Categoryid")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("OFTENCOFTAPI.Models.Tickets", b =>
+            modelBuilder.Entity("OFTENCOFTAPI.ApplicationCore.Models.Tickets", b =>
                 {
-                    b.HasOne("OFTENCOFTAPI.Models.Draws", "Draw")
+                    b.HasOne("OFTENCOFTAPI.ApplicationCore.Models.Draws", "Draw")
                         .WithMany("Tickets")
                         .HasForeignKey("Drawid");
 
-                    b.HasOne("OFTENCOFTAPI.Models.Transaction", "Transaction")
+                    b.HasOne("OFTENCOFTAPI.ApplicationCore.Models.Transaction", "Transaction")
                         .WithMany("Tickets")
                         .HasForeignKey("transactionid");
                 });

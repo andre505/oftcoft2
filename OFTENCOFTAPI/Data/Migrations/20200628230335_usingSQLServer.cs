@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace OFTENCOFTAPI.Migrations
+namespace OFTENCOFTAPI.Data.Migrations
 {
     public partial class usingSQLServer : Migration
     {

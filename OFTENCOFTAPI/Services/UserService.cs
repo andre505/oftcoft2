@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using OFTENCOFTAPI.Models;
-using OFTENCOFTAPI.Models.User;
+using OFTENCOFTAPI.ApplicationCore.Models;
+using OFTENCOFTAPI.ApplicationCore.Models.User;
+using OFTENCOFTAPI.Data.Models;
 using OFTENCOFTAPI.ViewModels.Account;
 using System;
 using System.Collections.Generic;

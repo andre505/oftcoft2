@@ -1,6 +1,6 @@
 using System;
 
-namespace OFTENCOFTAPI.Models
+namespace OFTENCOFTAPI.ApplicationCore.Models
 {
     public class ErrorViewModel
     {

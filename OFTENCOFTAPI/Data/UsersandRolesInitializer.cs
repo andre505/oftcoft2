@@ -19,8 +19,9 @@ namespace OFTENCOFTAPI.Data
 
         private static void SeedUsers(UserManager<ApplicationUser> userManager)
         {
+            var userInDb = userManager.FindByEmailAsync("admin@nationaluptake.com");
 
-            if (userManager.FindByEmailAsync("admin@nationaluptake.com").Result == null)
+            if (userInDb.Result == null)
             {
                 ApplicationUser user = new ApplicationUser();
                 user.UserName = "admin@nationaluptake.com";

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OFTENCOFTAPI.Data.Models;
 
 namespace OFTENCOFTAPI.Data.Migrations
 {
     [DbContext(typeof(OFTENCOFTDBContext))]
-    partial class OFTENCOFTDBContextModelSnapshot : ModelSnapshot
+    [Migration("20200716095440_remove-field-to-debug")]
+    partial class removefieldtodebug
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -200,23 +202,6 @@ namespace OFTENCOFTAPI.Data.Migrations
                     b.HasIndex("Categoryid");
 
                     b.ToTable("Items");
-                });
-
-            modelBuilder.Entity("OFTENCOFTAPI.ApplicationCore.Models.ResetToken", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Token");
-
-                    b.Property<DateTime>("TokenExpiry");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ResetTokens");
                 });
 
             modelBuilder.Entity("OFTENCOFTAPI.ApplicationCore.Models.Tickets", b =>

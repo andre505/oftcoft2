@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OFTENCOFTAPI.Data.Models;
 
 namespace OFTENCOFTAPI.Data.Migrations
 {
     [DbContext(typeof(OFTENCOFTDBContext))]
-    partial class OFTENCOFTDBContextModelSnapshot : ModelSnapshot
+    [Migration("20200716075332_added fields to app user")]
+    partial class addedfieldstoappuser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -202,23 +204,6 @@ namespace OFTENCOFTAPI.Data.Migrations
                     b.ToTable("Items");
                 });
 
-            modelBuilder.Entity("OFTENCOFTAPI.ApplicationCore.Models.ResetToken", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Token");
-
-                    b.Property<DateTime>("TokenExpiry");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ResetTokens");
-                });
-
             modelBuilder.Entity("OFTENCOFTAPI.ApplicationCore.Models.Tickets", b =>
                 {
                     b.Property<int>("Id")
@@ -339,6 +324,10 @@ namespace OFTENCOFTAPI.Data.Migrations
                         .HasMaxLength(256);
 
                     b.Property<string>("PasswordHash");
+
+                    b.Property<string>("PasswordToken");
+
+                    b.Property<DateTime>("PasswordTokenExpiryTime");
 
                     b.Property<string>("PhoneNumber");
 

@@ -10,6 +10,7 @@ using OFTENCOFTAPI.Services;
 using Swashbuckle.AspNetCore.Swagger;
 using OFTENCOFTAPI.ApplicationCore.Interfaces;
 using OFTENCOFTAPI.ApplicationCore.Services;
+using OFTENCOFTAPI.Data.Repositories;
 
 namespace OFTENCOFTAPI.Installers
 {
@@ -48,6 +49,8 @@ namespace OFTENCOFTAPI.Installers
             services.AddScoped<IUserService, UserService>();
 
             services.AddScoped<IIdentityService, IdentityService>();
+
+            services.AddScoped<IResetTokenRepository, ResetTokenRepository>();
 
             //
             services.Configure<CookiePolicyOptions>(options =>

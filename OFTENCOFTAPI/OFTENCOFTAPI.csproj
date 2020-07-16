@@ -42,7 +42,6 @@
       <CopyToPublishDirectory>Always</CopyToPublishDirectory>
     </Folder>
     <Content Include="Content/**" CopyToPublishDirectory="PreserveNewest" Exclude="$(DefaultItemExcludes);$(DefaultExcludesInProjectFolder);@(Content)" />
-    <Folder Include="Data\Repositories\" />
   </ItemGroup>
 
 
@@ -51,6 +50,12 @@
     <Content Remove="bin\**" />
     <EmbeddedResource Remove="bin\**" />
     <None Remove="bin\**" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\20200716100559_removed_user_field_in_app_user.cs" />
+    <Compile Remove="Data\Migrations\20200716100559_removed_user_field_in_app_user.Designer.cs" />
   </ItemGroup>
 
 </Project>

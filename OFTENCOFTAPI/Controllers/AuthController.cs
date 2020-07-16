@@ -1,21 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Web.Http;
 using OFTENCOFTAPI.Services;
 using OFTENCOFTAPI.ViewModels.Account;
-using OFTENCOFTAPI.ApplicationCore.Models;
 using Microsoft.AspNetCore.Identity;
 using OFTENCOFTAPI.ApplicationCore.Models.User;
-using System.IdentityModel.Tokens.Jwt;
-using System.Text;
-using System.Security.Claims;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using OFTENCOFTAPI.Data.Models;
 using OFTENCOFTAPI.ApplicationCore.Interfaces;
 using OFTENCOFTAPI.ApplicationCore.DTOs;
@@ -44,52 +36,44 @@ namespace OFTENCOFTAPI.Controllers
             _appSettings = appSettings.Value;
         }
 
-        [AllowAnonymous]
-        [HttpPost("authenticate")]
-        public async Task<IActionResult> Authenticate([FromBody]LoginViewModel model)
-        {
+        //[AllowAnonymous]
+        //[HttpPost("authenticate")]
+        //public async Task<IActionResult> Authenticate([FromBody]LoginViewModel model)
+        //{
+        //    string token = "";
+        //    ApplicationUser user = await _userManager.FindByEmailAsync(model.email);
+        //    if ((user != null))
+        //    {
 
-            //var response = _userService.Authenticate(model);
+        //        if (user.EmailConfirmed == true)
+        //        {
+        //            var result = await _signInManager.PasswordSignInAsync(model.email, model.password, model.RememberMe, lockoutOnFailure: false);
+        //            if (result.Succeeded)
+        //            {
+        //                token = generateJwtToken(user);
 
-            //if (response == null)
-            //    return BadRequest(new { message = "Username or password is incorrect" });
+        //                var data1 = new
+        //                {
+        //                    status = "success",
+        //                    user = model.email,
+        //                    token = token
+        //                };
 
-            //return Ok(response);
-            //====================================================
-            string token = "";
-            ApplicationUser user = await _userManager.FindByEmailAsync(model.email);
-            if ((user != null))
-            {
-
-                if (user.EmailConfirmed == true)
-                {
-                    var result = await _signInManager.PasswordSignInAsync(model.email, model.password, model.RememberMe, lockoutOnFailure: false);
-                    if (result.Succeeded)
-                    {
-                        token = generateJwtToken(user);
-
-                        var data1 = new
-                        {
-                            status = "success",
-                            user = model.email,
-                            token = token
-                        };
-
-                        return new JsonResult(data1);
-                    }
-                }
+        //                return new JsonResult(data1);
+        //            }
+        //        }
 
 
-            }
-            var data = new
-            {
-                status = "fail, user does not exist",
-                user = "",
-                token = ""
-            };
+        //    }
+        //    var data = new
+        //    {
+        //        status = "fail, user does not exist",
+        //        user = "",
+        //        token = ""
+        //    };
 
-            return new JsonResult(data);
-        }
+        //    return new JsonResult(data);
+        //}
 
         [Authorize]
         [HttpGet]
@@ -168,11 +152,11 @@ namespace OFTENCOFTAPI.Controllers
         //EMAIL AUTHENTICATION
         [AllowAnonymous]
         [HttpGet("verifyAccount/{email}")]
-        public async Task<IActionResult> verifyAccountExist(string email)
+        public async Task<IActionResult> VerifyAccountExist(string email)
         {
             try
             {
-                var isAccountExist = await _identityService.verifyAccountExist(email);
+                var isAccountExist = await _identityService.VerifyAccountExist(email);
 
                 return Ok(isAccountExist);
             }
@@ -240,23 +224,68 @@ namespace OFTENCOFTAPI.Controllers
 
         }
 
-        //GENERATE JWT TOKEN
-        private string generateJwtToken(ApplicationUser user)
+
+        [AllowAnonymous]
+        [HttpPost("sendResetToken/{email}")]
+        public async Task<IActionResult> SendResetToken(string email)
         {
-            // generate token that is valid for 7 days
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
+            try
             {
-                Subject = new ClaimsIdentity(new Claim[]
+                var response = await _identityService.SendResetToken(email);
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                var response = new ResetRequestResultDTO
                 {
-                    new Claim(ClaimTypes.Name, user.Id.ToString())
-                }),
-                Expires = DateTime.UtcNow.AddHours(1).AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
+                    Status = "failed",
+                    Message = ex.Message
+                };
+
+                return StatusCode(500, response);
+            }
         }
+
+        [AllowAnonymous]
+        [HttpPost("updatePassword")]
+        public async Task<IActionResult> UpdatePassword([FromBody]PasswordResetDTO passwordResetDTO)
+        {
+            try
+            {
+                var response = await _identityService.ResetPassword(passwordResetDTO.Token, passwordResetDTO.NewPassword, passwordResetDTO.Email);
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                var resetResult = new ResetRequestResultDTO
+                {
+                    Status = "failed",
+                    Message = ex.Message
+                };
+
+                return StatusCode(500, resetResult);
+            }
+        }
+
+        ////GENERATE JWT TOKEN
+        //private string generateJwtToken(ApplicationUser user)
+        //{
+        //    // generate token that is valid for 7 days
+        //    var tokenHandler = new JwtSecurityTokenHandler();
+        //    var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+        //    var tokenDescriptor = new SecurityTokenDescriptor
+        //    {
+        //        Subject = new ClaimsIdentity(new Claim[]
+        //        {
+        //            new Claim(ClaimTypes.Name, user.Id.ToString())
+        //        }),
+        //        Expires = DateTime.UtcNow.AddHours(1).AddDays(7),
+        //        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+        //    };
+        //    var token = tokenHandler.CreateToken(tokenDescriptor);
+        //    return tokenHandler.WriteToken(token);
+        //}
     }
 }

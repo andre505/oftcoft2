@@ -8,7 +8,8 @@ namespace OFTENCOFTAPI.ApplicationCore.Interfaces
     {
         Task<RegistrationResultDTO> RegisterAsync(string email, string password, bool rememberMe, string lastname, string firstname, string phonenumber);
         Task<LoginResultDTO> LoginAsync(string email, string password, bool rememberMe);
-
-        Task<bool> verifyAccountExist(string email);
+        Task<bool> VerifyAccountExist(string email);
+        Task<ResetRequestResultDTO> SendResetToken(string email);
+        Task<ResetRequestResultDTO> ResetPassword(string token, string newPassword, string email);
     }
 }

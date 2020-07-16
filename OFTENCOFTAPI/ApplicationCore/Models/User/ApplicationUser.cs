@@ -10,6 +10,8 @@ namespace OFTENCOFTAPI.ApplicationCore.Models.User
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        //public string PasswordToken { get; set; }
+        //public DateTime PasswordTokenExpiryTime { get; set; }
     }
 
 }

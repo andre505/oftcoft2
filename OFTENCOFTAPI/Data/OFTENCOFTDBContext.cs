@@ -26,7 +26,7 @@ namespace OFTENCOFTAPI.Data.Models
         public virtual DbSet<Tickets> Tickets { get; set; }
         public virtual DbSet<Transaction> Transaction { get; set; }
         public virtual DbSet<Transaction> Logs { get; set; }
-                     
+        public virtual DbSet<ResetToken> ResetTokens { get; set; }
         
     }
 }

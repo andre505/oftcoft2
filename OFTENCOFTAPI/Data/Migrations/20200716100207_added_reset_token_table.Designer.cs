@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OFTENCOFTAPI.Data.Models;
 
 namespace OFTENCOFTAPI.Data.Migrations
 {
     [DbContext(typeof(OFTENCOFTDBContext))]
-    partial class OFTENCOFTDBContextModelSnapshot : ModelSnapshot
+    [Migration("20200716100207_added_reset_token_table")]
+    partial class added_reset_token_table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -208,6 +210,8 @@ namespace OFTENCOFTAPI.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("ApplicationUserId");
+
                     b.Property<string>("Token");
 
                     b.Property<DateTime>("TokenExpiry");
@@ -215,6 +219,8 @@ namespace OFTENCOFTAPI.Data.Migrations
                     b.Property<string>("UserId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("ResetTokens");
                 });
@@ -423,6 +429,13 @@ namespace OFTENCOFTAPI.Data.Migrations
                         .WithMany("Items")
                         .HasForeignKey("Categoryid")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("OFTENCOFTAPI.ApplicationCore.Models.ResetToken", b =>
+                {
+                    b.HasOne("OFTENCOFTAPI.ApplicationCore.Models.User.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("OFTENCOFTAPI.ApplicationCore.Models.Tickets", b =>

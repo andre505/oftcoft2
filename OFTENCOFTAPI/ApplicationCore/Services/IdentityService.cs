@@ -213,14 +213,15 @@ namespace OFTENCOFTAPI.ApplicationCore.Services
                 return new ResetRequestResultDTO
                 {
                     Status = "failed",
-                    Message = "Account doesn't exist"
+                    ResponseMessage = "Account doesn't exist",
+                    ResponseCode = "01"
                 };
             }
 
             //, On existing
             //=> Generate reset token, 4 digit
             Random rnd = new Random();
-            var token = GlobalUtil.GenerateDigit(rnd, 4);
+            var token = Helper.RandomString(4, Helper.Mode.Numeric);
             var expiry = DateTime.Now.AddMinutes(15);
 
             // => Add 15minutes to current time,
@@ -259,12 +260,13 @@ namespace OFTENCOFTAPI.ApplicationCore.Services
                                  "</html>";
 
                 //=> Send response
-               // await _emailService.ExecuteAsync(email, subject, message, htmlMessage);
+               await _emailService.ExecuteAsync(email, subject, message, htmlMessage);
 
                 return new ResetRequestResultDTO
                 {
                     Status = "success",
-                    Message = "Password reset token sent"
+                    ResponseMessage = "Password reset token sent",
+                    ResponseCode = "00"
                 };
 
             }
@@ -273,7 +275,8 @@ namespace OFTENCOFTAPI.ApplicationCore.Services
                 return new ResetRequestResultDTO
                 {
                     Status = "failed",
-                    Message = ex.Message
+                    ResponseMessage = ex.Message,
+                    ResponseCode = "01"
                 };
             }
 
@@ -290,7 +293,8 @@ namespace OFTENCOFTAPI.ApplicationCore.Services
                 return new ResetRequestResultDTO
                 {
                     Status = "failed",
-                    Message = "Invalid Token"
+                    ResponseMessage = "Invalid Token",
+                    ResponseCode = "01"
                 };
             }
 
@@ -301,7 +305,8 @@ namespace OFTENCOFTAPI.ApplicationCore.Services
                 return new ResetRequestResultDTO
                 {
                     Status = "failed",
-                    Message = "Token Expired"
+                    ResponseMessage = "Token Expired",
+                    ResponseCode = "01"
                 };
             }
 
@@ -315,7 +320,8 @@ namespace OFTENCOFTAPI.ApplicationCore.Services
                 return new ResetRequestResultDTO
                 {
                     Status = "success",
-                    Message = "Password Updated"
+                    ResponseMessage = "Password Updated",
+                    ResponseCode = "00"
                 };
             } else
             {
@@ -323,7 +329,8 @@ namespace OFTENCOFTAPI.ApplicationCore.Services
                 return new ResetRequestResultDTO
                 {
                     Status = "failed",
-                    Message = "Something went wrong"
+                    ResponseMessage = "Something went wrong",
+                    ResponseCode = "01"
                 };
             }
 

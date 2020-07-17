@@ -8,6 +8,8 @@ namespace OFTENCOFTAPI.ApplicationCore.DTOs
     public class AuthenticationResultDTO
     {
         public string Status { get; set; }
+        public string ResponseCode { get; set; }
+        public string ResponseMessage { get; set; }
         public string Email { get; set; }
         public string Token { get; set; }
     }

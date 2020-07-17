@@ -8,6 +8,8 @@ namespace OFTENCOFTAPI.ApplicationCore.DTOs
     public class ResetRequestResultDTO
     {
         public string Status { get; set; }
-        public string Message { get; set; }
+
+        public string ResponseCode { get; set; }
+        public string ResponseMessage { get; set; }
     }
 }

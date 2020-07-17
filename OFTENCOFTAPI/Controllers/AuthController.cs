@@ -11,6 +11,7 @@ using Microsoft.Extensions.Options;
 using OFTENCOFTAPI.Data.Models;
 using OFTENCOFTAPI.ApplicationCore.Interfaces;
 using OFTENCOFTAPI.ApplicationCore.DTOs;
+using OFTENCOFTAPI.ApplicationCore.Utils;
 
 namespace OFTENCOFTAPI.Controllers
 {
@@ -36,44 +37,59 @@ namespace OFTENCOFTAPI.Controllers
             _appSettings = appSettings.Value;
         }
 
-        //[AllowAnonymous]
-        //[HttpPost("authenticate")]
-        //public async Task<IActionResult> Authenticate([FromBody]LoginViewModel model)
-        //{
-        //    string token = "";
-        //    ApplicationUser user = await _userManager.FindByEmailAsync(model.email);
-        //    if ((user != null))
-        //    {
+        [AllowAnonymous]
+        [HttpPost("authenticate")]
+        public async Task<IActionResult> Authenticate([FromBody] LoginViewModel model)
+        {
+            string token = "";
+            ApplicationUser user = await _userManager.FindByEmailAsync(model.email);
+            if ((user != null))
+            {
 
-        //        if (user.EmailConfirmed == true)
-        //        {
-        //            var result = await _signInManager.PasswordSignInAsync(model.email, model.password, model.RememberMe, lockoutOnFailure: false);
-        //            if (result.Succeeded)
-        //            {
-        //                token = generateJwtToken(user);
+                if (user.EmailConfirmed == true)
+                {
+                    var result = await _signInManager.PasswordSignInAsync(model.email, model.password, model.RememberMe, lockoutOnFailure: false);
+                    if (result.Succeeded)
+                    {
+                        token = IdentityUtil.generateJwtToken(user, _appSettings.Secret);
 
-        //                var data1 = new
-        //                {
-        //                    status = "success",
-        //                    user = model.email,
-        //                    token = token
-        //                };
+                        var authenticationResultDto = new AuthenticationResultDTO
+                        {
+                            Status = "success",
+                            ResponseCode = "00",
+                            ResponseMessage = "User Authenticated",
+                            Email = model.email,
+                            Token = token
+                        };
 
-        //                return new JsonResult(data1);
-        //            }
-        //        }
+                        return Ok(authenticationResultDto);
+                    }
+                    else
+                    {
+                        var authenticationResultDto = new AuthenticationResultDTO
+                        {
+                            Status = "failed",
+                            ResponseCode = "01",
+                            ResponseMessage = "Invalid Credential",
+                            Email = model.email,
+                            Token = null
+                        };
+                        
+                        return BadRequest(authenticationResultDto);
+                    }
+                }
 
 
-        //    }
-        //    var data = new
-        //    {
-        //        status = "fail, user does not exist",
-        //        user = "",
-        //        token = ""
-        //    };
+            }
+            var data = new
+            {
+                status = "fail, user does not exist",
+                user = "",
+                token = ""
+            };
 
-        //    return new JsonResult(data);
-        //}
+            return new JsonResult(data);
+        }
 
         [Authorize]
         [HttpGet]
@@ -240,7 +256,8 @@ namespace OFTENCOFTAPI.Controllers
                 var response = new ResetRequestResultDTO
                 {
                     Status = "failed",
-                    Message = ex.Message
+                    ResponseMessage = ex.Message,
+                    ResponseCode = "01"
                 };
 
                 return StatusCode(500, response);
@@ -262,7 +279,8 @@ namespace OFTENCOFTAPI.Controllers
                 var resetResult = new ResetRequestResultDTO
                 {
                     Status = "failed",
-                    Message = ex.Message
+                    ResponseMessage = ex.Message,
+                    ResponseCode = "01"
                 };
 
                 return StatusCode(500, resetResult);

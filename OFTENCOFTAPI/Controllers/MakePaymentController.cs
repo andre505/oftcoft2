@@ -287,10 +287,12 @@ namespace OFTENCOFTAPI.Controllers
             var amt = jsonanswer.Data.Amount.ToString();
             var normalizedamount = amt.Insert(amt.Length - 2, ".");
             DateTime curdate = DateTime.Parse(DateTime.UtcNow.AddHours(1).ToString("yyyy-MM-dd HH:mm:ss"));
+            
             //compare signature  
             //var signature = jsonanswer.Data.Authorization.Signature;
             //byte[] secretkeybytes = Encoding.UTF8.GetBytes(secretkey);
             //var mysignature = HashToString(answer, secretkeybytes);
+           
             paystackchargesuccessresponse.Event = jsonanswer.Event;
             paystackchargesuccessresponse.Status = jsonanswer.Data.Status;
             paystackchargesuccessresponse.Reference = jsonanswer.Data.Reference;
